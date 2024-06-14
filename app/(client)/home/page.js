@@ -22,8 +22,6 @@ const Home = () => {
                 backgroundPosition: "center",
               }}>
 
-                {/* <div className=''> Play</div> */}
-               
                 
                
             </div>

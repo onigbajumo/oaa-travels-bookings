@@ -73,15 +73,15 @@ const Footer = () => {
 
                     <div className='space-y-4 text-white lg:pr-12'>
 
-                    <h1 className='font-medium text-[32px] '>But we'are here not to talk about oursleves</h1>
-                    <p > - We'are here to talk about you, your company, your product, and your goals.</p>
+                    <h1 className='font-medium text-[32px] '>But we{`’`}are here not to talk about oursleves</h1>
+                    <p > - We{`’`}are here to talk about you, your company, your product, and your goals.</p>
                     <div>
                     </div>
 
                     <div className="w-[60%]">
                          <Link href='/' className='text-[#134574] rounded-full px-4 py-2 bg-white flex justify-between'>
                             
-                            <h2>Let’s Talk </h2>
+                            <h2>Let{`’`}s Talk </h2>
 
                              <Image src='/arrowE.svg' width={20} height={1} />
                            

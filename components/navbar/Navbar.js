@@ -100,7 +100,7 @@ const Navigation = () => {
         </div>
         <Link href="/menu " className="lg:flex hidden">
             <button className="border border-[#134574] flex items-center gap-2 rounded-full  text-[#134574] font-bold  px-6 py-2 ">
-                Lets Talk <Image src='/arrowE.svg' width={20} height={1} />
+                Let{`’`}s Talk <Image src='/arrowE.svg' width={20} height={1} />
             </button>
         </Link>
         <div className='lg:hidden '>
@@ -161,7 +161,7 @@ const Navigation = () => {
                     className="bg-white flex items-center gap-2 rounded-full text-[#134574] font-bold px-8 py-2"
                     onClick={() => setShowNav(false)}
                   >
-                    Lets Talk <Image src='/arrowE.svg' width={20} height={1} />
+                    Let{`’`}s Talk <Image src='/arrowE.svg' width={20} height={1} />
                   </button>
                 </Link>
               </ul>

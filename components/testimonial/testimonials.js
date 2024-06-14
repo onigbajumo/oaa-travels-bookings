@@ -29,7 +29,6 @@ const testimony = [
       'Our experience with Ehizua Hub has been nothing short of exceptional. They took our digital presence to the next level with their innovative strategies and attention to detail. From website design to social media management, they have exceeded our expectations at every step. Highly recommended!',
     img: '/tes.png',
   },
-  // Add more testimonial objects here...
 ];
 
 const testimonialColors = ['bg-blue-200', 'bg-green-200', 'bg-yellow-200', 'bg-pink-200'];
@@ -109,7 +108,7 @@ const Testimony = () => {
             <h2> Testimonials</h2>
           </div>
           <h2 className="text-[#0D1118] font-medium text-2xl">Read what our Clients are saying.</h2>
-          <button className="rounded-full px-4 py-2 text-white bg-[#134574]">Lets talk</button>
+          <button className="rounded-full px-4 py-2 text-white bg-[#134574]">Let{`’`}s talk</button>
           <div className="flex mt-4 gap-4 text-[#134574]">
             <CgArrowLeftO size={20} onClick={handlePrevCard} disabled={currentCardIndex === 0} />
             <CgArrowRightO size={20} onClick={handleNextCard} disabled={currentCardIndex >= totalCards - cardsPerPage} />
