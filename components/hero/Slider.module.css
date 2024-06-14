@@ -1,6 +1,5 @@
 .slider {
     position: relative;
-    /* height: 15rem;  */
     overflow: hidden;
   }
   
@@ -15,7 +14,7 @@
   .sliderItem.active {
     opacity: 1;
     transform: translateY(0);
-    animation: sharpPulse 0.01s ease-in-out, bounce 0.5s ease-in-out;
+    animation: sharpPulse 0.01s ease-in-out, bounce 0.10s ease-in-out;
   }
   
   @keyframes sharpPulse {
@@ -46,7 +45,7 @@
     position: absolute;
     top: -10%;
     left: 10%;
-    background-color: #FF7A00; /* Example background color */
+    background-color: #FF7A00; 
     color: white;
     height: 3rem; 
     display: flex;

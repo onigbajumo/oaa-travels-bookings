@@ -21,9 +21,6 @@ const Home = () => {
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}>
-
-                
-               
             </div>
 
         </div>
