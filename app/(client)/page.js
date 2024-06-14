@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Hero from '../../components/hero/Hero'
-import { HiOutlineArrowLongRight } from "react-icons/hi2";
 
 export default function Home() {
   return (
@@ -22,7 +21,7 @@ export default function Home() {
               <div className="flex flex-col md:flex-row justify-between container shadow-md items-center md:px-16 lg:px-24 px-8 py-4 border rounded-[2rem]">
                 <div className="space-y-6 md:w-1/2">
                   <h2 className="text-[#EF2689] text-[3rem] font-medium mb-4">Brand Design</h2>
-                  <p className="text-xl">Your brand is more than just a logo. It's your story, your voice, 
+                  <p className="text-xl">Your brand is more than just a logo. It{`’`}s your story, your voice, 
                     and your connection to the world. At Ehizua Hub, we go beyond 
                     aesthetics. We help you craft a powerful brand narrative that 
                     resonates, inspires, and drives results.</p>
