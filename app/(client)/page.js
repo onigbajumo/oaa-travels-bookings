@@ -36,7 +36,7 @@ export default function Home() {
               <div className="flex flex-col md:flex-row container gap-6  my-12">
 
                 <div className="border rounded-[2rem] shadow-sm px-8 pt-16 text-[3rem] md:w-1/3 relative">
-                <h2 className="text-[#EF2689] text-[2rem] lg:text-[3rem] font-medium mb-4 px-2">Digital Marketing</h2>
+                <h2 className="text-[#EF2689] text-[2rem]  font-medium mb-4 px-2">Digital Marketing</h2>
                   <p className="text-xl">We build Solutions and deliver excellent IT Services 
                     to Forward thinking business in Africa.</p>
                     <div className="flex justify-between">
@@ -48,7 +48,7 @@ export default function Home() {
 
 
                 <div className="border rounded-[2rem] shadow-sm px-8 pt-16 md:w-1/3 relative">
-                <h2 className="text-[#EF2689] text-[2rem] lg:text-[3rem] font-medium mb-4 px-2">Web Development</h2>
+                <h2 className="text-[#EF2689] text-[2rem]  font-medium mb-4 px-2">Web Development</h2>
                   <p className="text-xl">Innovative solutions for modern challenges</p>
                     <div className="flex justify-between">
                       <div></div>
@@ -58,7 +58,7 @@ export default function Home() {
                 </div>
 
                 <div className="border rounded-[2rem] shadow-sm px-8 pt-16 md:w-1/3 relative">
-                <h2 className="text-[#EF2689] text-[2rem] lg:text-[3rem] font-medium mb-4 px-2">App Development</h2>
+                <h2 className="text-[#EF2689] text-[2rem]  font-medium mb-4 px-2">App Development</h2>
                   <p className="text-xl">Your brand is more than just a name and logo</p>
                     <div className="flex justify-between">
                       <div></div>
