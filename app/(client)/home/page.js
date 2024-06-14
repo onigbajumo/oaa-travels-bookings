@@ -6,7 +6,7 @@ import Hero from '../../../components/hero/Hero'
 import ClientLogo from '../../../components/clientLogo/client'
 import DigitalProduct from '../../../components/digital/product'
 import Contact from '../../../components/contact/contact'
-import Testimony from '../../../components/testimonial/Testimonials'
+import Testimony from '../../../components/testimonial/testimonials'
 
 
 const Home = () => {
