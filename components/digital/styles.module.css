@@ -1,0 +1,27 @@
+.play {
+    display: flex;
+    overflow: hidden; /* Ensures that content outside the container isn't visible */
+    width: 100%;
+    white-space: nowrap; /* Ensure it spans the full width */
+}
+
+.playcontent {
+    display: inline-flex;
+    animation: quotes-marquee-slide 30s linear infinite;
+}
+
+@keyframes quotes-marquee-slide {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-10%);
+    }
+}
+
+.playcontent h1{
+    white-space: nowrap;
+}
+.reverse .playcontent{
+    animation-direction: reverse;
+}

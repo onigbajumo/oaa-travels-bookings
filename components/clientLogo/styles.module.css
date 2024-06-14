@@ -1,0 +1,22 @@
+@keyframes slide {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-100%);
+    }
+  }
+  
+  .carousel {
+    width: 150px; /* Adjust the width as needed */
+    height: 50px; /* Adjust the height as needed */
+  }
+  
+  .slides {
+    display: flex;
+    animation: slide 2s linear infinite; /* Adjust the animation duration as needed */
+  }
+  
+  .active {
+    /* Add any active styling here */
+  }
