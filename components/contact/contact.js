@@ -32,7 +32,7 @@ const Conatct = () => {
                     Unleash the power of innovation with us.
                     </div>
                     <p>
-                    We're all about transforming through digital solutions, no matter what your project or goal is about.
+                    We are all about transforming through digital solutions, no matter what your project or goal is about.
                     </p>
 
                 </div>
