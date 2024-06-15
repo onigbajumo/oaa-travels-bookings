@@ -32,7 +32,7 @@ const Slider = () => {
       {items.map((item, index) => (
         <div
           key={index}
-          className={`csecondary font-extrabold md:text-[4.5em] lg:text-[4.5em] xl:text-[6em]  2xl:text-[7em] text-[2.5em]  sm:text-[3.5em] lg:leading-[4rem] md:leading-[5rem]  leading-[1em] text-[#0D1118] relative ${styles.sliderItem} ${currentIndex === index ? styles.active : ''}`}
+          className={`csecondary font-extrabold md:text-[4.5em] lg:text-[4.5em] xl:text-[6em]  2xl:text-[7em] text-[2.5em]  sm:text-[3.5em] lg:leading-[4rem] md:leading-[5rem]  leading-[1em] text-[#134574] relative ${styles.sliderItem} ${currentIndex === index ? styles.active : ''}`}
         >
           {item.text}
           {/* {currentIndex === index && item.backgroundContent && (

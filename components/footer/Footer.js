@@ -68,7 +68,7 @@ const Footer = () => {
 
 
 
-            <div className=' flex lg:justify-between justify-center  md:px-28 px-12 flex-col lg:flex-row gap-12'>
+            <div className=' flex lg:justify-between justify-center  md:px-28 pl-12 pr-6 flex-col lg:flex-row gap-12'>
                 <div className="flex flex-col lg:w-1/3 ">
 
                     <div className='space-y-4 text-white lg:pr-12'>
@@ -78,7 +78,7 @@ const Footer = () => {
                     <div>
                     </div>
 
-                    <div className="w-[60%]">
+                    <div className="xl:w-[60%] md:w-[60%] lg:w-[100%]">
                          <Link href='/' className='text-[#134574] rounded-full px-4 py-2 bg-white flex justify-between'>
                             
                             <h2>Let{`’`}s Talk </h2>
@@ -117,9 +117,9 @@ const Footer = () => {
                     <h2 className="text-[#828282] mb-8">Contact Us</h2>
                     <div className="space-y-4">
 
-                    <div className="text-white flex gap-4"><Image src="/phoneE.svg" width={10} height={10} />Phone: +234 803 731 2788</div>
-                    <div className="text-white flex gap-4"><Image src="/mailE.svg" width={10} height={10} />Email: info@ehizuahub.com</div>
-                    <div className="text-white flex gap-4"><Image src="/locationE.svg" width={10} height={10} />6, Hon Fatai Eletu Street, Container Bus Stop, Awoyaya, Lekki</div>
+                    <div className="text-white flex gap-4"><Image src="/phoneE.svg" width={20} height={20} />Phone: +234 803 731 2788</div>
+                    <div className="text-white flex gap-4"><Image src="/mailE.svg" width={20} height={20} />Email: info@ehizuahub.com</div>
+                    <div className="text-white flex gap-4"><Image src="/locationE.svg" width={30} height={30} />6, Hon Fatai Eletu Street, Container Bus Stop, Awoyaya, Lekki</div>
                     </div>
                 </div>
             </div>

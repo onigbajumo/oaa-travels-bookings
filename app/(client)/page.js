@@ -25,7 +25,7 @@ export default function Home() {
                     and your connection to the world. At Ehizua Hub, we go beyond 
                     aesthetics. We help you craft a powerful brand narrative that 
                     resonates, inspires, and drives results.</p>
-                    <button className="bg-[#134574] py-4 text-2xl items-center px-8 text-white rounded-full flex gap-6 px-4"> <Image src="/arrowbtn.svg" width={70} height={20} /> Learn More</button>
+                    <button className="bg-[#134574] py-4 md:text-2xl items-center px-8 text-white rounded-full flex gap-6 px-4"> <Image src="/arrowbtn.svg" width={70} height={20} /> Learn More</button>
                 </div>
                 <div>
                   <Image src={"/serviceicon4.svg"} width={400} height={400} />

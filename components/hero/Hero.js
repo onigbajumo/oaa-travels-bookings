@@ -23,7 +23,7 @@ const HeroSection = () => {
                 
               }}>
                  <div className='text-center lg:px-[12em] md:px-16 px-4 space-y-4 pt-12'>
-                 <h1 className= "csecondary font-extrabold  md:text-[4.5em] lg:text-[4.5em] xl:text-[6.5em] 2xl:text-[7em] sm:text-[3.5em]  text-[2.5em] lg:leading-[6rem] md:leading-[2rem] leading-[0.5em] text-[#0D1118]">
+                 <h1 className= "csecondary font-extrabold  md:text-[4.5em] lg:text-[4.5em] xl:text-[6.5em] 2xl:text-[7em] sm:text-[3.5em]  text-[2.5em] lg:leading-[6rem] md:leading-[2rem] leading-[0.5em] text-[#134574]">
                   IT Services for</h1>
              
                   <Slider />
