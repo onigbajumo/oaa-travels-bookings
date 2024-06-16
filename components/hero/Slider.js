@@ -28,7 +28,7 @@ const Slider = () => {
   }, [items.length]);
 
   return (
-    <div className={` ${styles.slider} md:h-[6rem] lg:h-[5.9rem] xl:h-[8rem] h-[4rem]`}>
+    <div className={` ${styles.slider} md:h-[6rem] lg:h-[5.9rem] xl:h-[8rem] h-[4.5rem] z-50`}>
       {items.map((item, index) => (
         <div
           key={index}

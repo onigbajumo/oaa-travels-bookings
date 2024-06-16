@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Hero from '../../components/hero/Hero'
+import Testimony from '../../components/testimonial/testimonials'
+import CTA from '../../components/CTA/cta'
 
 export default function Home() {
   return (
@@ -69,6 +71,8 @@ export default function Home() {
             </div>
 
         </div>
+        <CTA />
+        <Testimony />
     </div>
   );
 }

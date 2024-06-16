@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { LuDot } from 'react-icons/lu';
 import { CgArrowRightO, CgArrowLeftO } from 'react-icons/cg';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const testimony = [
   {
@@ -31,14 +32,14 @@ const testimony = [
   },
 ];
 
-const testimonialColors = ['bg-blue-200', 'bg-green-200', 'bg-yellow-200', 'bg-pink-200'];
+const testimonialColors = ['bg-[#EF268933]', 'bg-[#FCD4E7]', 'bg-[#EF268933]', 'bg-[#EF268933]'];
 
 const TestimonySection = ({ name, message, img, index }) => {
 
     const bgColor = testimonialColors[index % testimonialColors.length] || '';
 
   return (
-    <div className={`w-full  ${bgColor} relative px-10 pt-12 pb-24 rounded-l-[50px] rounded-tr-[50px] group gap-8 `}>
+    <div className={`w-full  bg-[#EF268933] relative px-10 pt-12 pb-24 rounded-l-[50px] rounded-tr-[50px] group gap-8 `}>
       <div className="flex flex-col justify-between gap-4 ">
         <div>{message}</div>
         <div>{name}</div>
@@ -47,12 +48,12 @@ const TestimonySection = ({ name, message, img, index }) => {
 
         <div className='bg-white absolute p-2 z-10 bottom-0 left-0 rounded-[25px] flex gap-4  '>
 
-        <Image src={img} width={63} height={63} className='rounded-[25px]' />
+        <Image src={img} width={65} height={63} className='rounded-[25px]' />
         
         </div>
-        <span className={`z-10 absolute bottom-0 left-20  w-12 h-12 rounded-b-[20px] ${bgColor}`}></span>
-        <span className={`z-10 absolute bottom-20 left-0  w-12 h-8 rounded-bl-[15px] ${bgColor}`}></span>
-        <span className='bg-[white] h-6 w-12 absolute bottom-0 left-12 rounded'></span>
+        <span className={`z-10 absolute bottom-0 left-20  w-12 h-12 rounded-b-[20px] bg-[#FCD4E7]`}></span>
+        <span className={`z-10 absolute bottom-20 left-0  w-12 h-8 rounded-bl-[15px] bg-[#FCD4E7]`}></span>
+        <span className='bg-[#FCD4E7] h-6 w-12 absolute bottom-0 left-12 rounded'></span>
         <span className='bg-[white] h-12 w-6 absolute bottom-12 left-0 rounded'></span>
 
         </div>
@@ -108,10 +109,10 @@ const Testimony = () => {
             <h2> Testimonials</h2>
           </div>
           <h2 className="text-[#0D1118] font-medium text-2xl">Read what our Clients are saying.</h2>
-          <button className="rounded-full px-4 py-2 text-white bg-[#134574]">Let{`’`}s talk</button>
+          <Link href='/' className="rounded-full px-4 py-2 text-white bg-[#134574] w-[60%] lg:w-full">Let{`’`}s talk</Link>
           <div className="flex mt-4 gap-4 text-[#134574]">
-            <CgArrowLeftO size={20} onClick={handlePrevCard} disabled={currentCardIndex === 0} />
-            <CgArrowRightO size={20} onClick={handleNextCard} disabled={currentCardIndex >= totalCards - cardsPerPage} />
+            <CgArrowLeftO size={30} onClick={handlePrevCard} disabled={currentCardIndex === 0} />
+            <CgArrowRightO size={30} onClick={handleNextCard} disabled={currentCardIndex >= totalCards - cardsPerPage} />
           </div>
         </div>
         <div>
