@@ -108,11 +108,11 @@ const Testimony = () => {
             <LuDot className="" size={30} />
             <h2> Testimonials</h2>
           </div>
-          <h2 className="text-[#0D1118] font-medium text-2xl">Read what our Clients are saying.</h2>
+          <h2 className="text-[#0D1118] font-medium text-2xl">Read what our Clients are saying</h2>
           <Link href='/' className="rounded-full px-4 py-2 text-white bg-[#134574] w-[60%] lg:w-full">Let{`’`}s talk</Link>
           <div className="flex mt-4 gap-4 text-[#134574]">
-            <CgArrowLeftO size={30} onClick={handlePrevCard} disabled={currentCardIndex === 0} />
-            <CgArrowRightO size={30} onClick={handleNextCard} disabled={currentCardIndex >= totalCards - cardsPerPage} />
+            <CgArrowLeftO size={30} onClick={handlePrevCard} disabled={currentCardIndex === 0} className='cursor-pointer'/>
+            <CgArrowRightO size={30} onClick={handleNextCard} disabled={currentCardIndex >= totalCards - cardsPerPage} className='cursor-pointer'/>
           </div>
         </div>
         <div>
