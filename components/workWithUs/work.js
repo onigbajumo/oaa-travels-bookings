@@ -10,7 +10,10 @@ const Work = () => {
 
             <div className="text-center mb-4">
                 <h1 className=" text-[#134574] font-extrabold md:text-[4rem] text-[3rem] ">Why work with us?</h1>
-                <p className="md:text-2xl sm:text-2xl bg-[#EF26890A] rounded-full px-4 my-8 py-2"> Expertise You Can Trust </p>
+                <div>
+
+                <p className="md:text-2xl inline-block sm:text-2xl bg-[#EF26890A] rounded-full px-4 my-8 py-2"> Expertise You Can Trust </p>
+                </div>
 
                 </div>
             <div className="flex flex-col lg:gap-16 gap-8">

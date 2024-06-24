@@ -3,6 +3,7 @@ import Hero from '../../components/hero/Hero'
 import Testimony from '../../components/testimonial/testimonials'
 import CTA from '../../components/CTA/cta'
 import Work from '../../components/workWithUs/work'
+import Link from "next/link"
 
 export default function Home() {
   return (
@@ -74,6 +75,131 @@ export default function Home() {
         </div>
 
         <Work />
+
+        <div>
+          <div className="flex flex-col items-center my-16 ">
+          <h1 className=" text-[#134574] font-extrabold md:text-[4rem] text-[3rem] ">Portfolio</h1>
+              <p className="md:text-3xl sm:text-2xl bg-[#FF7A000D] rounded-full px-8 my-8 py-2">Transforming Ideas into Reality with Precision and Care</p>
+
+          </div>
+
+          {/* <div className="flex justify-between  w-full">
+
+            <div>
+                <div className='relative rounded-lg flex justify-around items-center' style={{
+                    height: "500px",
+                    backgroundImage: `url(/market.png)`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                  }}>
+
+                    Marketplace
+                </div>
+
+            </div>
+
+            <div className="">
+                <div className='relative rounded-lg flex justify-around items-center' style={{
+                    height: "500px",
+                    backgroundImage: `url(/market.png)`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                  }}>
+
+                    Marketplace
+                </div>
+
+            </div>
+            <div>
+                <div className='relative rounded-lg flex justify-around items-center' style={{
+                    height: "500px",
+                    backgroundImage: `url(/market.png)`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                  }}>
+
+                    Marketplace
+                </div>
+
+            </div>
+
+          </div> */}
+
+
+          {/* <div className="flex gap-8">
+            <div className="w-1/2 bg-[gray]">
+              <div className="relative">
+                <h2 className="text-[red] text-4xl absolute right-0">MarketAssist</h2>
+                
+                  <div className="">Maket</div>
+
+                <Link href="/" className="bg-[white]">MarketAssist</Link>
+                
+
+                     <Image src={"/market.png"} width={400} height={500}/>
+              </div>
+              <div>
+                <h2 className="font-bold text-3xl">MarketAssist</h2>
+                <p className="text-xl">A new look for food stuff accessibility</p>
+                <div className="flex gap-2 wrap">
+                  <div className="bg-[#FF7A00] px-2">VISUAL IDENTITY</div>
+                  <div className="bg-[#134574] text-white px-2">APP DEVELOPMENT</div>
+                  <div className="bg-[#EF2689] text-white px-2">APP DEVELOPMENT</div>
+
+                  
+                </div>
+              </div>
+            </div>
+
+            <div className="w-1/2 bg-[gray]">
+              <div className="relative">
+                <h2 className="text-[red] text-4xl absolute right-0">MarketAssist</h2>
+                
+                  <div className="">Maket</div>
+
+                <Link href="/" className="bg-[white]">MarketAssist</Link>
+                
+
+                     <Image src={"/market.png"} width={400} height={500}/>
+              </div>
+              <div>
+                <h2 className="font-bold text-3xl">MarketAssist</h2>
+                <p className="text-xl">A new look for food stuff accessibility</p>
+                <div className="flex gap-2 wrap">
+                  <div className="bg-[#FF7A00] px-2">VISUAL IDENTITY</div>
+                  <div className="bg-[#134574] text-white px-2">APP DEVELOPMENT</div>
+                  <div className="bg-[#EF2689] text-white px-2">APP DEVELOPMENT</div>
+
+                  
+                </div>
+              </div>
+            </div>
+
+            <div className="w-1/2 bg-[gray]">
+              <div className="relative">
+                <h2 className="text-[red] text-4xl absolute right-0">MarketAssist</h2>
+                
+                  <div className="">Maket</div>
+
+                <Link href="/" className="bg-[white]">MarketAssist</Link>
+                
+
+                     <Image src={"/market.png"} width={400} height={500}/>
+              </div>
+              <div>
+                <h2 className="font-bold text-3xl">MarketAssist</h2>
+                <p className="text-xl">A new look for food stuff accessibility</p>
+                <div className="flex gap-2 wrap">
+                  <div className="bg-[#FF7A00] px-2">VISUAL IDENTITY</div>
+                  <div className="bg-[#134574] text-white px-2">APP DEVELOPMENT</div>
+                  <div className="bg-[#EF2689] text-white px-2">APP DEVELOPMENT</div>
+
+                  
+                </div>
+              </div>
+            </div>
+          </div> */}
+        </div>
         <CTA />
         <Testimony />
     </div>
