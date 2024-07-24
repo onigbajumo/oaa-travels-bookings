@@ -123,7 +123,7 @@ const Hub = () => {
 
             <div className='bg-[#F4F7F8] xl:px-24 md:px-8 px-6 space-y-8 my-24 py-12'>
                 <div className='space-y-4'>
-                    <h1 className='font-medium text-4xl '>Empowering Young Africans with Tomorrow's Skills</h1>
+                    <h1 className='font-medium text-4xl '>Empowering Young Africans with Tomorrow{"'"}s Skills</h1>
                     <p className='leading-[20px] md:pr-48'>Take your first step towards a career in technology with our expert-led courses. From software development and data analysis to cybersecurity and cloud computing, we offer a wide range of tech skills that are in high demand. Learn from the best and start building your future today!</p>
                 </div>
                 <div>
@@ -135,7 +135,7 @@ const Hub = () => {
                 <h1 className='text-center text-4xl font-medium'>Frequently Asked <spand className="text-[#134574]">Questions</spand> </h1>
 
                 <FAQs />
-                
+
 
 
             </div>

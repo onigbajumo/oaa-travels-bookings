@@ -22,7 +22,7 @@ const Privacy = ()=>{
                     <h1 className='font-semibold text-lg'>1. Use of website</h1>
                     <div className='pl-4 space-y-4'>
 
-                    <p>You agree to use our website only for lawful purposes and in a way that does not infringe the rights of, restrict, or inhibit anyone else's use and enjoyment of the website.
+                    <p>You agree to use our website only for lawful purposes and in a way that does not infringe the rights of, restrict, or inhibit anyone else{"'"}s use and enjoyment of the website.
                     </p>
                     <p> You must not use our website to distribute any material which is unlawful, harassing, defamatory, abusive, threatening, harmful, vulgar, obscene, or otherwise objectionable.</p>
                     </div>
