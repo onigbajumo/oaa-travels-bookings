@@ -17,7 +17,7 @@ const FAQ = ()=>{
                 </div>
             </div>
 
-
+            <FAQs />
 
             <div>
 

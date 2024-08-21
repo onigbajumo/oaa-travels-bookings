@@ -3,7 +3,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import CTA from '../../../components/cta';
 import Portfolio from '../../../components/portfolio/portfolio';
-import FAQs from '../../../components/faq'
+import FAQs from '../../../components/faq';
+import Course from '../../../components/courses/course'
+import Testimony from '../../../components/testimonial/testimonials';
 
 const Hub = () => {
     return (
@@ -21,8 +23,8 @@ const Hub = () => {
                         <h1 className='text-[#134574] xl:text-[64px] md:text-[50px] text-4xl xl:leading-[70px] leading-[50px] font-extrabold'>We Provide <span className='text-[#EF2689]'>IT Solutions </span> That Beat Your Imagination</h1>
                         <p className='xl:pr-48 lg:pr-12 text-[#828282]'>We design and build cutting-edge software solutions and deliver excellent IT solutions that beat your imaginations.</p>
                         <div className='flex xl:gap-12 gap-4'>
-                            <Link href={""} className='bg-[#134574] rounded-full text-white lg:text-md text-[14px] px-8 py-4 font-medium'>Get Started</Link>
-                            <Link href={""} className=' rounded-full text-[#134574] lg:text-md border-[#134574] text-[14px] border-2 px-8 py-4 font-medium'>Free IT Consultation</Link>
+                            <Link href={"#"} className='bg-[#134574] rounded-full text-white lg:text-md text-[14px] px-8 py-4 font-medium'>Get Started</Link>
+                            <Link href={"#"} className=' rounded-full text-[#134574] lg:text-md border-[#134574] text-[14px] border-2 px-8 py-4 font-medium'>Free IT Consultation</Link>
                         </div>
                     </div>
                 </div>
@@ -127,15 +129,19 @@ const Hub = () => {
                     <p className='leading-[20px] md:pr-48'>Take your first step towards a career in technology with our expert-led courses. From software development and data analysis to cybersecurity and cloud computing, we offer a wide range of tech skills that are in high demand. Learn from the best and start building your future today!</p>
                 </div>
                 <div>
-                    Courses
+                    <Course />
+                    <div className='text-center pt-12 '>
+                        <Link href={"#"} className='bg-[#134574] text-white rounded-full px-6 py-2'>View all Courses</Link>
+                    </div>
                 </div>
             </div>
+
+            <Testimony />
 
             <div className=' xl:px-24 md:px-8 px-6 space-y-8 my-24 py-12'>
                 <h1 className='text-center text-4xl font-medium'>Frequently Asked <spand className="text-[#134574]">Questions</spand> </h1>
 
                 <FAQs />
-
 
 
             </div>

@@ -22,21 +22,21 @@ const navlist = [
   },
   {
     text: "Services",
-    path: "/services",
+    path: "/#",
   },
   {
     text: "Portfolio",
-    path: "/portfolio",
+    path: "/#",
   },
   
   {
     text: "Upskill program",
-    path: "/upskill-program",
+    path: "/#",
   },
   
   {
     text: "iEnterprise",
-    path: "/ienterprise",
+    path: "/#",
   },
  
   
@@ -98,7 +98,7 @@ const Navigation = () => {
           </div>
           
         </div>
-        <Link href="/menu " className="lg:flex hidden">
+        <Link href="# " className="lg:flex hidden">
             <button className="border border-[#134574] flex items-center gap-2 rounded-full  text-[#134574] font-bold  px-6 py-2 ">
                 Let{`’`}s Talk <Image src='/arrowE.svg' width={20} height={1} />
             </button>

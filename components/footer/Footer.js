@@ -94,21 +94,21 @@ const Footer = () => {
                     <div className='text-white'>  
                     <h2 className='text-[#828282] mb-8'>Learn</h2>
                     <ul className="space-y-4 flex flex-col">
-                        <Link href=''>Learn </Link>
-                        <Link href=''>About </Link>
-                        <Link href=''>Testimonials </Link>
-                        <Link href=''>Processes </Link>
-                        <Link href=''>FAQs</Link>
+                        <Link href='#'>Learn </Link>
+                        <Link href='about'>About </Link>
+                        <Link href='#'>Testimonials </Link>
+                        <Link href='#'>Processes </Link>
+                        <Link href='/faqs'>FAQs</Link>
                     </ul>
                     </div>
                     <div className='text-white'>  
                     <h2 className="text-[#828282] mb-8">Explore</h2>
                     <ul className="space-y-4 flex flex-col">
-                        <Link href=''>Home </Link>
-                        <Link href=''>Work </Link>
-                        <Link href=''>Services </Link>
-                        <Link href=''>iEnterprise </Link>
-                        <Link href=''>Upskill Program</Link>
+                        <Link href='/'>Home </Link>
+                        <Link href='#'>Work </Link>
+                        <Link href='#'>Services </Link>
+                        <Link href='#'>iEnterprise </Link>
+                        <Link href='#'>Upskill Program</Link>
                     </ul>
                     </div>
 

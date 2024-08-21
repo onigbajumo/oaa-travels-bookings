@@ -45,7 +45,7 @@ const CTA = () => {
                     We are all about transforming through digital solutions, no matter what your project or goal is about.
                     </p>
                     <div className="xl:w-[60%]  lg:w-[100%]">
-                         <Link href='/' className='text-[#134574] rounded-full px-4 py-2 bg-white flex justify-between'>
+                         <Link href='#' className='text-[#134574] rounded-full px-4 py-2 bg-white flex justify-between'>
                             
                             <h2>Let{`’`}s Talk </h2>
 

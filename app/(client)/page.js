@@ -4,11 +4,12 @@ import Testimony from '../../components/testimonial/testimonials'
 import CTA from '../../components/CTA/cta'
 import Work from '../../components/workWithUs/work'
 import Link from "next/link"
+import Hub from "./hub/page";
 
 export default function Home() {
   return (
     <div className="">
-     <Hero />
+     {/* <Hero />
         <div className='mx-8'>
             <div className='relative rounded-lg flex justify-around items-center  ' style={{
                 height: "500px",
@@ -85,7 +86,11 @@ export default function Home() {
 
         </div>
         <CTA />
-        <Testimony />
+        <Testimony /> */}
+
+        <Hub />
+
+
     </div>
   );
 }
