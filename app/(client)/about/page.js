@@ -57,7 +57,7 @@ const FAQ = ()=>{
                     <div className='relative px-8 pt-12 pb-8 space-y-2 bg-[#E2E1F147] rounded-md md:w-1/2'>
                         <Image src={"/media.svg"} width={50} height={50} className='absolute -top-5 left-10' />
                         <h1 className='font-semibold text-xl '>Media and Event Center</h1>
-                        <p>Our media arm was established to produce engaging content, while our event centre hosts conferences, workshops, and training sessions. We've successfully organised numerous events, bringing industry experts and enthusiasts together.</p>
+                        <p>Our media arm was established to produce engaging content, while our event centre hosts conferences, workshops, and training sessions. We{"'"}ve successfully organised numerous events, bringing industry experts and enthusiasts together.</p>
 
                     </div>
 
@@ -80,7 +80,7 @@ const FAQ = ()=>{
 
                     <div className='px-8 pb-8 space-y-2  rounded-md md:w-1/2'>
                        <Image src={"/quote.svg"} width={70} height={50}/>
-                        <p>Today, Ehizua Hub stands as a testament to innovation, dedication, and hard work. Our journey has been marked by milestones, achievements, and lessons learned. We've trained over 700 students, executed 10+ IT projects, and hosted 15+ events. Our journey is a testament to dedication, hard work, and the power of vision. We continue to push boundaries, exploring new frontiers in tech, education, and creative expression. Join us in our journey and shape the future together!</p>
+                        <p>Today, Ehizua Hub stands as a testament to innovation, dedication, and hard work. Our journey has been marked by milestones, achievements, and lessons learned. We{"'"}ve trained over 700 students, executed 10+ IT projects, and hosted 15+ events. Our journey is a testament to dedication, hard work, and the power of vision. We continue to push boundaries, exploring new frontiers in tech, education, and creative expression. Join us in our journey and shape the future together!</p>
                         <div className='text-right float-right space-y-4'>
                         <p>    CFO,Matthew Ehizua</p>
                         <Image src={"/quote.svg"} width={70} height={50} className='float-right'/>
