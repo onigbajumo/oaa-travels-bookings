@@ -91,10 +91,11 @@ const Navigation = () => {
             
           </ul>
 
-          <div onClick={() => setShowNav(!showNav)} className="lg:hidden">
-            {/* <MenuIcon  /> */}
-            <HiOutlineMenuAlt3 className="text-[40px]" />
+          <div className='lg:hidden '>
 
+            <Link className="text-xl font-semibold  " href="/">
+            <Image src="/logo.png" width={150} height={25}/>
+            </Link>
           </div>
           
         </div>
@@ -103,12 +104,12 @@ const Navigation = () => {
                 Let{`’`}s Talk <Image src='/arrowE.svg' width={20} height={1} />
             </button>
         </Link>
-        <div className='lg:hidden '>
+      
+        <div onClick={() => setShowNav(!showNav)} className="lg:hidden">
+            {/* <MenuIcon  /> */}
+            <HiOutlineMenuAlt3 className="text-[40px]" />
 
-                <Link className="text-xl font-semibold  " href="/">
-                 <Image src="/logo.png" width={150} height={25}/>
-                </Link>
-        </div>
+          </div>
 
 
       </div>
@@ -156,7 +157,7 @@ const Navigation = () => {
                     </li>
                   </Link>
                 ))}
-                <Link href="/menu">
+                <Link href="/">
                   <button
                     className="bg-white flex items-center gap-2 rounded-full text-[#134574] font-bold px-8 py-2"
                     onClick={() => setShowNav(false)}

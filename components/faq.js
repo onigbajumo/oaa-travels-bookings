@@ -58,7 +58,7 @@ const FAQs = ({ limit }) => {
             onClick={() => handleToggle(index)}
             className="w-full p-4 bg-[#F2F2F2] rounded-lg flex justify-between items-center"
           >
-            <span className="text-md">{item.title}</span>
+            <span className="text-md text-left">{item.title}</span>
             <span className='text-xl border bg-[#134574] text-white rounded-full px-[9px]'>{activeIndex === index ? '-' : '+'}</span>
           </button>
           {activeIndex === index && (
