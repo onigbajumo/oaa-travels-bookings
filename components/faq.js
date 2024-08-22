@@ -10,20 +10,40 @@ const FAQs = () => {
 
   const data = [
     {
-      title: "What is the process for your IT consulting services?",
-      content: "What is the process for your IT consulting services?What is the process for your IT consulting services?What is the process for your IT consulting services?What is the process for your IT consulting services?"
+      title: "What is your development process like?",
+      content: " Our workflow is outlined in 6 simple steps, you can read more here ....."
     },
     {
-      title: "What is the process for your IT consulting services?",
-      content: "What is the process for your IT consulting services?What is the process for your IT consulting services?What is the process for your IT consulting services?"
+      title: "Do you offer ongoing maintenance and support?",
+      content: "Yes we offer ongoing maintenance and support after project completion to our clients."
     },
     {
-      title: "What is the process for your IT consulting services?",
-      content: "What is the process for your IT consulting services?What is the process for your IT consulting services?What is the process for your IT consulting services?"
+      title: "How much does your service cost? ",
+      content: "Our rates for services are priced based on your service inquiry, let’s chat and you’ll get a quote emailed to you. "
     },
     {
-        title: "What is the process for your IT consulting services?",
-        content: "What is the process for your IT consulting services?What is the process for your IT consulting services?What is the process for your IT consulting services?"
+        title: "What kind of projects do you take on?",
+        content: "We are sector agnostic when we work on projects, our priority is ensuring your problem are solved with our digital skills"
+      },
+      {
+        title: "What information do you need from me to get started? ",
+        content: " That’s easy, we just need a brief about your project containing everything you need and we can schedule a discovery call to initiate the project."
+      },
+      {
+        title: "How will I be involved in the development process?",
+        content: "We ensure to keep our clients and stakeholders involved in the design and development phases of the project to maintain smooth communication and understanding between both parties."
+      },
+      {
+        title: "How will I know the project is on track?",
+        content: "That’s easy, we make use of project management software's to improve our operational efficiency and keep you updated as well."
+      },
+      {
+        title: "What happens if I need to make changes during development? ",
+        content: " Not a problem, we can be flexible however it would come at an extra cost if the changes are outside the scope of the project."
+      },
+      {
+        title: "Do you offer custom software development?",
+        content: "Yes. We design, build, and deploy bespoke software applications tailored to your unique needs"
       }
   ];
 
