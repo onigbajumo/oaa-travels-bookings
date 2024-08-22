@@ -51,7 +51,7 @@ const Hub = () => {
                     </div>
 
                     <div className='space-y-4 w-1/2'>
-                        <Image src={'/service.png'} width={300} height={300} />
+                        <Image src={'/upskill.png'} width={300} height={300} />
                         <h1 className='font-medium lg:text-4xl text-2xl'>Upskill</h1>
                         <p className='text-[#828282]'>Offering training and upskilling programs for individuals and professionals to enhance their skills and knowledge.</p>
                         <div>
@@ -63,7 +63,7 @@ const Hub = () => {
                     <div className='flex gap-8'>
 
                     <div className='space-y-4 w-1/2'>
-                        <Image src={'/service.png'} width={300} height={300} />
+                        <Image src={'/enterprise.png'} width={300} height={300} />
                         <h1 className='font-medium lg:text-4xl text-2xl '>iEnterprise</h1>
                         <p className='text-[#828282]'>Delivering top-notch event management, printing, and media services to support businesses and events.</p>
                         <div>
@@ -72,7 +72,7 @@ const Hub = () => {
                     </div>
 
                     <div className='space-y-4 w-1/2'>
-                        <Image src={'/service.png'} width={300} height={300} />
+                        <Image src={'/creative.png'} width={300} height={300} />
                         <h1 className='font-medium lg:text-4xl text-2xl '>Creative Tech Programs</h1>
                         <p className='text-[#828282]'>Inspiring and educating children in creative technology and STEM fields.</p>
                         <div>
@@ -141,7 +141,7 @@ const Hub = () => {
             <div className=' xl:px-24 md:px-8 px-6 space-y-8 my-24 py-12'>
                 <h1 className='text-center text-4xl font-medium'>Frequently Asked <spand className="text-[#134574]">Questions</spand> </h1>
 
-                <FAQs />
+                <FAQs limit={4} />
 
 
             </div>

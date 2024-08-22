@@ -18,13 +18,7 @@ const CTA = () => {
   <div className="relative float-right">
     <Image src={"/homecta.png"} alt="CTA Image" width={500} height={500} className="float-right" />
   </div>
-  {/* <div className='  ' style={{
-                height: "500px",
-                backgroundImage: `url(/homecta.png)`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}>
-            </div> */}
+  
 </div>
 
         </div>
