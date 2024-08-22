@@ -7,25 +7,25 @@ import Link from 'next/link';
 
 const testimony = [
   {
-    name: 'Adam Lalana',
+    name: '- Vice Principal, Living Spring School',
     message:
-      'Our experience with Ehizua Hub has been nothing short of exceptional. They took our digital presence to the next level with their innovative strategies and attention to detail. From website design to social media management, they have exceeded our expectations at every step. Highly recommended! - Sarah W., CEO',
+      'Our experience with Ehizua Hub has been nothing short of exceptional. They took our digital presence to the next level with their innovative strategies and attention to detail. From website design to social media management, they have exceeded our expectations at every step. Highly recommended! ',
     img: '/tes.png',
   },
   {
-    name: 'John Doe',
-    message:
-      'Our experience with Ehizua Hub has been nothing short of exceptional. They took our digital presence to the next level with their innovative strategies and attention to detail. From website design to social media management, they have exceeded our expectations at every step. Highly recommended!',
-    img: '/tes.png',
-  },
-  {
-    name: 'Benjamine Ehidoa',
+    name: '- David, Sales Manager, Vine Foods',
     message:
       'Our experience with Ehizua Hub has been nothing short of exceptional. They took our digital presence to the next level with their innovative strategies and attention to detail. From website design to social media management, they have exceeded our expectations at every step. Highly recommended!',
     img: '/tes.png',
   },
   {
-    name: 'Luke shaw',
+    name: '- Kemi, Data Science Student, Ehizua Hub',
+    message:
+      'Our experience with Ehizua Hub has been nothing short of exceptional. They took our digital presence to the next level with their innovative strategies and attention to detail. From website design to social media management, they have exceeded our expectations at every step. Highly recommended!',
+    img: '/tes.png',
+  },
+  {
+    name: '- Chioma, Unicorn Family Enterprise',
     message:
       'Our experience with Ehizua Hub has been nothing short of exceptional. They took our digital presence to the next level with their innovative strategies and attention to detail. From website design to social media management, they have exceeded our expectations at every step. Highly recommended!',
     img: '/tes.png',
