@@ -26,10 +26,44 @@ const Footer = () => {
                     <div className="flex">
 
                      <div className="bg-white space-y-4 pr-6 pb-4 z-[10]  rounded-br-[20px]">
+                        <div>
+
+                        <Link href={"https://www.instagram.com/ehizuahub"}>
+
                         <Image src="/social1.svg"  width={30} height={30}/>
-                        <Image src="/social2.svg"  width={30} height={30}/>
+                        </Link>
+                        </div>
+
+                        <div>
+                        <Link href={"https://www.facebook.com/ehizuahub"}>
+
+                            <Image src="/social2.svg"  width={30} height={30}/>
+                        </Link>
+                            
+                        </div>
+
+                        <div>
+                            
+                        <Link href={"https://www.x.com/Ehizua_hub"}>
+
                         <Image src="/social3.svg"  width={30} height={30}/>
+                        </Link>
+                        </div>
+
+                        <div>
+                        <Link href={"https://www.linkedin.com/company/ehizua-hub"}>
+
                         <Image src="/social4.svg"  width={30} height={30}/>
+                        </Link>
+                            
+                        </div>
+                        
+
+                      
+
+                       
+                        
+                        
                      </div>
                      
 
