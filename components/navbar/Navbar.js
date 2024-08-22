@@ -94,7 +94,7 @@ const Navigation = () => {
           <div className='lg:hidden '>
 
             <Link className="text-xl font-semibold  " href="/">
-            <Image src="/logo.png" width={150} height={25}/>
+            <Image src="/logo.png" width={200} height={200}/>
             </Link>
           </div>
           
