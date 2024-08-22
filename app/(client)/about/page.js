@@ -9,8 +9,8 @@ const FAQ = ()=>{
         <div className=''>
 
             <div className='bg-[#F3F6F8] flex flex-col md:flex-row justify-between  mt-[-9px] mb-24 pt-24 pb-4'>
-                <div className='pl-16'>
-                    <h1 className='font-semibold text-[80px]'>Who we Are</h1>
+                <div className='md:pl-16 px-6'>
+                    <h1 className='font-semibold md:text-[80px] text-[50px]'>Who we Are</h1>
                     <p className='italic font-thin text-lg max-w-lg'>We continue to push boundaries, exploring new frontiers in tech, education, and creative expression.</p>
                 </div>
                 <div>
@@ -18,7 +18,7 @@ const FAQ = ()=>{
                 </div>
             </div>
 
-            <div className='flex gap-12 px-16 py-24  justify-between items-center flex-col md:flex-row text-[20px]'>
+            <div className='flex gap-12 md:px-16 px-6 py-24  justify-between items-center flex-col md:flex-row text-[20px]'>
                 <div className='md:w-1/2 '>
                     <p className='mb-6'>
                     Ehizua Hub was born out of a vision to revolutionise the tech industry, education, and creative expression. Our humble beginnings date back to July 1st, 2021, when our founders dared to dream big and Implement the <span className='text-[#134574] font-semibold'>EHIZUA Way</span> .<br />
@@ -34,7 +34,7 @@ const FAQ = ()=>{
                 </div>
             </div>
 
-            <div className='px-16 space-y-20'>
+            <div className='md:px-16 px-6 space-y-20'>
                 <div className='flex gap-16 flex-col md:flex-row'>
 
                         <div className='relative px-8 pt-12 pb-8 space-y-2 bg-[#E2E1F147] rounded-md md:w-1/2'>
@@ -80,7 +80,7 @@ const FAQ = ()=>{
 
                     <div className='px-8 pb-8 space-y-2  rounded-md md:w-1/2'>
                        <Image src={"/quote.svg"} width={70} height={50}/>
-                        <p>Today, Ehizua Hub stands as a testament to innovation, dedication, and hard work. Our journey has been marked by milestones, achievements, and lessons learned. We{"'"}ve trained over 700 students, executed 10+ IT projects, and hosted 15+ events. Our journey is a testament to dedication, hard work, and the power of vision. We continue to push boundaries, exploring new frontiers in tech, education, and creative expression. Join us in our journey and shape the future together!</p>
+                        <p className='text-justify'>Today, Ehizua Hub stands as a testament to innovation, dedication, and hard work. Our journey has been marked by milestones, achievements, and lessons learned. We{"'"}ve trained over 700 students, executed 10+ IT projects, and hosted 15+ events. Our journey is a testament to dedication, hard work, and the power of vision. We continue to push boundaries, exploring new frontiers in tech, education, and creative expression. Join us in our journey and shape the future together!</p>
                         <div className='text-right float-right space-y-4'>
                         <p>    CFO,Matthew Ehizua</p>
                         <Image src={"/quote.svg"} width={70} height={50} className='float-right'/>
