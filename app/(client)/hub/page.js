@@ -23,8 +23,8 @@ const Hub = () => {
                         <h1 className='text-[#134574] xl:text-[64px] md:text-[50px] text-4xl xl:leading-[70px] leading-[50px] font-extrabold'>We Provide <span className='text-[#EF2689]'>IT Solutions </span> That Beat Your Imagination</h1>
                         <p className='xl:pr-48 lg:pr-12 text-[#828282]'>We design and build cutting-edge software solutions and deliver excellent IT solutions that beat your imaginations.</p>
                         <div className='flex xl:gap-12 gap-4'>
-                            <Link href={"#"} className='bg-[#134574] rounded-full text-white lg:text-md text-[14px] px-8 py-4 font-medium'>Get Started</Link>
-                            <Link href={"#"} className=' rounded-full text-[#134574] lg:text-md border-[#134574] text-[14px] border-2 px-8 py-4 font-medium'>Free IT Consultation</Link>
+                            <Link href={"#"} className='bg-[#134574] rounded-full text-white lg:text-md text-[12px] px-8 py-4 font-medium'>Get Started</Link>
+                            <Link href={"#"} className=' rounded-full text-[#134574] lg:text-md border-[#134574] text-[12px] border-2 px-8 py-4 font-medium'>Free IT Consultation</Link>
                         </div>
                     </div>
                 </div>
@@ -39,10 +39,10 @@ const Hub = () => {
                 <h1 className='text-[#134574] font-extrabold md:text-[50px] text-4xl'>Our Services</h1>
                 <div className='flex gap-8 flex-col md:flex-row'>
 
-                    <div className='flex gap-8'>
+                    <div className='flex flex-col md:flex-row gap-8'>
 
-                    <div className='space-y-4 w-1/2'>
-                        <Image src={'/service.png'} width={300} height={300} />
+                    <div className='space-y-4 md:w-1/2'>
+                        <Image src={'/service.png'} width={400} height={400} />
                         <h1 className='font-medium lg:text-4xl text-2xl '>IT Solution</h1>
                         <p className='text-[#828282]'>Providing cutting-edge IT solutions and services to businesses and organisations.</p>
                         <div className='pt-6'>
@@ -50,8 +50,8 @@ const Hub = () => {
                         </div>
                     </div>
 
-                    <div className='space-y-4 w-1/2'>
-                        <Image src={'/upskill.png'} width={300} height={300} />
+                    <div className='space-y-4 md:w-1/2'>
+                        <Image src={'/upskill.png'} width={400} height={400} />
                         <h1 className='font-medium lg:text-4xl text-2xl'>Upskill</h1>
                         <p className='text-[#828282]'>Offering training and upskilling programs for individuals and professionals to enhance their skills and knowledge.</p>
                         <div>
@@ -60,10 +60,10 @@ const Hub = () => {
                     </div>
                     </div>
 
-                    <div className='flex gap-8'>
+                    <div className='flex flex-col md:flex-row gap-8'>
 
-                    <div className='space-y-4 w-1/2'>
-                        <Image src={'/enterprise.png'} width={300} height={300} />
+                    <div className='space-y-4 md:w-1/2'>
+                        <Image src={'/enterprise.png'} width={400} height={400} />
                         <h1 className='font-medium lg:text-4xl text-2xl '>iEnterprise</h1>
                         <p className='text-[#828282]'>Delivering top-notch event management, printing, and media services to support businesses and events.</p>
                         <div>
@@ -71,8 +71,8 @@ const Hub = () => {
                         </div>
                     </div>
 
-                    <div className='space-y-4 w-1/2'>
-                        <Image src={'/creative.png'} width={300} height={300} />
+                    <div className='space-y-4 md:w-1/2'>
+                        <Image src={'/creative.png'} width={400} height={400} />
                         <h1 className='font-medium lg:text-4xl text-2xl '>Creative Tech Programs</h1>
                         <p className='text-[#828282]'>Inspiring and educating children in creative technology and STEM fields.</p>
                         <div>
@@ -102,7 +102,7 @@ const Hub = () => {
             </div>
             </div>
 
-            <div className='flex flex-col lg:flex-row justify-between gap-24 bg-[#134574] rounded-xl md:mx-24 mx-4 px-16 py-12'>
+            <div className='flex flex-col lg:flex-row justify-between gap-24 bg-[#134574] rounded-xl md:mx-24 mx-4 px-8 py-12'>
                 <div className='text-white space-y-8 lg:w-2/3'>
                     <h1 className='font-extrabold md:text-4xl text-2xl'>About Us</h1>
                     <p>
