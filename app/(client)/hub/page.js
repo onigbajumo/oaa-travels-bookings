@@ -119,7 +119,7 @@ const Hub = () => {
                 </div>
                 <div className='flex flex-col justify-center items-center gap-6'>
                     <Image src={"/matthy.png"} width={500} height={450} />
-                    <h1 className='text-white text-2xl font-medium '>CFO, Matthew Ehizua</h1>
+                    <h1 className='text-white text-2xl font-medium '>CEO, Matthias Ehizua</h1>
                 </div>
             </div>
 
