@@ -3,13 +3,9 @@
 import React, {useState} from 'react';
 import Link from 'next/link';
 import Image from "next/image";
-import { useRouter } from 'next/navigation';
-import { BsCart3 } from "react-icons/bs";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { usePathname } from "next/navigation";
 import { TfiClose } from "react-icons/tfi";
-import { CiSearch } from "react-icons/ci";
-
 
 const navlist = [
   {

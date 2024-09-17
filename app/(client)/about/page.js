@@ -82,7 +82,7 @@ const FAQ = ()=>{
                        <Image src={"/quote.svg"} width={70} height={50}/>
                         <p className='text-justify'>Today, Ehizua Hub stands as a testament to innovation, dedication, and hard work. Our journey has been marked by milestones, achievements, and lessons learned. We{"'"}ve trained over 700 students, executed 10+ IT projects, and hosted 15+ events. Our journey is a testament to dedication, hard work, and the power of vision. We continue to push boundaries, exploring new frontiers in tech, education, and creative expression. Join us in our journey and shape the future together!</p>
                         <div className='text-right float-right space-y-4'>
-                        <p>    CFO,Matthew Ehizua</p>
+                        <p>    CEO, Matthias Ehizua</p>
                         <Image src={"/quote.svg"} width={70} height={50} className='float-right'/>
                         </div>
 
