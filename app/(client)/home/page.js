@@ -3,6 +3,36 @@ import Link from "next/link";
 import Image from "next/image";
 import Tag from "../../../components/tag/Tag";
 
+const offer = [
+  {
+    title: "IT Solution",
+    icon: "/icons/web.svg",
+    image: "/images/service-1.jpg",
+    desc: "Providing cutting-edge IT solutions and services to businesses and organisations.",
+    path: "#",
+  },
+  {
+    title: "Creative Tech Programs",
+    icon: "/icons/web.svg",
+    image: "/images/service-2.jpg",
+    desc: "Inspiring and educating children in creative technology and STEM fields.",
+    path: "#",
+  },
+  {
+    title: "Upskill",
+    icon: "/icons/web.svg",
+    image: "/images/service-3.jpg",
+    desc: "Offering training and upskilling programs for individuals and professionals to enhance their skills and knowledge.",
+    path: "#",
+  },
+  {
+    title: "iEnterprise",
+    icon: "/icons/web.svg",
+    image: "/images/service-1.jpg",
+    desc: "Delivering top-notch event management, printing, and media services to support businesses and events.",
+    path: "#",
+  },
+];
 
 const Home = () => {
   return (
@@ -111,8 +141,34 @@ const Home = () => {
         </p>
 
         <div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            {offer.map((item, index) => (
+              <div
+                key={index}
+                style={{ backgroundImage: "url('/images/service-1.jpg')" }}
+                className="bg-cover bg-center p-4 rounded-xl flex flex-col items-center w-full aspect-[3/2] relative group  transition-all ease-in-out duration-700"
+              >
+                <div className="absolute bottom-0 left-0 bg-main/80 group-hover:bg-main group-hover:h-full rounded-xl p-4 w-full group-hover:flex flex-col justify-between transition-all ease-in-out duration-700">
+                  <div className="space-y-3">
+                    <Image src={item.icon} width={50} height={50} />
+                    <h3 className="text-white">{item.title}</h3>
+                  </div>
+
+                  <p className="hidden group-hover:block text-white transition-all ease-in-out duration-700">
+                    {item.desc}
+                  </p>
+
+                  <div className="hidden group-hover:flex transition-all ease-in-out duration-700">
+                    <Link
+                      href={item.path}
+                      className=" rounded-full text-white text-center border-white text-base border-2 px-4 py-2 font-medium"
+                    >
+                      View More
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
