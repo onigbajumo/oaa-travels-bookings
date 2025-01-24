@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Tag from "../../../components/tag/Tag";
+import { FaArrowRight } from "react-icons/fa";
 
 const offer = [
   {
@@ -13,7 +14,7 @@ const offer = [
   },
   {
     title: "Creative Tech Programs",
-    icon: "/icons/web.svg",
+    icon: "/icons/creative.svg",
     image: "/images/service-2.jpg",
     desc: "Inspiring and educating children in creative technology and STEM fields.",
     path: "#",
@@ -27,12 +28,27 @@ const offer = [
   },
   {
     title: "iEnterprise",
-    icon: "/icons/web.svg",
-    image: "/images/service-1.jpg",
+    icon: "/icons/enterprise.svg",
+    image: "/images/service-4.jpg",
     desc: "Delivering top-notch event management, printing, and media services to support businesses and events.",
     path: "#",
   },
 ];
+
+const benefits = [
+    {
+        title: "Comprehensive Training",
+        desc: "Our IT Training Courses are designed to meet industry demands, ensuring learners are job ready"
+    },
+    {
+        title: "Business Centric Services",
+        desc: "From web development to branding, we support business in reaching their goals"
+    },
+    {
+        title: "Future Focused Learning",
+        desc: "Our Creative Tech School Program empowers students with essential tech skills from an early age"
+    },
+]
 
 const Home = () => {
   return (
@@ -145,7 +161,7 @@ const Home = () => {
             {offer.map((item, index) => (
               <div
                 key={index}
-                style={{ backgroundImage: "url('/images/service-1.jpg')" }}
+                style={{ backgroundImage: `url(${item.image})` }}
                 className="bg-cover bg-center p-4 rounded-xl flex flex-col items-center w-full aspect-[3/2] relative group  transition-all ease-in-out duration-700"
               >
                 <div className="absolute bottom-0 left-0 bg-main/80 group-hover:bg-main group-hover:h-full rounded-xl p-4 w-full group-hover:flex flex-col justify-between transition-all ease-in-out duration-700">
@@ -169,6 +185,70 @@ const Home = () => {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="container space-y-5 py-12">
+        <Tag text="Why Ehizua Hub" />
+
+        <div className="grid md:grid-cols-7 gap-8">
+          <div className="md:col-span-3 space-y-5">
+            <h2 className="text-main">
+              Driving innovation, excellence, and growth
+            </h2>
+
+            <p>
+              At EhizuaHub, we don't just train minds, we shape futures. Explore
+              our offerings and you experience the transformation for yourself
+            </p>
+
+            <div className="space-y-5">
+                <h3 className="font-bold text-main">
+                    Key Features
+                </h3>
+
+                <div className="space-y-4">
+                {benefits.map((item, index) => (
+                    <div key={index} className="flex items-start gap-3">
+                        <div className="bg-secondary/20 p-2 rounded-md text-secondary">
+                            <FaArrowRight />
+                        </div>
+
+                        <div>
+                            <h4>
+                            {item.title}
+                            </h4>
+
+
+                            <p className="text-sm">
+                                {item.desc}
+                            </p>
+                        </div>
+                    </div>
+                ))}
+                </div>
+
+                <div className="flex">
+                    
+                <Link
+                  href={"#"}
+                  className="bg-main rounded-full text-white text-center text-base px-5 py-2 border-2 border-transparent font-medium"
+                >
+                  View all programs
+                </Link>
+                </div>
+            </div>
+          </div>
+
+          <div className="md:col-span-4 hidden md:grid  md:grid-cols-2 gap-5">
+            <Image src="/images/person-1b.jpg" width={1000} height={1000} className="w-full object-cover h-full rounded-tl-full" />
+            <Image src="/images/person-2.jpg" width={1000} height={1000} className="w-full object-cover h-full rounded-br-full" />
+          </div>
+
+          <div className="md:col-span-4 hidde grid md:hidden gap-5">
+            <Image src="/images/person-1.jpg" width={1000} height={1000} className="w-full object-cover h-full rounded-tl-full" />
+            <Image src="/images/person-2b.jpg" width={1000} height={1000} className="w-full object-cover h-full rounded-br-full" />
           </div>
         </div>
       </section>
