@@ -1,40 +1,123 @@
-import React from 'react';
-import "../globals.css";
-import Design from '../../../components/service/design'
-import Portfolio from '../../../components/portfolio/port'
-import Hero from '../../../components/hero/Hero'
-import ClientLogo from '../../../components/clientLogo/client'
-import DigitalProduct from '../../../components/digital/product'
-import Contact from '../../../components/contact/contact'
-import Testimony from '../../../components/testimonial/testimonials'
+import React from "react";
+import Link from "next/link";
+import Image from "next/image";
+import Tag from "../../../components/tag/Tag";
 
 
 const Home = () => {
-
-    return(
-        <>
-        <Hero />
-        <div className='mx-8'>
-            <div className='relative rounded-lg flex justify-around items-center  ' style={{
-                height: "500px",
-                backgroundImage: `url(/videoDummy.png)`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}>
+  return (
+    <>
+      <section className="bg-[url('/images/background.png')] bg-no-repeat bg-cover">
+        <div className="container flex md:flex-row flex-col gap-12 ">
+          <div className="space-y-6 flex flex-col justify-center md:w-2/3 py-20 md:py-0">
+            <div className="flex gap-2">
+              <p className="text-main font-semibold flex sm:items-center text-sm sm:text-md  lg:text-lg flex-col sm:flex-row gap-3">
+                Imagine, Create, Innovate
+                <span>
+                  <span className="text-sm text-black">|</span>
+                  <span className="text-secondary font-semibold bg-white p-2 rounded-tr-full rounded-br-full">
+                    The Ehizua Way
+                  </span>
+                </span>
+              </p>
             </div>
+            <div className="space-y-8 ">
+              <h1 className="text-main">
+                We Provide <span className="text-secondary">IT Solutions </span>{" "}
+                That Beat Your Imagination
+              </h1>
+              <p className="xl:pr-48 lg:pr-12">
+                We design and build cutting-edge software solutions and deliver
+                excellent IT solutions that beat your imaginations.
+              </p>
+              <div className="flex flex-col md:flex-row gap-4">
+                <Link
+                  href={"#"}
+                  className="bg-main rounded-full text-white text-center text-base px-5 py-3 border-2 border-transparent font-medium"
+                >
+                  Get Started
+                </Link>
+                <Link
+                  href={"#"}
+                  className=" rounded-full text-main text-center border-main text-base border-2 px-5 py-3 font-medium"
+                >
+                  Free IT Consultation
+                </Link>
+              </div>
+            </div>
+          </div>
 
+          <div className="hidden md:block pt-10 lg:pt-0">
+            <Image src={"/homescreen.png"} width={600} height={400} />
+          </div>
         </div>
+      </section>
 
-        <ClientLogo />
-        <Design />
+      <section className="container flex justify-center gap-12 py-12">
+        <div className="flex flex-col md:flex-row w-full gap-10 lg:w-[90%]">
+          <div className="md:w-1/3 flex justify-center relative">
+            <Image
+              src={"/images/ceo.png"}
+              width={1000}
+              height={1000}
+              className="w-[80%] md:w-full"
+            />
 
-        <Portfolio />
-        <DigitalProduct />
-        <Testimony />
-        <Contact />
-        
-        </>
-    )
-}
+            <div className="absolute bottom-4 left-0 text-white p-2 w-full font-semibold text-center">
+              {" "}
+              CFO, Matthew Ehizua
+            </div>
+          </div>
+
+          <div className="md:w-2/3 flex flex-col justify-center space-y-5">
+            <Tag text="About Ehizua Hub" />
+            <h2 className="text-main">Empowering Growth Through Technology</h2>
+            <p>
+              Ehizua Hub was born out of a vision to revolutionize the tech
+              industry, education, and creative expression. Our humble
+              beginnings date back to July 1st, 2021, when our founders dared to
+              dream big and Implement the EHIZUA Way. <br />
+              <br />
+              Over the past few years, we have grown exponentially, diversifying
+              our services and expanding our reach.
+              <br />
+              <br />
+              We started as an IT company, providing cutting-edge top-notch
+              solutions to businesses and individuals. Our expertise in software
+              development, networking, and cybersecurity helped us build a loyal
+              client base.
+            </p>
+            <div className="flex">
+              <Link
+                href={"#"}
+                className="bg-main rounded-full text-white text-center text-base px-7 py-3 font-medium"
+              >
+                Learn More
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="container space-y-5 py-12">
+        <Tag text="Our Services" />
+        <h2 className="text-main">What We Offer</h2>
+        <p>
+          EhizuaHub is your gateway to a diverse array of innovative services
+          designed to empower individuals and businesses in the digital age. Our
+          offerings are meticulously crafted to meet the evolving demands of the
+          tech industry and to foster creativity, skill development, and
+          business growth.
+        </p>
+
+        <div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            
+          </div>
+        </div>
+      </section>
+    </>
+  );
+};
 
 export default Home;
