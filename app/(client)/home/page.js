@@ -2,7 +2,11 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Tag from "../../../components/tag/Tag";
-import { FaArrowRight } from "react-icons/fa";
+import { FaArrowRight, FaStar } from "react-icons/fa";
+import Portfolio from "../../../components/portfolio/portfolio";
+// import CTA from "../../../components/cta";
+import CTA from "../../../components/CTA/cta";
+import Testimony from "../../../components/testimonial/testimonials";
 
 const offer = [
   {
@@ -36,23 +40,58 @@ const offer = [
 ];
 
 const benefits = [
-    {
-        title: "Comprehensive Training",
-        desc: "Our IT Training Courses are designed to meet industry demands, ensuring learners are job ready"
-    },
-    {
-        title: "Business Centric Services",
-        desc: "From web development to branding, we support business in reaching their goals"
-    },
-    {
-        title: "Future Focused Learning",
-        desc: "Our Creative Tech School Program empowers students with essential tech skills from an early age"
-    },
-]
+  {
+    title: "Comprehensive Training",
+    desc: "Our IT Training Courses are designed to meet industry demands, ensuring learners are job ready",
+  },
+  {
+    title: "Business Centric Services",
+    desc: "From web development to branding, we support business in reaching their goals",
+  },
+  {
+    title: "Future Focused Learning",
+    desc: "Our Creative Tech School Program empowers students with essential tech skills from an early age",
+  },
+];
+
+const skill = [
+  {
+    title: "Full Stack Development",
+    category: "development",
+    desc: "Master front-end and back-end technologies to build dynamic, responsive websites and applications",
+    duration: "6 months",
+    rating: "4.5",
+    path: "#",
+    image: "https://placehold.co/500.png",
+    tag: "most popular",
+  },
+  {
+    title: "Full Stack Development",
+    category: "development",
+    desc: "Master front-end and back-end technologies to build dynamic, responsive websites and applications",
+    duration: "6 months",
+    rating: "4.5",
+    path: "#",
+    image: "https://placehold.co/500.png",
+  },
+  {
+    title: "Full Stack Development",
+    category: "development",
+    desc: "Master front-end and back-end technologies to build dynamic, responsive websites and applications",
+    duration: "6 months",
+    rating: "4.5",
+    path: "#",
+    image: "https://placehold.co/500.png",
+    tag: "most popular",
+  },
+];
 
 const Home = () => {
   return (
-    <>
+    <div className="relative">
+      <div className="absolute top-0 right-0 z-[-1]">
+        <Image src={"/images/home-bg.svg"} width={500} height={500} />
+      </div>
       <section className="bg-[url('/images/background.png')] bg-no-repeat bg-cover">
         <div className="container flex md:flex-row flex-col gap-12 ">
           <div className="space-y-6 flex flex-col justify-center md:w-2/3 py-20 md:py-0">
@@ -192,8 +231,8 @@ const Home = () => {
       <section className="container space-y-5 py-12">
         <Tag text="Why Ehizua Hub" />
 
-        <div className="grid md:grid-cols-7 gap-8">
-          <div className="md:col-span-3 space-y-5">
+        <div className="grid md:grid-cols-2 gap-8">
+          <div className="space-y-5">
             <h2 className="text-main">
               Driving innovation, excellence, and growth
             </h2>
@@ -204,55 +243,147 @@ const Home = () => {
             </p>
 
             <div className="space-y-5">
-                <h3 className="font-bold text-main">
-                    Key Features
-                </h3>
+              <h3 className="font-bold text-main">Key Features</h3>
 
-                <div className="space-y-4">
+              <div className="space-y-4">
                 {benefits.map((item, index) => (
-                    <div key={index} className="flex items-start gap-3">
-                        <div className="bg-secondary/20 p-2 rounded-md text-secondary">
-                            <FaArrowRight />
-                        </div>
-
-                        <div>
-                            <h4>
-                            {item.title}
-                            </h4>
-
-
-                            <p className="text-sm">
-                                {item.desc}
-                            </p>
-                        </div>
+                  <div key={index} className="flex items-start gap-3">
+                    <div className="bg-secondary/20 p-2 rounded-md text-secondary">
+                      <FaArrowRight />
                     </div>
-                ))}
-                </div>
 
-                <div className="flex">
-                    
+                    <div>
+                      <h4>{item.title}</h4>
+
+                      <p className="text-sm w-full lg:w-[80%]">{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex">
                 <Link
                   href={"#"}
                   className="bg-main rounded-full text-white text-center text-base px-5 py-2 border-2 border-transparent font-medium"
                 >
                   View all programs
                 </Link>
-                </div>
+              </div>
             </div>
           </div>
 
-          <div className="md:col-span-4 hidden md:grid  md:grid-cols-2 gap-5">
-            <Image src="/images/person-1b.jpg" width={1000} height={1000} className="w-full object-cover h-full rounded-tl-full" />
-            <Image src="/images/person-2.jpg" width={1000} height={1000} className="w-full object-cover h-full rounded-br-full" />
+          <div className="hidden md:grid  md:grid-cols-2 gap-5">
+            <Image
+              src="/images/person-1b.jpg"
+              width={1000}
+              height={1000}
+              className="w-full object-cover h-full rounded-tl-full"
+            />
+            <Image
+              src="/images/person-2.jpg"
+              width={1000}
+              height={1000}
+              className="w-full object-cover h-full rounded-br-full"
+            />
           </div>
 
-          <div className="md:col-span-4 hidde grid md:hidden gap-5">
-            <Image src="/images/person-1.jpg" width={1000} height={1000} className="w-full object-cover h-full rounded-tl-full" />
-            <Image src="/images/person-2b.jpg" width={1000} height={1000} className="w-full object-cover h-full rounded-br-full" />
+          <div className="hidde grid md:hidden gap-5">
+            <Image
+              src="/images/person-1.jpg"
+              width={1000}
+              height={1000}
+              className="w-full object-cover h-full rounded-tl-full"
+            />
+            <Image
+              src="/images/person-2b.jpg"
+              width={1000}
+              height={1000}
+              className="w-full object-cover h-full rounded-br-full"
+            />
           </div>
         </div>
       </section>
-    </>
+
+      <section className="py-12 bg-[#F4F7F8]">
+        <div className="space-y-5 container">
+          <Tag text="Training Program" />
+          <h2 className="text-main">Upskill for Success</h2>
+          <p>
+            Take your first step towards a career in technology with our
+            expert-led courses. From software development and data analysis to
+            cybersecurity and cloud computing, we offer a wide range of tech
+            skills that are in high demand. Learn from the best and start
+            building your future today!
+          </p>
+
+          <div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-10">
+              {skill.slice(0, 3).map((item, index) => (
+                <div
+                  key={index}
+                  className="bg-white rounded-2xl p-2 md:p-3 hover:shadow-lg transition-all ease-in-out duration-300"
+                >
+                  <div className="relative">
+                    <Image
+                      src={item.image}
+                      width={1000}
+                      height={1000}
+                      alt={item.title}
+                      className="rounded-xl object-cover aspect-[3/2]"
+                    />
+
+                    {item.tag && (
+                      <div className="absolute top-2 right-2 bg-white text-secondary px-3 py-1 rounded-full text-sm">
+                        {item.tag}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="space-y-4 mt-2">
+                    <p className="uppercase text-[#828282] font-semibold text-xs md:text-base">
+                      {item.category}
+                    </p>
+                    <h3 className="text-black font-bold">{item.title}</h3>
+                    <p className="text-[#C4C4C4]">{item.desc}</p>
+                    <div className="flex justify-between w-full">
+                      <p className="text-[#C4C4C4]">{item.duration}</p>
+                      <p className="text-black font-semibold flex items-center gap-2">
+                        <FaStar className="text-[#FAC036]" />{" "}
+                        <span>{item.rating}/5</span>
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex mt-2">
+                    <Link
+                      href={item.path}
+                      className="bg-main lg:bg-transparent hover:bg-main rounded-full text-white lg:text-main hover:text-white text-center text-base px-4 py-2 border border-main font-medium transition-all ease-in-out duration-300"
+                    >
+                      Get Started
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex justify-center !mt-10">
+            <Link
+              href={"#"}
+              className="bg-main rounded-full text-white text-center text-base px-7 py-3 font-medium"
+            >
+              View all courses
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <Portfolio />
+
+      <CTA />
+
+      <Testimony />
+    </div>
   );
 };
 
