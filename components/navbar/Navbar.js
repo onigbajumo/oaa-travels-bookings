@@ -34,28 +34,32 @@ const Navigation = () => {
     },
     {
       title: "About",
-      path: "/about",
+      path: "/about-us",
     },
     {
       title: "Services",
-      path: "/#",
+      path: "/services",
     },
     {
-      title: "Programs",
-      dropdown: true,
-      submenu: [
-        { title: "Upskill Program", path: "#" },
-        { title: "All Programs", path: "#" },
-      ],
+      title: "Upskill Program",
+      path: "/upskill-program",
     },
+    // {
+    //   title: "Programs",
+    //   dropdown: true,
+    //   submenu: [
+    //     { title: "Upskill Program", path: "#" },
+    //     { title: "All Programs", path: "#" },
+    //   ],
+    // },
     {
       title: "Portfolio",
-      path: "/#",
+      path: "/portfolio",
     },
 
     {
       title: "iEnterprise",
-      path: "/#",
+      path: "/i-enterprise",
     },
   ];
 
@@ -115,7 +119,7 @@ const Navigation = () => {
                 <Link
                   href={link.path}
                   className={`font-semibold ${
-                    pathname === link.path ? "text-main" : "hover:text-main"
+                    pathname === link.path ? "text-main border-b-2 border-secondary pb-1" : "hover:text-main border-b-2 border-transparent hover:border-secondary pb-1"
                   }`}
                 >
                   {link.title}
@@ -124,10 +128,10 @@ const Navigation = () => {
             </div>
           ))}
           <Link
-            href="/"
+            href="/contact-us"
             className="bg-white flex items-center gap-2 rounded-full text-main font-bold px-8 py-2 border border-main"
           >
-            Let{`’`}s Talk <Image src="/arrowE.svg" width={20} height={1} />
+            Let{`’`}s Talk <Image src="/arrowE.svg" width={20} height={1} alt="arrow" />
           </Link>
         </div>
 
@@ -194,10 +198,10 @@ const Navigation = () => {
           ))}
           <div className="mt-3">
             <Link
-              href="/"
+              href="/contact-us"
               className="bg-white flex items-center gap-2 rounded-full text-main font-bold px-8 py-2 border border-main"
             >
-              Let{`’`}s Talk <Image src="/arrowE.svg" width={20} height={1} />
+              Let{`’`}s Talk <Image src="/arrowE.svg" width={20} height={1} alt="arrow" />
             </Link>
           </div>
         </div>

@@ -1,110 +1,205 @@
-import React from "react"
-import Testimony from "../../../components/testimonial/testimonials"
-import Work from "../../../components/workWithUs/work"
-import Image from "next/image"
+import React from "react";
+import Testimony from "../../../components/testimonial/testimonials";
+import Work from "../../../components/workWithUs/work";
+import Image from "next/image";
+import Tag from "../../../components/tag/Tag";
+import CTA from "../../../components/CTA/cta";
+import Contact from "../../../components/contact/contact";
+import Journey from "./journey";
 
-const About =() => {
-    
+const dream = [
+  {
+    title: "Custom software development",
+    icon: "/icons/software.svg",
+  },
+  {
+    title: "Mobile app development",
+    icon: "/icons/mobile.svg",
+  },
+  {
+    title: "Web application development",
+    icon: "/icons/webapp.svg",
+  },
+  {
+    title: "Design",
+    icon: "/icons/design.svg",
+  },
+  {
+    title: "Digital Marketing",
+    icon: "/icons/marketing.svg",
+  },
+  {
+    title: "Branding",
+    icon: "/icons/branding.svg",
+  },
+  {
+    title: "Logo Design",
+    icon: "/icons/logo-design.svg",
+  },
+  {
+    title: "SEO",
+    icon: "/icons/branding.svg",
+  },
+];
 
-    return(
-        <div>
-            <div className="flex flex-col justify-center items-center bg-[#13457405] p-12 gap-16">
-            <h1 className=" text-[#134574] font-bold md:text-[4rem] text-[3rem] ">About Us</h1>
-                <div className="flex gap-4 lg:flex-row flex-col mx-8">
-                    <div className="bg-white py-12 px-16 rounded-[30px] lg:w-[50%] flex flex-col gap-12">
-                        <div>
+const team = [
+  {
+    name: "John Doe",
+    position: "CEO",
+    image: "https://placehold.co/500.png",
+  },
+  {
+    name: "Jane Doe",
+    position: "CTO",
+    image: "https://placehold.co/500.png",
+  },
+  {
+    name: "John Doe",
+    position: "CEO",
+    image: "https://placehold.co/500.png",
+  },
+  {
+    name: "Jane Doe",
+    position: "CTO",
+    image: "https://placehold.co/500.png",
+  },
+  {
+    name: "John Doe",
+    position: "CEO",
+    image: "https://placehold.co/500.png",
+  },
+  {
+    name: "Jane Doe",
+    position: "CTO",
+    image: "https://placehold.co/500.png",
+  },
+  {
+    name: "John Doe",
+    position: "CEO",
+    image: "https://placehold.co/500.png",
+  },
+  {
+    name: "Jane Doe",
+    position: "CTO",
+    image: "https://placehold.co/500.png",
+  },
+];
 
-                            <h2 className="bg-[#EF268921] inline-block px-2 rounded-full font-semibold text-[#134574]">The Dream</h2>
-                        </div>
-                        <h2 className="font-semibold text-5xl">Our Dream is Global IT Services</h2>
-                        <p className="text-xl text-[#0D1118]">Ehizua Hub is a technology agency focused on building software products for forward thinking businesses in Africa. We partner with growth-focused companies to create cutting-edge software solutions that propel business growth and improve operational efficiency.</p>
-                    </div>
-                    <div className="">
-                        <Image src={"/about1.png"} width={800} height={800} />
-                        <div className=" mt-4 bg-white rounded-xl flex flex-col">
-                            <div className="flex  p-4 gap-2">
-                                <div className="bg-[#13457405] rounded-[30px] flex flex-col gap-2 items-center text-center p-4 md:flex-1">
-                                    <Image src={"/abticon1.svg"} width={20} height={20} />
-                                    <p className="text-sm">Custom software development</p>
-
-                                </div>
-                                <div className="bg-[#13457405] rounded-[30px] flex flex-col gap-2 items-center text-center p-4 md:flex-1">
-                                    <Image src={"/abticon2.svg"} width={20} height={20} />
-                                    <p className="text-sm">Mobile app development</p>
-
-                                </div>
-                                <div className="bg-[#13457405] rounded-[30px] flex flex-col gap-2 items-center text-center p-4 md:flex-1">
-                                    <Image src={"/abticon7.svg"} width={20} height={20} />
-                                    <p className="text-sm">Logo Design</p>
-
-                                </div>
-                                <div className="bg-[#13457405] rounded-[30px] flex flex-col gap-2 items-center text-center p-4 md:flex-1">
-                                    <Image src={"/abticon4.svg"} width={20} height={20} />
-                                    <p className="text-sm">Design</p>
-
-                                </div>
-                           
-                            </div>
-                            <div className="flex  p-4 gap-2">
-                                <div className="bg-[#13457405] rounded-[30px] flex flex-col gap-2 items-center text-center p-4 md:flex-1">
-                                    <Image src={"/abticon5.svg"} width={20} height={20} />
-                                    <p className="text-sm">Digital Marketing</p>
-
-                                </div>
-                                <div className="bg-[#13457405] rounded-[30px] flex flex-col gap-2 items-center text-center p-4 md:flex-1">
-                                    <Image src={"/abticon6.svg"} width={20} height={20} />
-                                    <p className="text-sm">Branding</p>
-
-                                </div>
-                                
-                                <div className="bg-[#13457405] rounded-[30px] flex flex-col gap-2 items-center text-center p-4 md:flex-1">
-                                    <Image src={"/abticon3.svg"} width={20} height={20} />
-                                    <p className="text-sm">Web application development</p>
-
-                                </div>
-                                <div className="bg-[#13457405] rounded-[30px] flex flex-col gap-2 items-center text-center p-4 md:flex-1">
-                                    <Image src={"/abticon6.svg"} width={20} height={20} />
-                                    <p className="text-sm">SEO</p>
-
-                                </div>
-                           
-                            </div>
-                            
-                        </div>
-                    </div>
-
-                </div>
+const About = () => {
+  return (
+    <>
+      <section className="bg-[url('/images/background.png')] bg-no-repeat bg-cover">
+        <div className="container py-20">
+          <div className="space-y-6 flex flex-col justify-center">
+            <div className="space-y-8 ">
+              <h1 className="text-main">
+                Shaping the Future of Innovation and Creativity
+              </h1>
+              <p className="xl:pr-48 lg:pr-12">
+                Welcome to Ehizuahub—your ultimate destination for innovative IT
+                services, cutting-edge tech training and creative solutions that
+                redefine possibilities. We’re not just a company; we’re a
+                community of forward-thinkers, dreamers, and problem-solvers
+                dedicated to transforming lives and businesses through the power
+                of technology.
+              </p>
             </div>
-
-            <div className="p-16 flex flex-col gap-12 ">
-                <div>
-                    <h2 className="bg-[#EF268921] inline-block px-2 rounded-full font-semibold text-[#134574]">The Dream</h2>
-                </div>
-                <div className="text-4xl font-semibold lg:w-1/3 md:1/2  ">Meet Our Dedicated team and creators</div>
-                <div className="flex justify-between items-center gap-8 md:flex-row flex-col">
-                    <div>
-
-                    <Image src={"/dev1.png"} width={500} height={500}/>
-                    </div>
-                    <div>
-
-                    <Image src={"/dev2.png"} width={500} height={500}/>
-                    </div>
-                    <div>
-
-                    <Image src={"/dev3.png"} width={500} height={500}/>
-                    </div>
-
-                </div>
-            </div>
-
-            <Work />
-            
-
-            <Testimony />
+          </div>
         </div>
-    )
-}
+      </section>
 
+      <section className="container space-y-5 py-20 grid md:grid-cols-2 gap-7 items-center">
+        <div className="space-y-5">
+          <Tag text="The Dream" />
+          <h2 className="text-main">
+            Shaping Tomorrow, One Innovation at a Time
+          </h2>
+          <p>
+            At Ehizuahub, our dream is more than just a vision—it’s a movement.
+            We dream of a world where African talent leads global innovation,
+            where technology bridges gaps, and where every individual has the
+            tools to rewrite their story.
+          </p>
+        </div>
 
-export default About
+        <div>
+          <Image
+            src={"/images/about-image.jpg"}
+            width={1000}
+            height={1000}
+            className="rounded-3xl w-full"
+            alt="about"
+          />
+        </div>
+
+        <div className="md:col-span-2">
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4">
+            {dream.map((item, index) => (
+              <div
+                key={index}
+                className="flex flex-col items-center bg-main/5 rounded-lg p-3 gap-4"
+              >
+                <Image src={item.icon} width={30} height={30} alt={item.title} />
+                <p className="text-xs font-semibold text-center">
+                  {item.title}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <Journey />
+
+      <section className="container py-20">
+        <div className="space-y-5">
+          <Tag text="Meet Our Team" />
+          <h2 className="text-main">The Faces Behind Ehizua Hub</h2>
+          <p>
+            A dedicated team of professionals committed to transforming lives
+            and businesses
+          </p>
+        </div>
+
+        <div className="mt-10">
+          <div className="grid sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-10">
+            {team.map((item, index) => (
+              <div key={index} className="flex flex-col items-center gap-1">
+                <Image
+                  src={item.image}
+                  width={500}
+                  height={500}
+                  alt={item.name}
+                  className="rounded-lg w-4/5"
+                />
+                <div>
+                  <h4 className="font-semibold text-center text-main">
+                    {item.name}
+                  </h4>
+                  <p className="text-sm text-center">{item.position}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <Work />
+
+      <Testimony />
+
+      <CTA
+        preText="Ready to Transform Your"
+        pinkText="Vision"
+        endText="Into Reality?"
+        desc="Take the first step towards success and start achieving your
+                goals today! Our services are tailored to meet your unique needs
+                and help you reach new milestones."
+      />
+
+      <Contact />
+    </>
+  );
+};
+
+export default About;

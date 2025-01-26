@@ -55,7 +55,7 @@ const Portfolio = () => {
   const project = projects[currentSlide];
 
   return (
-    <section className="container py-12">
+    <section className="container py-20">
       <div className="space-y-5">
         <Tag text="Our Portfolio" />
         <h2 className="text-main">Crafting Digital Excellence</h2>
@@ -113,7 +113,7 @@ const Portfolio = () => {
                   alt={project.title}
                   width={1000}
                   height={1000}
-                  className="h-20 w-fit"
+                  className="h-10 w-fit"
                 />
               </div>
 

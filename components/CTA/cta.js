@@ -2,9 +2,9 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-const CTA = () => {
+const CTA = ({preText, endText, pinkText, desc}) => {
   return (
-    <section className="container py-12">
+    <section className="container py-20">
       <div className="relative">
         <div className="hidden sm:block">
           <Image
@@ -30,17 +30,15 @@ const CTA = () => {
           <div className="p-3 sm:p-10 xl:p-24">
             <div className="flex flex-col items-center gap-4 sm:gap-7 xl:gap-10">
               <h1 className="text-white text-center">
-                Build the <span className="text-secondary">Ehizua way</span>
+                {preText} <span className="text-secondary">{pinkText}</span> {endText}
               </h1>
               <p className="text-white text-center text-md sm:text-lg xl:text-2xl w-full lg:w-3/4">
-                Take the first step towards success and start achieving your
-                goals today! Our services are tailored to meet your unique needs
-                and help you reach new milestones.
+                {desc}
               </p>
 
               <div className="flex justify-center">
                 <Link
-                  href="#"
+                  href="/contact-us"
                   className="bg-white rounded-full text-main text-center text-base px-7 py-3 font-medium"
                 >
                   Get in touch

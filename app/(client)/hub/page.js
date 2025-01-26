@@ -102,7 +102,7 @@ const Hub = () => {
             </div>
             </div>
 
-            <div className='flex flex-col lg:flex-row justify-between gap-24 bg-[#134574] rounded-xl md:mx-24 mx-4 px-8 py-12'>
+            <div className='flex flex-col lg:flex-row justify-between gap-24 bg-[#134574] rounded-xl md:mx-24 mx-4 px-8 py-20'>
                 <div className='text-white space-y-8 lg:w-2/3'>
                     <h1 className='font-extrabold md:text-4xl text-2xl'>About Us</h1>
                     <p>
@@ -123,7 +123,7 @@ const Hub = () => {
                 </div>
             </div>
 
-            <div className='bg-[#F4F7F8] xl:px-24 md:px-8 px-6 space-y-8 my-24 py-12'>
+            <div className='bg-[#F4F7F8] xl:px-24 md:px-8 px-6 space-y-8 my-24 py-20'>
                 <div className='space-y-4'>
                     <h1 className='font-medium text-4xl '>Empowering Young Africans with Tomorrow{"'"}s Skills</h1>
                     <p className='leading-[20px] md:pr-48'>Take your first step towards a career in technology with our expert-led courses. From software development and data analysis to cybersecurity and cloud computing, we offer a wide range of tech skills that are in high demand. Learn from the best and start building your future today!</p>
@@ -138,7 +138,7 @@ const Hub = () => {
 
             <Testimony />
 
-            <div className=' xl:px-24 md:px-8 px-6 space-y-8 my-24 py-12'>
+            <div className=' xl:px-24 md:px-8 px-6 space-y-8 my-24 py-20'>
                 <h1 className='text-center text-4xl font-medium'>Frequently Asked <spand className="text-[#134574]">Questions</spand> </h1>
 
                 <FAQs limit={4} />

@@ -2,11 +2,12 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Tag from "../../../components/tag/Tag";
-import { FaArrowRight, FaStar } from "react-icons/fa";
+import { FaArrowRight } from "react-icons/fa";
 import Portfolio from "../../../components/portfolio/portfolio";
-// import CTA from "../../../components/cta";
 import CTA from "../../../components/CTA/cta";
 import Testimony from "../../../components/testimonial/testimonials";
+import FAQs from "../../../components/faq";
+import Courses from "../../../components/courses/course";
 
 const offer = [
   {
@@ -14,28 +15,28 @@ const offer = [
     icon: "/icons/web.svg",
     image: "/images/service-1.jpg",
     desc: "Providing cutting-edge IT solutions and services to businesses and organisations.",
-    path: "#",
+    path: "/services",
   },
   {
     title: "Creative Tech Programs",
     icon: "/icons/creative.svg",
     image: "/images/service-2.jpg",
     desc: "Inspiring and educating children in creative technology and STEM fields.",
-    path: "#",
+    path: "/upskill-program/courses",
   },
   {
     title: "Upskill",
     icon: "/icons/web.svg",
     image: "/images/service-3.jpg",
     desc: "Offering training and upskilling programs for individuals and professionals to enhance their skills and knowledge.",
-    path: "#",
+    path: "/upskill-program",
   },
   {
     title: "iEnterprise",
     icon: "/icons/enterprise.svg",
     image: "/images/service-4.jpg",
     desc: "Delivering top-notch event management, printing, and media services to support businesses and events.",
-    path: "#",
+    path: "/i-enterprise",
   },
 ];
 
@@ -54,43 +55,11 @@ const benefits = [
   },
 ];
 
-const skill = [
-  {
-    title: "Full Stack Development",
-    category: "development",
-    desc: "Master front-end and back-end technologies to build dynamic, responsive websites and applications",
-    duration: "6 months",
-    rating: "4.5",
-    path: "#",
-    image: "https://placehold.co/500.png",
-    tag: "most popular",
-  },
-  {
-    title: "Full Stack Development",
-    category: "development",
-    desc: "Master front-end and back-end technologies to build dynamic, responsive websites and applications",
-    duration: "6 months",
-    rating: "4.5",
-    path: "#",
-    image: "https://placehold.co/500.png",
-  },
-  {
-    title: "Full Stack Development",
-    category: "development",
-    desc: "Master front-end and back-end technologies to build dynamic, responsive websites and applications",
-    duration: "6 months",
-    rating: "4.5",
-    path: "#",
-    image: "https://placehold.co/500.png",
-    tag: "most popular",
-  },
-];
-
 const Home = () => {
   return (
     <div className="relative">
       <div className="absolute top-0 right-0 z-[-1]">
-        <Image src={"/images/home-bg.svg"} width={500} height={500} />
+        <Image src={"/images/home-bg.svg"} width={500} height={500} alt="home" />
       </div>
       <section className="bg-[url('/images/background.png')] bg-no-repeat bg-cover">
         <div className="container flex md:flex-row flex-col gap-12 ">
@@ -117,13 +86,13 @@ const Home = () => {
               </p>
               <div className="flex flex-col md:flex-row gap-4">
                 <Link
-                  href={"#"}
+                  href="/services"
                   className="bg-main rounded-full text-white text-center text-base px-5 py-3 border-2 border-transparent font-medium"
                 >
                   Get Started
                 </Link>
                 <Link
-                  href={"#"}
+                  href="/contact-us"
                   className=" rounded-full text-main text-center border-main text-base border-2 px-5 py-3 font-medium"
                 >
                   Free IT Consultation
@@ -133,12 +102,12 @@ const Home = () => {
           </div>
 
           <div className="hidden md:block pt-10 lg:pt-0">
-            <Image src={"/homescreen.png"} width={600} height={400} />
+            <Image src={"/homescreen.png"} width={600} height={400} alt="hero" />
           </div>
         </div>
       </section>
 
-      <section className="container flex justify-center gap-12 py-12">
+      <section className="container flex justify-center gap-12 py-20">
         <div className="flex flex-col md:flex-row w-full gap-10 lg:w-[90%]">
           <div className="md:w-1/3 flex justify-center relative">
             <Image
@@ -146,6 +115,7 @@ const Home = () => {
               width={1000}
               height={1000}
               className="w-[80%] md:w-full"
+              alt="ceo"
             />
 
             <div className="absolute bottom-4 left-0 text-white p-2 w-full font-semibold text-center">
@@ -174,7 +144,7 @@ const Home = () => {
             </p>
             <div className="flex">
               <Link
-                href={"#"}
+                href="/about-us"
                 className="bg-main rounded-full text-white text-center text-base px-7 py-3 font-medium"
               >
                 Learn More
@@ -184,7 +154,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="container space-y-5 py-12">
+      <section className="container space-y-5 py-20">
         <Tag text="Our Services" />
         <h2 className="text-main">What We Offer</h2>
         <p>
@@ -205,7 +175,7 @@ const Home = () => {
               >
                 <div className="absolute bottom-0 left-0 bg-main/80 group-hover:bg-main group-hover:h-full rounded-xl p-4 w-full group-hover:flex flex-col justify-between transition-all ease-in-out duration-700">
                   <div className="space-y-3">
-                    <Image src={item.icon} width={50} height={50} />
+                    <Image src={item.icon} width={50} height={50} alt={item.title} />
                     <h3 className="text-white">{item.title}</h3>
                   </div>
 
@@ -228,7 +198,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="container space-y-5 py-12">
+      <section className="container space-y-5 py-20">
         <Tag text="Why Ehizua Hub" />
 
         <div className="grid md:grid-cols-2 gap-8">
@@ -238,7 +208,7 @@ const Home = () => {
             </h2>
 
             <p>
-              At EhizuaHub, we don't just train minds, we shape futures. Explore
+              At EhizuaHub, we don&apos;t just train minds, we shape futures. Explore
               our offerings and you experience the transformation for yourself
             </p>
 
@@ -263,7 +233,7 @@ const Home = () => {
 
               <div className="flex">
                 <Link
-                  href={"#"}
+                  href="/upskill-program"
                   className="bg-main rounded-full text-white text-center text-base px-5 py-2 border-2 border-transparent font-medium"
                 >
                   View all programs
@@ -278,12 +248,14 @@ const Home = () => {
               width={1000}
               height={1000}
               className="w-full object-cover h-full rounded-tl-full"
+              alt="person"
             />
             <Image
               src="/images/person-2.jpg"
               width={1000}
               height={1000}
               className="w-full object-cover h-full rounded-br-full"
+              alt="person"
             />
           </div>
 
@@ -293,96 +265,42 @@ const Home = () => {
               width={1000}
               height={1000}
               className="w-full object-cover h-full rounded-tl-full"
+              alt="person"
             />
             <Image
               src="/images/person-2b.jpg"
               width={1000}
               height={1000}
               className="w-full object-cover h-full rounded-br-full"
+              alt="person"
             />
           </div>
         </div>
       </section>
 
-      <section className="py-12 bg-[#F4F7F8]">
-        <div className="space-y-5 container">
-          <Tag text="Training Program" />
-          <h2 className="text-main">Upskill for Success</h2>
-          <p>
-            Take your first step towards a career in technology with our
+      <Courses
+        limit={3}
+        heading="Upskill for Success"
+        subHeading="Take your first step towards a career in technology with our
             expert-led courses. From software development and data analysis to
             cybersecurity and cloud computing, we offer a wide range of tech
             skills that are in high demand. Learn from the best and start
-            building your future today!
-          </p>
-
-          <div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-10">
-              {skill.slice(0, 3).map((item, index) => (
-                <div
-                  key={index}
-                  className="bg-white rounded-2xl p-2 md:p-3 hover:shadow-lg transition-all ease-in-out duration-300"
-                >
-                  <div className="relative">
-                    <Image
-                      src={item.image}
-                      width={1000}
-                      height={1000}
-                      alt={item.title}
-                      className="rounded-xl object-cover aspect-[3/2]"
-                    />
-
-                    {item.tag && (
-                      <div className="absolute top-2 right-2 bg-white text-secondary px-3 py-1 rounded-full text-sm">
-                        {item.tag}
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="space-y-4 mt-2">
-                    <p className="uppercase text-[#828282] font-semibold text-xs md:text-base">
-                      {item.category}
-                    </p>
-                    <h3 className="text-black font-bold">{item.title}</h3>
-                    <p className="text-[#C4C4C4]">{item.desc}</p>
-                    <div className="flex justify-between w-full">
-                      <p className="text-[#C4C4C4]">{item.duration}</p>
-                      <p className="text-black font-semibold flex items-center gap-2">
-                        <FaStar className="text-[#FAC036]" />{" "}
-                        <span>{item.rating}/5</span>
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex mt-2">
-                    <Link
-                      href={item.path}
-                      className="bg-main lg:bg-transparent hover:bg-main rounded-full text-white lg:text-main hover:text-white text-center text-base px-4 py-2 border border-main font-medium transition-all ease-in-out duration-300"
-                    >
-                      Get Started
-                    </Link>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex justify-center !mt-10">
-            <Link
-              href={"#"}
-              className="bg-main rounded-full text-white text-center text-base px-7 py-3 font-medium"
-            >
-              View all courses
-            </Link>
-          </div>
-        </div>
-      </section>
+            building your future today!"
+      />
 
       <Portfolio />
 
-      <CTA />
+      <CTA
+        pinkText="Ehizua way"
+        preText="Build the"
+        desc="Take the first step towards success and start achieving your
+                goals today! Our services are tailored to meet your unique needs
+                and help you reach new milestones."
+      />
 
       <Testimony />
+
+      <FAQs limit={4} />
     </div>
   );
 };

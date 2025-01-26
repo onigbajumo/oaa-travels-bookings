@@ -1,85 +1,131 @@
-import React from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import Tag from "../tag/Tag";
+import { FaStar } from "react-icons/fa";
 
-const courses = [
+const skill = [
+  {
+    title: "Full Stack Development",
+    category: "development",
+    desc: "Master front-end and back-end technologies to build dynamic, responsive websites and applications",
+    duration: "6 months",
+    rating: "4.5",
+    path: "course",
+    image: "https://placehold.co/500.png",
+    tag: "most popular",
+  },
+  {
+    title: "Full Stack Development",
+    category: "development",
+    desc: "Master front-end and back-end technologies to build dynamic, responsive websites and applications",
+    duration: "6 months",
+    rating: "4.5",
+    path: "course",
+    image: "https://placehold.co/500.png",
+  },
+  {
+    title: "Full Stack Development",
+    category: "development",
+    desc: "Master front-end and back-end technologies to build dynamic, responsive websites and applications",
+    duration: "6 months",
+    rating: "4.5",
+    path: "course",
+    image: "https://placehold.co/500.png",
+    tag: "most popular",
+  },
+  {
+    title: "Full Stack Development",
+    category: "development",
+    desc: "Master front-end and back-end technologies to build dynamic, responsive websites and applications",
+    duration: "6 months",
+    rating: "4.5",
+    path: "course",
+    image: "https://placehold.co/500.png",
+    tag: "most popular",
+  },
+  {
+    title: "Full Stack Development",
+    category: "development",
+    desc: "Master front-end and back-end technologies to build dynamic, responsive websites and applications",
+    duration: "6 months",
+    rating: "4.5",
+    path: "course",
+    image: "https://placehold.co/500.png",
+    tag: "most popular",
+  },
+];
 
-]
-
-const course = () => {
+const Courses = ({ limit, heading, subHeading }) => {
   return (
-    <div className='flex gap-16 justify-between flex-col md:flex-row'>
-        
-        <div className='bg-white rounded-xl shadow-md p-6 md:w-1/2 space-y-6'>
-            <Image src={"/develop.svg"} width={60} height={50} />
-            <div className='space-y-2'>
+    <section className="py-20 bg-[#F4F7F8]">
+      <div className="space-y-5 container">
+        <Tag text="Training Program" />
+        <h2 className="text-main">{heading}</h2>
+        <p>{subHeading}</p>
 
-            <h4 className='text-sm text-gray-400'>DEVELOPMENT</h4>
-            <h2 className='font-medium w-1/2 text-xl'>Full Stack Development</h2>
-            </div>
+        <div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-10">
+            {skill.slice(0, limit).map((item, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-2xl p-2 md:p-3 hover:shadow-lg transition-all ease-in-out duration-300"
+              >
+                <div className="relative">
+                  <Image
+                    src={item.image}
+                    width={1000}
+                    height={1000}
+                    alt={item.title}
+                    className="rounded-xl object-cover aspect-[3/2]"
+                  />
 
-            <div className='flex justify-between'>
-                <h4 className='text-gray-400'>6 months Course</h4>
-                <div className='flex gap-2'>
-                    <Image src={'/start.svg'} width={20} height={20} />
-                    <p>4/5</p>
+                  {item.tag && (
+                    <div className="absolute top-2 right-2 bg-white text-secondary px-3 py-1 rounded-full text-sm">
+                      {item.tag}
+                    </div>
+                  )}
                 </div>
-            </div>
-            <div>
 
-            <Link href={"/"} className='border rounded-full p-2 text-[#134574] font-medium'>Get Started</Link>
-            </div>
+                <div className="space-y-4 mt-2">
+                  <p className="uppercase text-[#828282] font-semibold text-xs md:text-base">
+                    {item.category}
+                  </p>
+                  <h3 className="text-black font-bold">{item.title}</h3>
+                  <p className="text-[#C4C4C4]">{item.desc}</p>
+                  <div className="flex justify-between w-full">
+                    <p className="text-[#C4C4C4]">{item.duration}</p>
+                    <p className="text-black font-semibold flex items-center gap-2">
+                      <FaStar className="text-[#FAC036]" />{" "}
+                      <span>{item.rating}/5</span>
+                    </p>
+                  </div>
+                </div>
 
+                <div className="flex mt-2">
+                  <Link
+                    href={`/upskill-program/${item.path}`}
+                    className="bg-main lg:bg-transparent hover:bg-main rounded-full text-white lg:text-main hover:text-white text-center text-base px-4 py-2 border border-main font-medium transition-all ease-in-out duration-300"
+                  >
+                    Get Started
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
-        <div className='bg-white rounded-xl shadow-md p-6 md:w-1/2 space-y-6'>
-            <Image src={"/design.svg"} width={60} height={50} />
-            <div className='space-y-2'>
-
-            <h4 className='text-sm text-gray-400'>DESIGN</h4>
-            <h2 className='font-medium w-1/2 text-xl'>UI/UX</h2>
-            </div>
-
-            <div className='flex justify-between'>
-                <h4 className='text-gray-400'>3 months Course</h4>
-                <div className='flex gap-2'>
-                    <Image src={'/start.svg'} width={20} height={20} />
-                    <p>4/5</p>
-                </div>
-            </div>
-            <div>
-
-            <Link href={"/"} className='border rounded-full p-2 text-[#134574] font-medium'>Get Started</Link>
-            </div>
-
+        <div className="flex justify-center !mt-10">
+          <Link
+            href="/upskill-program/courses"
+            className="bg-main rounded-full text-white text-center text-base px-7 py-3 font-medium"
+          >
+            View all courses
+          </Link>
         </div>
+      </div>
+    </section>
+  );
+};
 
-        <div className='bg-white rounded-xl shadow-md p-6 md:w-1/2 space-y-6'>
-            <Image src={"/develop.svg"} width={60} height={50} />
-            <div className='space-y-2'>
-
-            <h4 className='text-sm text-gray-400'>DEVELOPMENT</h4>
-            <h2 className='font-medium w-1/2 text-xl'>Front-end Development</h2>
-            </div>
-
-            <div className='flex justify-between'>
-                <h4 className='text-gray-400'>4 months Course</h4>
-                <div className='flex gap-2'>
-                    <Image src={'/start.svg'} width={20} height={20} />
-                    <p>4.5/5</p>
-                </div>
-            </div>
-            <div>
-
-            <Link href={"/"} className='border rounded-full p-2 text-[#134574] font-medium'>Get Started</Link>
-            </div>
-
-        </div>
-      
-      
-        
-    </div>
-  )
-}
-
-export default course
+export default Courses;

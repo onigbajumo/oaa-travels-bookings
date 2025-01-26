@@ -8,7 +8,7 @@ const CTA = () => {
     return (
         <div >
            <div className="bg-[#EF2689] md:m-16 m-8 rounded-xl flex relative overflow-hidden justify-between flex-col lg:flex-row">
-  <div className="lg:w-1/2 space-y-12 relative z-10 py-12 md:px-24 px-4">
+  <div className="lg:w-1/2 space-y-12 relative z-10 py-20 md:px-24 px-4">
     <h1 className="text-4xl font-semibold text-white">Build the Ehizua way</h1>
     <p className="text-white">Take the first step towards success and start achieving your goals today! Our services are tailored to meet your unique needs and help you reach new milestones.</p>
     <div>

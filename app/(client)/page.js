@@ -1,10 +1,10 @@
 import React from "react";
-import Hub from "./hub/page";
+import Home from "./home/page";
 
-export default function Home() {
+export default function Page() {
   return (
     <div className="">
-        <Hub />
+        <Home />
     </div>
   );
 }
