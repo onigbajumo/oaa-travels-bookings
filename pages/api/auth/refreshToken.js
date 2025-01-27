@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken';
-import RefreshToken from '@/models/RefreshToken';
-import User from '@/models/User';
-import { generateTokens } from '@/utils/auth';
-import connectToMongoDB from '@/libs/mongodb';
+import RefreshToken from '../../../models/RefreshToken';
+import User from '../../../models/User';
+import { generateTokens } from '../../../utils/auth';
+import connectToMongoDB from '../../../libs/mongodb';
 
 export default async function refresh(req, res) {
 

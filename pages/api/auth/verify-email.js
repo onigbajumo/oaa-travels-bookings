@@ -1,4 +1,4 @@
-import User from '@/models/User';
+import User from '../../../models/User';
 import jwt from 'jsonwebtoken';
 import connectToMongoDB from '../../../libs/mongodb';
 
