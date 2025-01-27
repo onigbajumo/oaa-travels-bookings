@@ -13,7 +13,7 @@ const skill = [
     rating: "4.5",
     path: "course",
     image: "https://placehold.co/500.png",
-    tag: "most popular",
+    tag: "Beginner",
   },
   {
     title: "Full Stack Development",
@@ -23,6 +23,7 @@ const skill = [
     rating: "4.5",
     path: "course",
     image: "https://placehold.co/500.png",
+    tag: "Intermediate",
   },
   {
     title: "Full Stack Development",
@@ -32,7 +33,7 @@ const skill = [
     rating: "4.5",
     path: "course",
     image: "https://placehold.co/500.png",
-    tag: "most popular",
+    tag: "Beginner",
   },
   {
     title: "Full Stack Development",
@@ -42,7 +43,7 @@ const skill = [
     rating: "4.5",
     path: "course",
     image: "https://placehold.co/500.png",
-    tag: "most popular",
+    tag: "Intermediate",
   },
   {
     title: "Full Stack Development",
@@ -52,7 +53,7 @@ const skill = [
     rating: "4.5",
     path: "course",
     image: "https://placehold.co/500.png",
-    tag: "most popular",
+    tag: "Advanced",
   },
 ];
 

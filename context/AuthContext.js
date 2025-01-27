@@ -3,6 +3,7 @@ import { createContext, useContext, useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import jwt from "jsonwebtoken";
+import "react-toastify/dist/ReactToastify.css";
 
 const AuthContext = createContext();
 
@@ -16,35 +17,40 @@ export function AuthProvider({ children }) {
   const router = useRouter();
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
-    if (storedToken) {
-      setToken(storedToken);
-      const decodedToken = jwt.decode(storedToken);
+    const storedAccessToken = localStorage.getItem("accessToken");
+    const storedRefreshToken = localStorage.getItem("refreshToken");
+
+    if (storedAccessToken) {
+      setToken(storedAccessToken);
+      const decodedToken = jwt.decode(storedAccessToken);
+
       if (decodedToken) {
         setIsAuthenticated(true);
         setUserRole(decodedToken.role);
-        
+
         const expirationTime = decodedToken.exp * 1000 - Date.now();
         setExpirationTimeout(expirationTime);
       }
     }
+
     setLoading(false);
   }, []);
 
   const setExpirationTimeout = (expirationTime) => {
-    if (expirationTimeoutRef.current) clearTimeout(expirationTimeoutRef.current);
-    
+    if (expirationTimeoutRef.current) {
+      clearTimeout(expirationTimeoutRef.current);
+    }
     expirationTimeoutRef.current = setTimeout(() => {
       handleTokenExpiration();
     }, expirationTime);
   };
 
   const handleTokenExpiration = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
     setToken(null);
     setIsAuthenticated(false);
     setUserRole(null);
-    
     router.push("/");
   };
 
@@ -56,86 +62,63 @@ export function AuthProvider({ children }) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ emailOrPhone: email, password }),
       });
-
+  
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || "Login failed.");
+        throw new Error(errorData.error || "Login failed.");
       }
-
+  
       const data = await response.json();
-      console.log("Login Data:", data);
-      const { accessToken } = data;
-
-      localStorage.setItem("token", accessToken);
-      setToken(accessToken);
-
-      const decodedToken = jwt.decode(accessToken);
-      console.log(decodedToken)
-      if (!decodedToken) {
-        throw new Error("Failed to decode token.");
+      console.log("Login Response:", data);
+  
+      const { accessToken, refreshToken } = data;
+  
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("refreshToken", refreshToken);
+  
+      const decodedAccessToken = jwt.decode(accessToken);
+      console.log("Decoded Access Token:", decodedAccessToken);
+  
+      if (!decodedAccessToken) {
+        throw new Error("Failed to decode access token.");
       }
-
+  
+      setToken(accessToken);
       setIsAuthenticated(true);
-      setUserRole(decodedToken.role);
-
-      const expirationTime = decodedToken.exp * 1000 - Date.now();
+      setUserRole(decodedAccessToken.role);
+  
+      const expirationTime = decodedAccessToken.exp * 1000 - Date.now();
       setExpirationTimeout(expirationTime);
-
+  
       toast.success("Login successful!");
-      router.push("/admin/dashboard");
+  
+      if (decodedAccessToken.role) {
+        router.push(`/${decodedAccessToken.role}/dashboard`);
+      } else {
+        router.push("/home");
+      }
     } catch (err) {
-      console.error(err);
+      console.error("Login error:", err);
       toast.error(err.message || "An error occurred during login.");
     } finally {
       setLoading(false);
     }
   };
-
-  const handleTokenLogin = (tokenFromUrl) => {
-    if (isProcessingRef.current) return;
-
-    setLoading(true);
-
-    try {
-      const decodedToken = jwt.decode(tokenFromUrl);
-
-      if (!decodedToken) {
-        throw new Error("Invalid token.");
-      }
-
-      const expirationDate = new Date(decodedToken.exp * 1000);
-      if (expirationDate < new Date()) {
-        throw new Error("Token has expired.");
-      }
-
-      localStorage.setItem("token", tokenFromUrl);
-      setToken(tokenFromUrl);
-      setIsAuthenticated(true);
-      setUserRole("admin");
-
-      const expirationTime = decodedToken.exp * 1000 - Date.now();
-      setExpirationTimeout(expirationTime);
-
-      router.push("/resources");
-    } catch (err) {
-      console.error("Error in handleTokenLogin:", err);
-      toast.error(
-        err.message || "An error occurred during token verification."
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
-
+  
+  
   const logout = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
     setToken(null);
     setIsAuthenticated(false);
     setUserRole(null);
-    if (expirationTimeoutRef.current) clearTimeout(expirationTimeoutRef.current);
-    router.push("/access-management");
+
+    if (expirationTimeoutRef.current) {
+      clearTimeout(expirationTimeoutRef.current);
+    }
+    router.push("/login");
   };
 
   const forgotPassword = async (email) => {
@@ -166,11 +149,16 @@ export function AuthProvider({ children }) {
 
   const refreshAuthToken = async () => {
     try {
+      const refreshToken = localStorage.getItem("refreshToken");
+      if (!refreshToken) {
+        throw new Error("No refresh token available.");
+      }
+
       const response = await fetch("/api/auth/refresh-token", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${refreshToken}`,
         },
       });
 
@@ -179,12 +167,12 @@ export function AuthProvider({ children }) {
       }
 
       const data = await response.json();
-      const { token: newToken } = data;
+      const { token: newAccessToken } = data;
 
-      localStorage.setItem("token", newToken);
-      setToken(newToken);
+      localStorage.setItem("accessToken", newAccessToken);
+      setToken(newAccessToken);
 
-      const decodedNewToken = jwt.decode(newToken);
+      const decodedNewToken = jwt.decode(newAccessToken);
       if (decodedNewToken) {
         setIsAuthenticated(true);
         setUserRole(decodedNewToken.role);
@@ -207,7 +195,7 @@ export function AuthProvider({ children }) {
         const expirationTime = decodedToken.exp * 1000;
         const currentTime = Date.now();
         const timeUntilExpiration = expirationTime - currentTime;
-        
+
         refreshTimeout = setTimeout(() => {
           refreshAuthToken();
         }, timeUntilExpiration - 60000);
@@ -229,7 +217,6 @@ export function AuthProvider({ children }) {
         login,
         logout,
         forgotPassword,
-        handleTokenLogin,
       }}
     >
       {children}

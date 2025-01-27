@@ -2,11 +2,14 @@ import React from "react";
 import Link from "next/link";
 import Testimony from "../../../components/testimonial/testimonials";
 import CTA from "../../../components/CTA/cta";
-import Contact from "../../../components/contact/contact";
 import Timeline from "./timeline";
 import Offer from "./offer";
 import Tag from "../../../components/tag/Tag";
 import Image from "next/image";
+
+export const metadata = {
+  title: "Our Services",
+}
 
 const client = [
   "https://placehold.co/400x100.png",
@@ -120,7 +123,6 @@ const About = () => {
                 and help you reach new milestones."
       />
 
-      <Contact />
     </>
   );
 };

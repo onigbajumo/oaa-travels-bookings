@@ -1,27 +1,45 @@
 "use client";
 import { useState } from "react";
-import { useAuth } from "../../../context/AuthContext";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 import Image from "next/image";
 import Link from "next/link";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-export default function LoginPage() {
-  const { login } = useAuth();
+export default function SignupPage() {
+  const { loading } = useAuth();
+  const router = useRouter();
 
   const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [viewPassword, setViewPassword] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
+
+    const userData = { email, phoneNumber, password };
+
     try {
-      await login(email, password);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsSubmitting(false);
+      const response = await fetch("/api/auth/registration", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+
+      if (response.ok) {
+        router.push("/login");
+        toast.success("Account created successfully. Please login.");
+      } else {
+        const error = await response.json();
+        toast.error(error.message || "An error occurred during signup.");
+      }
+    } catch (err) {
+      toast.error(err.message || "An error occurred. Please try again later.");
     }
   };
 
@@ -41,9 +59,11 @@ export default function LoginPage() {
               alt="logo"
             />
           </div>
-          <h2 className="text-center font-semibold text-3xl">Welcome</h2>
+          <h2 className="text-center font-semibold text-3xl">
+            Create Account
+          </h2>
           <p className="text-center text-sm text-[#525252]">
-            Please enter your credentials to gain access to the Julia Torres Portal.
+            Please fill in your details to create a new account.
           </p>
         </div>
 
@@ -55,6 +75,16 @@ export default function LoginPage() {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
+
+        <input
+          type="tel"
+          placeholder="Phone Number"
+          className="border border-gray-300 w-full p-2 mb-4 rounded"
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
+          required
+        />
+
         <div className="relative">
           <input
             type={viewPassword ? "text" : "password"}
@@ -64,7 +94,7 @@ export default function LoginPage() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <div className="absolute top-2 right-2">
+          <div className="absolute top-2 right-2 cursor-pointer">
             {viewPassword ? (
               <IoEyeOutline size={16} onClick={() => setViewPassword(false)} />
             ) : (
@@ -72,21 +102,23 @@ export default function LoginPage() {
             )}
           </div>
         </div>
+
         <button
           type="submit"
           className={`bg-secondary text-white w-full p-2 rounded-lg ${
-            isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+            loading ? "opacity-50 cursor-not-allowed" : ""
           }`}
-          disabled={isSubmitting}
+          disabled={loading}
         >
-          {isSubmitting ? "Logging in..." : "Login"}
+          {loading ? "Creating Account..." : "Sign Up"}
         </button>
+
         <div className="mt-4 text-center text-sm text-[#525252]">
           <Link
-            href="/forgot-password"
+            href="/login"
             className="text-main hover:underline hover:text-secondary"
           >
-            Forgot Password?
+            Already have an account? Login here.
           </Link>
         </div>
       </form>

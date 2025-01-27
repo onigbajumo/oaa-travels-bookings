@@ -28,6 +28,7 @@ const data = [
                 front-end and back-end development, equipping you with the
                 skills to create robust and scalable web applications`,
     duration: "6 months",
+    tag: "Beginner",
     mode: ["Onsite", "Virtual"],
     image: "https://placehold.co/500.png",
     highlights: [
@@ -203,8 +204,8 @@ const Page = () => {
 
           <div className="rounded-xl bg-[#F4F7F8] p-6 space-y-3">
             <PiUsersThreeBold className="text-secondary text-3xl" />
-            <span className="text-black font-medium">Beginner Friendly</span>
-            <h4 className="capitalize font-semibold">Foundations to Mastery</h4>
+            <span className="text-black font-medium">Level</span>
+            <h4 className="capitalize font-semibold">{course.tag}</h4>
           </div>
 
           <div className="rounded-xl bg-[#F4F7F8] p-6 space-y-3">

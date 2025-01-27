@@ -2,6 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const footerLinks = [
   {
@@ -26,7 +27,24 @@ const footerLinks = [
   },
 ];
 
+
+
 const Footer = () => {
+
+  const pathname = usePathname();
+
+  if (
+    pathname.startsWith("/login") ||
+    pathname.startsWith("/admin") ||
+    pathname.startsWith("/author") ||
+    pathname.startsWith("/superadmin") ||
+    pathname.startsWith("/reset-password") ||
+    pathname.startsWith("/forgot-password")
+  ) {
+    return null;
+  }
+
+
   return (
     <footer className="mx-auto max-w-[1920px]">
       <div

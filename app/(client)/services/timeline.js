@@ -1,6 +1,8 @@
+"use client";
+
 import React from "react";
 import Tag from "../../../components/tag/Tag";
-
+import { useInView } from "react-intersection-observer";
 
 const steps = [
   {
@@ -29,7 +31,12 @@ const Timeline = () => {
       <div className="space-y-5">
         <Tag text="Approach" />
         <h2 className="text-main">How We Work</h2>
-        <p>Our streamlined process ensures every project is tailored to your needs, executed with precision, and supported for lasting impact. From understanding your goals to delivering exceptional results, we’re with you every step of the way</p>
+        <p>
+          Our streamlined process ensures every project is tailored to your needs,
+          executed with precision, and supported for lasting impact. From
+          understanding your goals to delivering exceptional results, we’re with
+          you every step of the way.
+        </p>
       </div>
 
       <div className="max-w-4xl mx-auto mt-10">
@@ -41,19 +48,24 @@ const Timeline = () => {
             }}
           />
           {steps.map((item, index) => {
-            const circleColor = colors[index % 2];
-            let borderColor = "#D0DAE3";
-            if (circleColor === "#EF2689") {
-              borderColor = "#FCD8EA";
-            }
+            const { ref, inView } = useInView({
+              threshold: 0.5,
+              triggerOnce: true,
+            });
 
+            const circleColor = colors[index % 2];
+            const borderColor = circleColor === "#EF2689" ? "#FCD8EA" : "#D0DAE3";
             const secondColor =
               circleColor === "#EF2689" ? "#134574" : "#EF2689";
 
             return (
               <div
                 key={index}
-                className="relative mb-20 flex items-start"
+                ref={ref}
+                className={`relative mb-20 flex items-start transition-all 
+                  duration-[3000ms] ease-in-out
+                  ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"}
+                `}
                 style={{ minHeight: 100 }}
               >
                 <div className="relative">
@@ -68,9 +80,6 @@ const Timeline = () => {
                     className="absolute h-[2px] w-40"
                     style={{
                       top: "50%",
-                      // transform: "translateY(10%)",
-                      left: 0,
-                      right: 0,
                       background: `linear-gradient(to right, ${circleColor}, ${secondColor})`,
                     }}
                   />
@@ -87,6 +96,7 @@ const Timeline = () => {
           })}
         </div>
 
+        {/* Desktop Timeline */}
         <div className="hidden md:block relative">
           <div
             className="absolute top-0 bottom-0 left-1/2 -ml-px w-[2px]"
@@ -95,19 +105,25 @@ const Timeline = () => {
             }}
           />
           {steps.map((item, index) => {
+            const { ref, inView } = useInView({
+              threshold: 0.5,
+              triggerOnce: true,
+            });
+
             const isRightSide = index % 2 === 0;
             const circleColor = colors[index % 2];
-            let borderColor = "#D0DAE3";
-            if (circleColor === "#EF2689") {
-              borderColor = "#FCD8EA";
-            }
+            const borderColor = circleColor === "#EF2689" ? "#FCD8EA" : "#D0DAE3";
             const secondColor =
               circleColor === "#EF2689" ? "#134574" : "#EF2689";
 
             return (
               <div
                 key={index}
-                className="relative flex items-start mb-20"
+                ref={ref}
+                className={`relative flex items-start mb-20 transition-all 
+                  duration-[3000ms] ease-in-out
+                  ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"}
+                `}
                 style={{ minHeight: 100 }}
               >
                 <div className="w-1/2 flex justify-end pr-4">

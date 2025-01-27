@@ -2,7 +2,7 @@ import React from 'react'
 import LoginPage from './loginClient'
 
 export const metadata = {
-  title: `Login to management portal`,
+  title: `Login to portal`,
 };
 
 const page = () => {

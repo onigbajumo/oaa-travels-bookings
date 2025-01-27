@@ -6,7 +6,10 @@ import { FaArrowRight } from "react-icons/fa";
 import CTA from "../../../components/CTA/cta";
 import Testimony from "../../../components/testimonial/testimonials";
 import Portfolio from "../../../components/portfolio/portfolio";
-import Contact from "../../../components/contact/contact";
+
+export const metadata = {
+  title: "i-Enterprise",
+}
 
 const offer = [
   {
@@ -51,7 +54,6 @@ const benefits = [
   },
 ];
 
-
 const Page = () => {
   return (
     <>
@@ -86,7 +88,7 @@ const Page = () => {
                   Get Started Today
                 </Link>
                 <Link
-                  href="/services"
+                  href="#services"
                   className=" rounded-full text-main text-center border-main text-base border-2 px-5 py-3 font-medium"
                 >
                   Explore Our Services
@@ -96,12 +98,17 @@ const Page = () => {
           </div>
 
           <div className="hidden md:block">
-            <Image src={"/images/enterprise.png"} width={600} height={400} alt="hero" />
+            <Image
+              src={"/images/enterprise.png"}
+              width={600}
+              height={400}
+              alt="hero"
+            />
           </div>
         </div>
       </section>
 
-      <section className="container space-y-5 py-20">
+      <section className="container space-y-5 py-20" id="services">
         <Tag text="Our Services" />
         <h2 className="text-main">Our Expertise</h2>
         <p>
@@ -119,7 +126,12 @@ const Page = () => {
               >
                 <div className="absolute bottom-0 left-0 bg-main/80 group-hover:bg-main group-hover:h-full rounded-xl p-4 w-full group-hover:flex flex-col justify-between transition-all ease-in-out duration-700">
                   <div className="space-y-3">
-                    <Image src={item.icon} width={50} height={50} alt={item.title} />
+                    <Image
+                      src={item.icon}
+                      width={50}
+                      height={50}
+                      alt={item.title}
+                    />
                     <h3 className="text-white">{item.title}</h3>
                   </div>
 
@@ -128,12 +140,12 @@ const Page = () => {
                   </p>
 
                   <div className="hidden group-hover:flex transition-all ease-in-out duration-700">
-                    <Link
+                    {/* <Link
                       href={item.path}
                       className=" rounded-full text-white text-center border-white text-base border-2 px-4 py-2 font-medium"
                     >
                       View More
-                    </Link>
+                    </Link> */}
                   </div>
                 </div>
               </div>
@@ -142,63 +154,68 @@ const Page = () => {
         </div>
       </section>
 
-      <section className="container space-y-5 py-20 bg-[#F4F7F8]">
-        <Tag text="About the Upskill Program" />
+      <section className="py-20 bg-[#F4F7F8]">
+        <div className="container space-y-5">
+          <Tag text="About the Upskill Program" />
 
-        <div className="grid md:grid-cols-2 gap-10 lg:gap-20">
-          <div className="flex flex-col gap-5">
-            <h2 className="text-main">Why Choose iEnterprise by Ehizua Hub?</h2>
+          <div className="grid md:grid-cols-2 gap-10 lg:gap-20">
+            <div className="flex flex-col gap-5">
+              <h2 className="text-main">
+                Why Choose iEnterprise by Ehizua Hub?
+              </h2>
 
-            <div className="grid grid-cols-2 gap-2 md:gap-5 h-full">
-              <Image
-                src="/images/person-5.jpg"
-                width={1000}
-                height={1000}
-                className="w-full object-cover h-full md:rounded-tl-[100px] rounded-tl-[50px]"
-                alt="person"
-              />
-              <Image
-                src="/images/person-6.png"
-                width={1000}
-                height={1000}
-                className="w-full object-cover h-full md:rounded-br-[100px] rounded-br-[50px]"
-                alt="person"
-              />
+              <div className="grid grid-cols-2 gap-2 md:gap-5 h-full">
+                <Image
+                  src="/images/person-5.jpg"
+                  width={1000}
+                  height={1000}
+                  className="w-full object-cover h-full md:rounded-tl-[100px] rounded-tl-[50px]"
+                  alt="person"
+                />
+                <Image
+                  src="/images/person-6.png"
+                  width={1000}
+                  height={1000}
+                  className="w-full object-cover h-full md:rounded-br-[100px] rounded-br-[50px]"
+                  alt="person"
+                />
+              </div>
             </div>
-          </div>
-
-          <div className="space-y-5">
-            <p>
-              We bring creativity, innovation, and reliability to every project.
-              We bring creativity, innovation, and reliability to every project
-            </p>
 
             <div className="space-y-5">
-              <h3 className="font-bold text-main">Key Highlights</h3>
+              <p>
+                We bring creativity, innovation, and reliability to every
+                project. We bring creativity, innovation, and reliability to
+                every project
+              </p>
 
-              <div className="space-y-6">
-                {benefits.map((item, index) => (
-                  <div key={index} className="flex items-center gap-3">
-                    <div className="bg-secondary/20 p-2 rounded-md text-secondary">
-                      <FaArrowRight />
+              <div className="space-y-5">
+                <h3 className="font-bold text-main">Key Highlights</h3>
+
+                <div className="space-y-6">
+                  {benefits.map((item, index) => (
+                    <div key={index} className="flex items-center gap-3">
+                      <div className="bg-secondary/20 p-2 rounded-md text-secondary">
+                        <FaArrowRight />
+                      </div>
+
+                      <div>
+                        <h4>{item.title}</h4>
+
+                        {/* <p className="text-sm w-full lg:w-[80%]">{item.desc}</p> */}
+                      </div>
                     </div>
+                  ))}
+                </div>
 
-                    <div>
-                      <h4>{item.title}</h4>
-
-                      {/* <p className="text-sm w-full lg:w-[80%]">{item.desc}</p> */}
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="flex">
-                <Link
-                  href="/contact-us"
-                  className="bg-main rounded-full text-white text-center text-base px-5 py-2 border-2 border-transparent font-medium"
-                >
-                  Let’s Talk
-                </Link>
+                <div className="flex">
+                  <Link
+                    href="/contact-us"
+                    className="bg-main rounded-full text-white text-center text-base px-5 py-2 border-2 border-transparent font-medium"
+                  >
+                    Let’s Talk
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -215,8 +232,6 @@ const Page = () => {
         endText="?"
         desc="Let iEnterprise take your business to the next level with creative solutions that work. Let iEnterprise take your business to the next level with creative solutions that work"
       />
-
-      <Contact />
     </>
   );
 };
