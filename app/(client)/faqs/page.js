@@ -1,30 +1,27 @@
-import React from 'react'
-import FAQs from '../../../components/faq'
-import Image from 'next/image'
+import React from "react";
+import FAQs from "../../../components/faq";
+import Image from "next/image";
 
-
-const FAQ = ()=>{
-    return (
-        <div className=''>
-
-            <div className='bg-[#F3F6F8] flex flex-col md:flex-row justify-between  mt-[-9px] mb-24 pt-24 pb-4'>
-                <div className='pl-16'>
-                    <h1 className='font-semibold text-[80px]'>FAQ</h1>
-                    <p className='italic font-thin text-lg max-w-md'>Welcome to Ehizua Hub. By accessing and using our website.</p>
-                </div>
-                <div>
-                    <Image src="/ehizuahubprint.png" width={600} height={600} className='float-right'/>
-                </div>
+const FAQ = () => {
+  return (
+    <>
+      <section className="bg-[url('/images/background.png')] bg-no-repeat bg-cover">
+        <div className="container py-20">
+          <div className="space-y-6 flex flex-col justify-center">
+            <div className="space-y-8 ">
+              <h1 className="text-main">FAQs</h1>
+              <p className="xl:pr-48 lg:pr-12">
+                Answers to common questions about our services, policies,
+                support, and everything you need to know in one place.
+              </p>
             </div>
-
-            <FAQs />
-
-            <div>
-
-            </div>
-            
+          </div>
         </div>
-    )
-}
+      </section>
+
+      <FAQs />
+    </>
+  );
+};
 
 export default FAQ;
