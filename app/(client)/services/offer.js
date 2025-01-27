@@ -2,50 +2,108 @@
 import React, { useState } from "react";
 import Tag from "../../../components/tag/Tag";
 import { FaArrowRight, FaGlobe } from "react-icons/fa";
+import { MdPalette } from "react-icons/md";
+import { BsXDiamondFill } from "react-icons/bs";
+import { HiLightBulb } from "react-icons/hi";
 import Image from "next/image";
 
 const data = [
   {
-    title: "UI/UX Design",
+    title: "IT Training Programs",
     description:
-      "We design user interfaces that are intuitive, engaging, and visually appealing...",
-    icon: <FaGlobe />,
+      "Gain industry-relevant skills through our comprehensive IT training courses. Our expert-led classes prepare you for today's competitive tech landscape",
+    icon: <HiLightBulb />,
     image: "https://placehold.co/500.png",
-    heading: "Our Service Includes",
+    heading: "Our training programs includes:",
     details: [
       {
-        title: "User Research",
-        description: "We conduct user research to understand the needs...",
+        title: "Full-Stack Web Development",
+        description: "Master the art of web development by learning front-end and back-end technologies to build dynamic, responsive websites and applications",
       },
       {
-        title: "Wireframing & Prototyping",
-        description: "We create wireframes and prototypes to visualize...",
+        title: "UI/UX Design",
+        description: "Learn to design user-friendly and aesthetically pleasing digital products that prioritize user experience",
       },
       {
-        title: "Visual Design",
-        description: "We create visually appealing designs that reflect...",
+        title: "Animation",
+        description: "Acquire skills to create captivating animations for entertainment, education, and marketing",
+      },
+      {
+        title: "Cinematography",
+        description: "Master the art of storytelling through visual media and develop the technical skills needed for professional video production",
       },
     ],
   },
   {
-    title: "Development",
+    title: "IT Services",
     description:
-      "We build high-quality, scalable web and mobile applications...",
+      "Elevate your business with our range of professional IT services designed to strengthen your digital presence and streamline operations",
     icon: <FaGlobe />,
     image: "https://placehold.co/500.png",
-    heading: "Our Service",
+    heading: "Our offerings includes:",
     details: [
       {
-        title: "Frontend Development",
-        description: "We use modern frameworks and libraries...",
+        title: "Web Development",
+        description: "Build robust, custom websites that align with your brand's identity and deliver an exceptional user experience",
       },
       {
-        title: "Backend Development",
-        description: "We create robust and scalable backend solutions...",
+        title: "Digital Marketing",
+        description: "Drive traffic, boost brand visibility, and grow your online presence through targeted digital marketing strategies ",
+      },
+      {
+        title: "UI/UX Design",
+        description: "Enhance customer satisfaction with well-designed, intuitive interfaces for your websites, apps, and digital products",
       },
     ],
   },
-  // ... more items if needed
+  {
+    title: "iEnterprise",
+    description:
+      "Through IEnterprise, we deliver creative solutions that enhance brand identity, boost event impact, and capture life's unforgettable moments",
+    icon: <BsXDiamondFill />,
+    image: "https://placehold.co/500.png",
+    heading: "Our services includes:",
+    details: [
+      {
+        title: "Cinematography",
+        description: "Capture high-quality visuals for events, commercials, films, and promotional videos. Our team ensures your story is told with impact",
+      },
+      {
+        title: "Event Branding",
+        description: "Make your event memorable with customized branding materials, from banners to signage that align with your brand identity",
+      },
+      {
+        title: "Printing Services",
+        description: "High-quality printing services for promotional materials, brochures, event materials, and corporate branding assets",
+      },
+    ],
+  },
+  {
+    title: "Creative Tech School Program",
+    description:
+      "At EhizuaHub, we believe in nurturing the next generation of tech innovators. Our Creative Tech School Program is tailored for primary and secondary schools, providing students with essential tech skills that prepare them for the future.",
+    icon: <MdPalette />,
+    image: "https://placehold.co/500.png",
+    heading: "We partner with schools to offer hands-on training in:",
+    details: [
+      {
+        title: "Coding",
+        description: "Introduce students to programming concepts, logical thinking, and problem-solving through interactive projects",
+      },
+      {
+        title: "Animation",
+        description: "Empower students to create digital animations, unlocking their creative potential",
+      },
+      {
+        title: "Robotics",
+        description: "Engage students in building and programming robots, fostering critical thinking, engineering, and problem-solving skills",
+      },
+      {
+        title: "Cinematography",
+        description: "Teach students how to produce visually engaging videos, enhancing their storytelling abilities",
+      },
+    ],
+  },
 ];
 
 const Offer = () => {
@@ -84,7 +142,7 @@ const Offer = () => {
                 >
                   <div className="flex items-center space-x-2">
                     <span
-                      className={`text-xl ${
+                      className={`text-2xl ${
                         isActive ? "text-white" : "text-secondary"
                       }`}
                     >
@@ -131,7 +189,7 @@ const Offer = () => {
                     </div>
                     <div>
                       <h4>{detail.title}</h4>
-                      <p className="text-sm w-full lg:w-[80%]">
+                      <p className="text-sm w-full ">
                         {detail.description}
                       </p>
                     </div>
