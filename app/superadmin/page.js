@@ -3,7 +3,7 @@ import React from 'react'
 const page = () => {
   return (
     <div>
-      Admin Dashboard
+      Super Admin Dashboard
     </div>
   )
 }

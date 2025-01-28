@@ -1,7 +1,7 @@
 "use client";
 
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
-import { AuthProvider } from "../../context/AuthContext";
+import { AuthProvider } from "@/context/AuthContext";
 import React from "react";
 
 const theme = extendTheme({

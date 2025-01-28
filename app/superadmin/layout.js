@@ -6,7 +6,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <ProtectedRoute requiredRoles={["admin"]}>
+    <ProtectedRoute requiredRoles={["superadmin"]}>
         {children}
     </ProtectedRoute>
   );

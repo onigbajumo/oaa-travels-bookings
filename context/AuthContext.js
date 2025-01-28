@@ -95,7 +95,7 @@ export function AuthProvider({ children }) {
       toast.success("Login successful!");
   
       if (decodedAccessToken.role) {
-        router.push(`/${decodedAccessToken.role}/dashboard`);
+        router.push(`/${decodedAccessToken.role}`);
       } else {
         router.push("/home");
       }

@@ -1,6 +1,6 @@
 import "./globals.css";
-import Navbar from "../../components/navbar/Navbar";
-import Footer from "../../components/footer/Footer";
+import Navbar from "../components/navbar/Navbar";
+import Footer from "../components/footer/Footer";
 import Providers from "./Providers";
 import { ToastContainer } from "react-toastify";
 
