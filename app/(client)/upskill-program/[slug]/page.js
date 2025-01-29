@@ -19,90 +19,9 @@ import {
 import Testimony from "../../../../components/testimonial/testimonials";
 import CTA from "../../../../components/CTA/cta";
 import FAQs from "../../../../components/faq";
-
-const data = [
-  {
-    title: "Full-Stack Web Development",
-    description: `Learn to build dynamic, responsive websites and applications
-                from scratch. This course offers an in-depth exploration of both
-                front-end and back-end development, equipping you with the
-                skills to create robust and scalable web applications`,
-    duration: "6 months",
-    tag: "Beginner",
-    mode: ["Onsite", "Virtual"],
-    image: "https://placehold.co/500.png",
-    highlights: [
-      "Comprehensive Curriculum",
-      "Hands-On Projects",
-      "Beginner Friendly",
-      "Flexible Learning Modes",
-    ],
-    skills: ["html", "css", "javascript", "react", "nodejs", "mongodb"],
-    instructor: {
-      name: "John Doe",
-      image: "https://placehold.co/500.png",
-      bio: "John is a seasoned full-stack developer with over 10 years of experience in building web applications. He has worked with several startups and tech companies, helping them build scalable and robust web applications.",
-      experience: "Senior Fullstack Developer | 10+ Years of Experience",
-    },
-    curriculum: [
-      {
-        module: "Module 1: Introduction to Web Development",
-        topics: [
-          "Introduction to Web Development",
-          "HTML Basics",
-          "CSS Basics",
-          "JavaScript Basics",
-        ],
-      },
-      {
-        module: "Module 2: Front-End Development",
-        topics: [
-          "Advanced CSS",
-          "Responsive Layouts",
-          "JavaScript DOM Manipulation",
-          "Frameworks (React, Vue, or Angular)",
-        ],
-      },
-      {
-        module: "Module 3: Back-End & Database",
-        topics: [
-          "Node.js & Express",
-          "APIs & RESTful Services",
-          "Database (MongoDB, SQL)",
-          "Authentication & Security",
-        ],
-      },
-    ],
-    payments: [
-      {
-        title: "One-time Payment (remote)",
-        description:
-          "Pay the full program fee upfront and get started with the program.",
-        price: "₦200,000",
-      },
-      {
-        title: "One-time Payment (onsite)",
-        description:
-          "Pay the full program fee upfront and get started with the program.",
-        price: "₦250,000",
-      },
-      {
-        title: "Monthly Payment (remote)",
-        description:
-          "Pay the program fee in monthly installments spread over the duration of the program.",
-        price: "₦250,000",
-        duration: "4 months",
-      },
-      {
-        title: "Monthly Payment (onsite)",
-        description:
-          "Pay the program fee in monthly installments spread over the duration of the program.",
-        price: "₦250,000",
-        duration: "4 months",
-      },
-    ],
-  },
-];
+import { IoIosArrowForward } from "react-icons/io";
+import { useParams } from "next/navigation";
+import courses from "@/content/data";
 
 const sections = [
   { id: "overview", label: "Overview" },
@@ -114,7 +33,9 @@ const sections = [
 ];
 
 const Page = () => {
-  const course = data[0];
+  const { slug } = useParams();
+
+  const course = courses.find((course) => course.slug === slug);
 
   const [openModules, setOpenModules] = useState([]);
   const [activeSection, setActiveSection] = useState("overview");
@@ -160,6 +81,9 @@ const Page = () => {
     <>
       <section className="bg-[url('/images/background.png')] bg-no-repeat bg-cover">
         <div className="container py-20">
+        <div className="flex items-center gap-2 flex-wrap mb-5">
+          <Link href="/" className="hover:text-secondary">Home</Link> <IoIosArrowForward /> <Link href="/upskill-program/courses" className="hover:text-secondary">All courses</Link> <IoIosArrowForward /> <Link href="#" className="text-gray-500">{course.title}</Link>
+        </div>
           <div className="space-y-6 flex flex-col justify-center">
             <div className="space-y-8">
               <h1 className="text-main">{course.title}</h1>
@@ -167,7 +91,7 @@ const Page = () => {
 
               <div className="flex flex-col md:flex-row gap-4">
                 <Link
-                  href="#"
+                  href={`/enrol?course=${slug}`}
                   className="bg-main rounded-full text-white text-center text-base px-5 py-3 border-2 border-transparent font-medium"
                 >
                   Enrol Now
@@ -420,7 +344,7 @@ const Page = () => {
 
                     <div className="flex">
                       <Link
-                        href="#"
+                        href={`/enrol?course=${slug}`}
                         className="bg-main rounded-full text-white text-center text-base px-5 py-2 font-medium"
                       >
                         Enrol Now
@@ -470,7 +394,7 @@ const Page = () => {
 
                 <div className="flex justify-center">
                   <Link
-                    href="#"
+                    href={`/enrol?course=${slug}`}
                     className="bg-white rounded-full text-main text-center text-base px-7 py-3 font-medium"
                   >
                     Start Learning Today

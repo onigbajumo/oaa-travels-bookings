@@ -64,7 +64,7 @@ export default function LoginPage() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <div className="absolute top-2 right-2">
+          <div className="absolute top-5 right-2">
             {viewPassword ? (
               <IoEyeOutline size={16} onClick={() => setViewPassword(false)} />
             ) : (

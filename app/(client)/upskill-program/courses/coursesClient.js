@@ -5,59 +5,8 @@ import Image from "next/image";
 import { FaStar } from "react-icons/fa";
 import { BiFilter } from "react-icons/bi";
 import CTA from "../../../../components/CTA/cta";
-
-const skill = [
-  {
-    title: "Full Stack Development",
-    category: "development",
-    desc: "Master front-end and back-end technologies to build dynamic, responsive websites and applications",
-    duration: "6 months",
-    rating: "4.5",
-    path: "course",
-    image: "https://placehold.co/500.png",
-    tag: "Beginner",
-  },
-  {
-    title: "Full Stack Development",
-    category: "design",
-    desc: "Master front-end and back-end technologies to build dynamic, responsive websites and applications",
-    duration: "2 months",
-    rating: "4.5",
-    path: "course",
-    image: "https://placehold.co/500.png",
-    tag: "Beginner",
-  },
-  {
-    title: "Full Stack Development",
-    category: "marketing",
-    desc: "Master front-end and back-end technologies to build dynamic, responsive websites and applications",
-    duration: "6 months",
-    rating: "4.5",
-    path: "course",
-    image: "https://placehold.co/500.png",
-    tag: "Intermediate",
-  },
-  {
-    title: "Full Stack Development",
-    category: "development",
-    desc: "Master front-end and back-end technologies to build dynamic, responsive websites and applications",
-    duration: "2 months",
-    rating: "4.5",
-    path: "course",
-    image: "https://placehold.co/500.png",
-    tag: "Intermediate",
-  },
-  {
-    title: "Full Stack Development",
-    category: "development",
-    desc: "Master front-end and back-end technologies to build dynamic, responsive websites and applications",
-    duration: "3 months",
-    rating: "4.5",
-    path: "course",
-    image: "https://placehold.co/500.png",
-    tag: "Advanced",
-  },
-];
+import { IoIosArrowForward } from "react-icons/io";
+import courses from "@/content/data";
 
 const Courses = () => {
   const [selectedCategory, setSelectedCategory] = useState("Category");
@@ -66,22 +15,22 @@ const Courses = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const categories = useMemo(() => {
-    const uniqueCategories = Array.from(new Set(skill.map((s) => s.category)));
+    const uniqueCategories = Array.from(new Set(courses.map((s) => s.category)));
     return ["Category", ...uniqueCategories];
   }, []);
 
   const durations = useMemo(() => {
-    const uniqueDurations = Array.from(new Set(skill.map((s) => s.duration)));
+    const uniqueDurations = Array.from(new Set(courses.map((s) => s.duration)));
     return ["Duration", ...uniqueDurations];
   }, []);
 
   const difficulties = useMemo(() => {
-    const uniqueDifficulties = Array.from(new Set(skill.map((s) => s.tag)));
+    const uniqueDifficulties = Array.from(new Set(courses.map((s) => s.tag)));
     return ["Difficulty", ...uniqueDifficulties];
   }, []);
 
-  const filteredSkills = useMemo(() => {
-    return skill.filter((item) => {
+  const filteredCourses = useMemo(() => {
+    return courses.filter((item) => {
       const matchesCategory =
         selectedCategory === "Category" || item.category === selectedCategory;
       const matchesDuration =
@@ -105,6 +54,9 @@ const Courses = () => {
     <>
       <section className="bg-[url('/images/background.png')] bg-no-repeat bg-cover">
         <div className="container py-20">
+        <div className="flex items-center gap-2 flex-wrap mb-5">
+          <Link href="/" className="hover:text-secondary">Home</Link> <IoIosArrowForward /> <Link href="/upskill-program" className="hover:text-secondary">Upskill program</Link> <IoIosArrowForward /> <Link href="#" className="text-gray-500">Courses</Link>
+        </div>
           <div className="space-y-6 flex flex-col justify-center">
             <div className="space-y-8">
               <h1 className="text-main">Explore Our Courses</h1>
@@ -181,13 +133,13 @@ const Courses = () => {
             </div>
           </div>
 
-          {filteredSkills.length === 0 ? (
+          {filteredCourses.length === 0 ? (
             <p className="text-center mt-10 text-lg font-medium">
               No courses available
             </p>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-10">
-              {filteredSkills.map((item, index) => (
+              {filteredCourses.map((item, index) => (
                 <div
                   key={index}
                   className="bg-white rounded-2xl p-2 md:p-3 hover:shadow-lg transition-all ease-in-out duration-300"
@@ -212,7 +164,7 @@ const Courses = () => {
                       {item.category}
                     </p>
                     <h3 className="text-black font-bold">{item.title}</h3>
-                    <p className="text-[#C4C4C4]">{item.desc}</p>
+                    <p className="text-[#C4C4C4] short">{item.description}</p>
                     <div className="flex justify-between w-full">
                       <p className="text-[#C4C4C4]">{item.duration}</p>
                       <p className="text-black font-semibold flex items-center gap-2">
@@ -224,7 +176,7 @@ const Courses = () => {
 
                   <div className="flex mt-2">
                     <Link
-                      href={`/upskill-program/${item.path}`}
+                      href={`/upskill-program/${item.slug}`}
                       className="bg-main lg:bg-transparent hover:bg-main rounded-full text-white lg:text-main hover:text-white text-center text-base px-4 py-2 border border-main font-medium transition-all ease-in-out duration-300"
                     >
                       Get Started

@@ -198,37 +198,35 @@ const About = () => {
           </div>
 
           <div className="mt-8">
-
             <div className="overflow-x-auto">
-            <div className="bg-white/40 rounded-full p-3 flex items-center gap-5 w-fit whitespace-nowrap">
-              <button
-                onClick={() => setActiveTab("mission")}
-                className={`rounded-full px-4 py-2 bg-white font-semibold transition-colors ${
-                  activeTab === "mission" ? "text-secondary" : "text-black"
-                }`}
-              >
-                MISSION
-              </button>
+              <div className="bg-white/40 rounded-full p-3 flex items-center gap-5 w-fit whitespace-nowrap">
+                <button
+                  onClick={() => setActiveTab("mission")}
+                  className={`rounded-full px-4 py-2 bg-white font-semibold transition-colors ${
+                    activeTab === "mission" ? "text-secondary" : "text-black"
+                  }`}
+                >
+                  MISSION
+                </button>
 
-              <button
-                onClick={() => setActiveTab("vision")}
-                className={`rounded-full px-4 py-2 bg-white font-semibold transition-colors ${
-                  activeTab === "vision" ? "text-secondary" : "text-black"
-                }`}
-              >
-                VISION
-              </button>
+                <button
+                  onClick={() => setActiveTab("vision")}
+                  className={`rounded-full px-4 py-2 bg-white font-semibold transition-colors ${
+                    activeTab === "vision" ? "text-secondary" : "text-black"
+                  }`}
+                >
+                  VISION
+                </button>
 
-              <button
-                onClick={() => setActiveTab("values")}
-                className={`rounded-full px-4 py-2 bg-white font-semibold transition-colors ${
-                  activeTab === "values" ? "text-secondary" : "text-black"
-                }`}
-              >
-                CORE VALUES
-              </button>
-            </div>
-
+                <button
+                  onClick={() => setActiveTab("values")}
+                  className={`rounded-full px-4 py-2 bg-white font-semibold transition-colors ${
+                    activeTab === "values" ? "text-secondary" : "text-black"
+                  }`}
+                >
+                  CORE VALUES
+                </button>
+              </div>
             </div>
 
             <div className="mt-8">
@@ -289,13 +287,15 @@ const About = () => {
           <div className="grid sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-10">
             {team.map((item, index) => (
               <div key={index} className="flex flex-col items-center gap-1">
-                <Image
-                  src={item.image}
-                  width={500}
-                  height={500}
-                  alt={item.name}
-                  className="rounded-lg w-4/5"
-                />
+                <div className="rounded-xl border-2 border-secondary/20 p-1 flex justify-center ">
+                  <Image
+                    src={item.image}
+                    width={500}
+                    height={500}
+                    alt={item.name}
+                    className="rounded-lg w-full object-cover aspect-square"
+                  />
+                </div>
                 <div>
                   <h4 className="font-semibold text-center text-main">
                     {item.name}
