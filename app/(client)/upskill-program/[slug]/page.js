@@ -335,7 +335,7 @@ const Page = () => {
                     key={i}
                     className="bg-[#F4F7F8] p-4 rounded-lg space-y-2"
                   >
-                    <h4 className="font-semibold">{payment.title}</h4>
+                    <h4 className="font-semibold">{payment.title} <span className="capitalize">({payment.mode})</span></h4>
                     <p>{payment.description}</p>
                     <div className="flex gap-2">
                       <h5 className="font-semibold">{payment.price}</h5>{" "}

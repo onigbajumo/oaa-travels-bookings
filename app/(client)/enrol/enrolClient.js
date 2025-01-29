@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { Suspense } from "react";
 import Link from "next/link";
 import { IoIosArrowForward } from "react-icons/io";
 import { useSearchParams } from "next/navigation";
@@ -19,12 +19,17 @@ const Enrol = () => {
     firstName: Yup.string().required("First Name is required"),
     lastName: Yup.string().required("Last Name is required"),
     phoneNumber: Yup.string().required("Phone Number is required"),
-    email: Yup.string().email("Invalid email address").required("Email is required"),
+    email: Yup.string()
+      .email("Invalid email address")
+      .required("Email is required"),
     gender: Yup.string().required("Gender is required"),
     state: Yup.string().required("State is required"),
     learningMode: Yup.string().required("Learning Mode is required"),
     paymentPlan: Yup.string().required("Payment Plan is required"),
-    terms: Yup.boolean().oneOf([true], "You must accept the terms and conditions"),
+    terms: Yup.boolean().oneOf(
+      [true],
+      "You must accept the terms and conditions"
+    ),
   });
 
   const formik = useFormik({
@@ -47,7 +52,8 @@ const Enrol = () => {
   });
 
   const filteredPaymentPlans = course?.payments.filter(
-    (payment) => payment.mode.toLowerCase() === formik.values.learningMode.toLowerCase()
+    (payment) =>
+      payment.mode.toLowerCase() === formik.values.learningMode.toLowerCase()
   );
 
   return (
@@ -79,7 +85,9 @@ const Enrol = () => {
           </div>
           <div className="space-y-6 flex flex-col justify-center">
             <div className="space-y-8">
-              <h1 className="text-main capitalize">Enrollment for {course.title}</h1>
+              <h1 className="text-main capitalize">
+                Enrollment for {course.title}
+              </h1>
               <p className="xl:pr-48 lg:pr-12">
                 You're just a few steps away from starting your learning
                 journey!
@@ -94,10 +102,14 @@ const Enrol = () => {
           <div className="w-full">
             <h2 className="text-main text-center">Welcome to Ehizua Hub!</h2>
             <p className="text-center text-[#828282] mt-2">
-              Please fill out the form below to finalize your enrollment for {course.title}.
+              Please fill out the form below to finalize your enrollment for{" "}
+              {course.title}.
             </p>
 
-            <form onSubmit={formik.handleSubmit} className="mt-5 bg-white border-2 rounded-xl p-5 grid md:grid-cols-2 gap-5 gap-y-8">
+            <form
+              onSubmit={formik.handleSubmit}
+              className="mt-5 bg-white border-2 rounded-xl p-5 grid md:grid-cols-2 gap-5 gap-y-8"
+            >
               <div className="flex flex-col">
                 <label>First Name</label>
                 <input
@@ -142,7 +154,9 @@ const Enrol = () => {
                   value={formik.values.phoneNumber}
                 />
                 {formik.touched.phoneNumber && formik.errors.phoneNumber ? (
-                  <div className="text-red-500">{formik.errors.phoneNumber}</div>
+                  <div className="text-red-500">
+                    {formik.errors.phoneNumber}
+                  </div>
                 ) : null}
               </div>
 
@@ -215,7 +229,9 @@ const Enrol = () => {
                   ))}
                 </select>
                 {formik.touched.learningMode && formik.errors.learningMode ? (
-                  <div className="text-red-500">{formik.errors.learningMode}</div>
+                  <div className="text-red-500">
+                    {formik.errors.learningMode}
+                  </div>
                 ) : null}
               </div>
 
@@ -237,7 +253,9 @@ const Enrol = () => {
                   ))}
                 </select>
                 {formik.touched.paymentPlan && formik.errors.paymentPlan ? (
-                  <div className="text-red-500">{formik.errors.paymentPlan}</div>
+                  <div className="text-red-500">
+                    {formik.errors.paymentPlan}
+                  </div>
                 ) : null}
               </div>
 
@@ -251,7 +269,10 @@ const Enrol = () => {
                     onBlur={formik.handleBlur}
                     checked={formik.values.terms}
                   />
-                  <span>I have read and agreed to Ehizua Hub <span className="text-main">Terms & Conditions</span></span>
+                  <span>
+                    I have read and agreed to Ehizua Hub{" "}
+                    <span className="text-main">Terms & Conditions</span>
+                  </span>
                 </label>
                 {formik.touched.terms && formik.errors.terms ? (
                   <div className="text-red-500">{formik.errors.terms}</div>
@@ -259,7 +280,10 @@ const Enrol = () => {
               </div>
 
               <div className="md:col-span-2 flex justify-center mb-6">
-                <button type="submit" className="bg-main text-white rounded-full text-center text-base px-7 py-3 font-medium">
+                <button
+                  type="submit"
+                  className="bg-main text-white rounded-full text-center text-base px-7 py-3 font-medium"
+                >
                   Proceed with Application
                 </button>
               </div>
@@ -273,4 +297,10 @@ const Enrol = () => {
   );
 };
 
-export default Enrol;
+const EnrolPage = () => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <Enrol />
+  </Suspense>
+);
+
+export default EnrolPage;
