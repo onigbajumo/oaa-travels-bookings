@@ -86,7 +86,7 @@ label {
 input,
 select,
 textarea {
-  @apply outline-none border border-gray-400 rounded-full px-3 py-2 placeholder:text-sm text-black placeholder:text-black mt-2;
+  @apply outline-none border border-gray-400 rounded-full px-3 py-2 placeholder:text-sm text-black placeholder:text-black;
 }
 
 @layer components {

@@ -247,8 +247,8 @@ const Enrol = () => {
                 >
                   <option value="">Select plan</option>
                   {filteredPaymentPlans?.map((payment, index) => (
-                    <option key={index} value={payment.title}>
-                      {payment.title} - {payment.price}
+                    <option key={index} value={payment.plan.toLowerCase()}>
+                      {payment.plan.toLowerCase()} - {payment.price}
                     </option>
                   ))}
                 </select>

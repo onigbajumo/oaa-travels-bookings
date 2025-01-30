@@ -55,37 +55,11 @@ const courses = [
       },
     ],
     payments: [
-      {
-        title: "One-time Payment",
-        mode: "virtual",
-        description:
-          "Pay the full program fee upfront and get started with the program.",
-        price: "₦200,000",
-      },
-      {
-        title: "One-time Payment",
-        mode: "onsite",
-        description:
-          "Pay the full program fee upfront and get started with the program.",
-        price: "₦250,000",
-      },
-      {
-        title: "Monthly Payment",
-        mode: "virtual",
-        description:
-          "Pay the program fee in monthly installments spread over the duration of the program.",
-        price: "₦250,000",
-        duration: "4 months",
-      },
-      {
-        title: "Monthly Payment",
-        mode: "onsite",
-        description:
-          "Pay the program fee in monthly installments spread over the duration of the program.",
-        price: "₦250,000",
-        duration: "4 months",
-      },
-    ],
+        { mode: "Virtual", plan: "One-time", price: "₦200,000" },
+        { mode: "Onsite", plan: "One-time", price: "₦250,000" },
+        { mode: "Virtual", plan: "Monthly", price: "₦200,000" },
+        { mode: "Onsite", plan: "Monthly", price: "₦250,000" },
+      ],
   },
   {
     title: "Full-Stack Web Development",
@@ -143,37 +117,9 @@ const courses = [
       },
     ],
     payments: [
-      {
-        title: "One-time Payment",
-        mode: "virtual",
-        description:
-          "Pay the full program fee upfront and get started with the program.",
-        price: "₦200,000",
-      },
-      {
-        title: "One-time Payment",
-        mode: "onsite",
-        description:
-          "Pay the full program fee upfront and get started with the program.",
-        price: "₦250,000",
-      },
-      {
-        title: "Monthly Payment",
-        mode: "virtual",
-        description:
-          "Pay the program fee in monthly installments spread over the duration of the program.",
-        price: "₦250,000",
-        duration: "4 months",
-      },
-      {
-        title: "Monthly Payment",
-        mode: "onsite",
-        description:
-          "Pay the program fee in monthly installments spread over the duration of the program.",
-        price: "₦250,000",
-        duration: "4 months",
-      },
-    ],
+        { mode: "Virtual", plan: "One-time", price: "₦200,000" },
+        { mode: "Onsite", plan: "One-time", price: "₦250,000" },
+      ],
   },
   {
     title: "Full-Stack Web Development",
@@ -231,37 +177,9 @@ const courses = [
       },
     ],
     payments: [
-      {
-        title: "One-time Payment",
-        mode: "virtual",
-        description:
-          "Pay the full program fee upfront and get started with the program.",
-        price: "₦200,000",
-      },
-      {
-        title: "One-time Payment",
-        mode: "onsite",
-        description:
-          "Pay the full program fee upfront and get started with the program.",
-        price: "₦250,000",
-      },
-      {
-        title: "Monthly Payment",
-        mode: "virtual",
-        description:
-          "Pay the program fee in monthly installments spread over the duration of the program.",
-        price: "₦250,000",
-        duration: "4 months",
-      },
-      {
-        title: "Monthly Payment",
-        mode: "onsite",
-        description:
-          "Pay the program fee in monthly installments spread over the duration of the program.",
-        price: "₦250,000",
-        duration: "4 months",
-      },
-    ],
+        { mode: "Virtual", plan: "One-time", price: "₦200,000" },
+        { mode: "Onsite", plan: "One-time", price: "₦250,000" },
+      ],
   },
   {
     title: "UI UX design",
@@ -319,37 +237,9 @@ const courses = [
       },
     ],
     payments: [
-      {
-        title: "One-time Payment",
-        mode: "virtual",
-        description:
-          "Pay the full program fee upfront and get started with the program.",
-        price: "₦200,000",
-      },
-      {
-        title: "One-time Payment",
-        mode: "onsite",
-        description:
-          "Pay the full program fee upfront and get started with the program.",
-        price: "₦250,000",
-      },
-      {
-        title: "Monthly Payment",
-        mode: "virtual",
-        description:
-          "Pay the program fee in monthly installments spread over the duration of the program.",
-        price: "₦250,000",
-        duration: "4 months",
-      },
-      {
-        title: "Monthly Payment",
-        mode: "onsite",
-        description:
-          "Pay the program fee in monthly installments spread over the duration of the program.",
-        price: "₦250,000",
-        duration: "4 months",
-      },
-    ],
+        { mode: "Virtual", plan: "One-time", price: "₦200,000" },
+        { mode: "Onsite", plan: "One-time", price: "₦250,000" },
+      ],
   },
 ];
 

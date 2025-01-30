@@ -35,14 +35,14 @@ function ResetPasswordContent() {
     }
 
     try {
-      const response = await fetch("/api/auth/reset-password", {
+      const response = await fetch(`/api/auth/accept-invite?token=${token}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          token,
-          newPassword: values.newPassword,
+          // token,
+          password: values.newPassword,
         }),
       });
 
@@ -96,7 +96,7 @@ function ResetPasswordContent() {
               />
             </div>
             <h2 className="text-center font-semibold text-3xl">
-              Reset Your Password
+              Set Password
             </h2>
             <p className="text-center text-sm text-[#525252]">
               Please enter your new password below.
@@ -202,7 +202,7 @@ function ResetPasswordContent() {
             }`}
             disabled={isSubmitting}
           >
-            {isSubmitting ? "Resetting..." : "Reset Password"}
+            {isSubmitting ? "Setting..." : "Set Password"}
           </button>
         </Form>
       )}

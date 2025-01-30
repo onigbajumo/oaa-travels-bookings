@@ -6,7 +6,36 @@ import React from "react";
 
 const theme = extendTheme({
   colors: {
-    main: "#3182CE",
+    brand: {
+      500: "#EF2689",
+    },
+  },
+  components: {
+    Button: {
+      baseStyle: {
+        _focus: { boxShadow: "none" },
+      },
+      variants: {
+        solid: {
+          bg: "brand.500",
+          color: "white",
+          _hover: {
+            bg: "brand.600",
+          },
+        },
+        // outline: {
+        //   borderColor: "brand.500",
+        //   color: "brand.500",
+        //   _hover: {
+        //     bg: "brand.500",
+        //     color: "white",
+        //   },
+        // },
+      },
+      defaultProps: {
+        colorScheme: "brand",
+      },
+    },
   },
 });
 
