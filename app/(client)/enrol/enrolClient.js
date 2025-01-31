@@ -89,7 +89,7 @@ const Enrol = () => {
                 Enrollment for {course.title}
               </h1>
               <p className="xl:pr-48 lg:pr-12">
-                You're just a few steps away from starting your learning
+                You{"'"}re just a few steps away from starting your learning
                 journey!
               </p>
             </div>
