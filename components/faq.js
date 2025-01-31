@@ -16,14 +16,17 @@ const FAQs = ({ limit }) => {
 
   useEffect(() => {
     const fetchFaqs = async () => {
+      setLoading(true);
+
       try {
-        setLoading(true);
         const response = await fetch("/api/faqs");
+
         if (!response.ok) {
           throw new Error(`Error fetching FAQs: ${response.statusText}`);
         }
+
         const data = await response.json();
-        if (data) {
+        if ([200, 201].includes(response.status) && data.length > 0) {
           setFaqs(data);
           setLoading(false);
         }
@@ -31,6 +34,7 @@ const FAQs = ({ limit }) => {
         console.error(error);
       }
     };
+
     fetchFaqs();
   }, []);
 

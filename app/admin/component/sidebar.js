@@ -134,16 +134,16 @@ const Sidebar = () => {
               {isSidebarOpen ? (
                 <Image
                   src="/logo.png"
-                  width={500}
-                  height={500}
+                  width={300}
+                  height={50}
                   className="w-40"
                   alt="Logo"
                 />
               ) : (
                 <Image
-                  src="/logo.png"
-                  width={500}
-                  height={500}
+                  src="/icon.png"
+                  width={50}
+                  height={50}
                   className="w-16"
                   alt="Logo"
                 />

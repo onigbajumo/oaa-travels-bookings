@@ -50,18 +50,20 @@ const Testimony = () => {
     const fetchTestimonials = async () => {
       try {
         setLoading(true);
+
         const res = await fetch("/api/testimonial");
         if (!res.ok) {
           throw new Error(`Error fetching testimonials: ${res.statusText}`);
         }
+
         const data = await res.json();
-        if (data) {
+        if ([200, 201].includes(res.status) && data.length > 0) {
           setTestimonials(data);
           setLoading(false);
         }
       } catch (error) {
         console.error(error);
-      } 
+      }
     };
 
     fetchTestimonials();

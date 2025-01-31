@@ -33,29 +33,16 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const FAQPage = () => {
-  // Dummy data for FAQs
-  const initialFaqs = [
-    {
-      _id: "1",
-      question: "What is React?",
-      answer: "React is a JavaScript library for building user interfaces.",
-    },
-    {
-      _id: "2",
-      question: "How do I install React?",
-      answer: "You can install React using npm or yarn.",
-    },
-  ];
+  const [faqs, setFaqs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const [faqs, setFaqs] = useState(initialFaqs);
-  const [loading, setLoading] = useState(false); // No loading needed for dummy data
-  const [newQuestion, setNewQuestion] = useState("");
-  const [newAnswer, setNewAnswer] = useState("");
+  const [newTitle, setNewTitle] = useState("");
+  const [newContent, setNewContent] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [currentQuestion, setCurrentQuestion] = useState("");
-  const [currentAnswer, setCurrentAnswer] = useState("");
+  const [currentTitle, setCurrentTitle] = useState("");
+  const [currentContent, setCurrentContent] = useState("");
   const [currentId, setCurrentId] = useState(null);
 
   const {
@@ -71,96 +58,164 @@ const FAQPage = () => {
 
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Simulate fetching FAQs (no API call needed)
   useEffect(() => {
-    setLoading(false); // Set loading to false immediately
+    const fetchFAQs = async () => {
+      try {
+        setLoading(true);
+        const res = await fetch("/api/faqs");
+        if (!res.ok) {
+          throw new Error(`Error fetching FAQs: ${res.statusText}`);
+        }
+        const data = await res.json();
+        setFaqs(data);
+      } catch (error) {
+        toast.error(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFAQs();
   }, []);
 
-  const handleAddFAQ = () => {
-    if (newQuestion.trim() === "" || newAnswer.trim() === "") {
-      toast.error("Both question and answer are required.");
-      return;
-    }
-
-    if (
-      faqs.some(
-        (faq) => faq.question.toLowerCase() === newQuestion.trim().toLowerCase()
-      )
-    ) {
-      toast.error("This question already exists.");
+  const handleAddFAQ = async () => {
+    if (newTitle.trim() === "" || newContent.trim() === "") {
+      toast.error("Both title and content are required.");
       return;
     }
 
     setIsAddSubmitting(true);
 
-    // Simulate adding a new FAQ
-    const newFaq = {
-      _id: String(faqs.length + 1), // Generate a simple ID
-      question: newQuestion.trim(),
-      answer: newAnswer.trim(),
-    };
+    try {
+      const response = await fetch("/api/faqs", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: newTitle.trim(),
+          content: newContent.trim(),
+        }),
+      });
 
-    setFaqs([newFaq, ...faqs]);
-    toast.success(`FAQ "${newFaq.question}" has been added successfully.`);
-    onClose();
-    setNewQuestion("");
-    setNewAnswer("");
-    setIsAddSubmitting(false);
+      if (!response.ok) {
+        throw new Error(`Error adding FAQ: ${response.statusText}`);
+      }
+
+      const result = await response.json();
+      console.log("Create FAQ response:", result);
+
+      await refetchFaqs();
+
+      toast.success("FAQ created successfully!");
+      onClose();
+      setNewTitle("");
+      setNewContent("");
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setIsAddSubmitting(false);
+    }
   };
 
-  const handleEditFAQ = () => {
-    if (currentQuestion.trim() === "" || currentAnswer.trim() === "") {
-      toast.error("Both question and answer are required.");
+  const refetchFaqs = async () => {
+    try {
+      setLoading(true);
+      const res = await fetch("/api/faqs");
+      if (!res.ok) {
+        throw new Error(`Error fetching FAQs: ${res.statusText}`);
+      }
+      const data = await res.json();
+      setFaqs(data);
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleEditFAQ = async () => {
+    if (currentTitle.trim() === "" || currentContent.trim() === "") {
+      toast.error("Both title and content are required.");
       return;
     }
 
     if (
       faqs.some(
         (faq) =>
-          faq.question.toLowerCase() === currentQuestion.trim().toLowerCase() &&
+          faq.title.toLowerCase() === currentTitle.trim().toLowerCase() &&
           faq._id !== currentId
       )
     ) {
-      toast.error("This question already exists.");
+      toast.error("This FAQ already exists.");
       return;
     }
 
     setIsEditSubmitting(true);
 
-    // Simulate updating an FAQ
-    const updatedFaqs = faqs.map((faq) =>
-      faq._id === currentId
-        ? { ...faq, question: currentQuestion.trim(), answer: currentAnswer.trim() }
-        : faq
-    );
+    try {
+      const response = await fetch("/api/faqs", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: currentId,
+          title: currentTitle.trim(),
+          content: currentContent.trim(),
+        }),
+      });
 
-    setFaqs(updatedFaqs);
-    toast.success(`FAQ "${currentQuestion}" has been updated successfully.`);
-    handleCloseEditModal();
-    setIsEditSubmitting(false);
+      if (!response.ok) {
+        throw new Error(`Error updating FAQ: ${response.statusText}`);
+      }
+
+      const updatedFaq = await response.json();
+
+      setFaqs((prevFaqs) =>
+        prevFaqs.map((faq) => (faq._id === currentId ? updatedFaq : faq))
+      );
+
+      toast.success(`FAQ "${updatedFaq.title}" has been updated successfully.`);
+      handleCloseEditModal();
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setIsEditSubmitting(false);
+    }
   };
 
-  const handleDeleteFAQ = () => {
-    if (faqToDelete) {
-      // Simulate deleting an FAQ
-      const updatedFaqs = faqs.filter((faq) => faq._id !== faqToDelete);
-      setFaqs(updatedFaqs);
+  const handleDeleteFAQ = async () => {
+    if (!faqToDelete) return;
+
+    try {
+      const response = await fetch(`/api/faqs?id=${faqToDelete}`, {
+        method: "DELETE",
+      });
+      if (!response.ok) {
+        throw new Error(`Error deleting FAQ: ${response.statusText}`);
+      }
+
+      setFaqs((prevFaqs) => prevFaqs.filter((faq) => faq._id !== faqToDelete));
       toast.info("FAQ has been deleted successfully.");
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
       onDeleteClose();
     }
   };
 
   const handleOpenEditModal = (faq) => {
-    setCurrentQuestion(faq.question);
-    setCurrentAnswer(faq.answer);
+    setCurrentTitle(faq.title);
+    setCurrentContent(faq.content);
     setCurrentId(faq._id);
     setIsEditModalOpen(true);
   };
 
   const handleCloseEditModal = () => {
     setIsEditModalOpen(false);
-    setCurrentQuestion("");
-    setCurrentAnswer("");
+    setCurrentTitle("");
+    setCurrentContent("");
     setCurrentId(null);
   };
 
@@ -169,11 +224,15 @@ const FAQPage = () => {
     onDeleteOpen();
   };
 
-  const filteredFaqs = faqs.filter(
-    (faq) =>
-      faq.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      faq.answer.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredFaqs = faqs.filter((faq) => {
+    if (!faq.title || !faq.content) return false;
+
+    const q = searchQuery.toLowerCase();
+    return (
+      faq.title.toLowerCase().includes(q) ||
+      faq.content.toLowerCase().includes(q)
+    );
+  });
 
   return (
     <div className="space-y-5">
@@ -211,13 +270,13 @@ const FAQPage = () => {
           filteredFaqs.map((faq) => (
             <div
               key={faq._id}
-              className="flex justify-between items-start p-4 md:p-7 rounded-xl border-2 "
+              className="flex justify-between items-start p-4 md:p-7 rounded-xl border-2"
             >
               <div className="flex-1">
                 <h4 className="text-gray-800 text-lg font-semibold">
-                  {faq.question}
+                  {faq.title}
                 </h4>
-                <p className="text-gray-600 mt-2">{faq.answer}</p>
+                <p className="text-gray-600 mt-2">{faq.content}</p>
               </div>
               <Menu>
                 <MenuButton
@@ -243,13 +302,12 @@ const FAQPage = () => {
         )}
       </div>
 
-      {/* Add FAQ Modal */}
       <Modal
         isOpen={isOpen}
         onClose={() => {
           onClose();
-          setNewQuestion("");
-          setNewAnswer("");
+          setNewTitle("");
+          setNewContent("");
           setIsAddSubmitting(false);
         }}
       >
@@ -259,35 +317,35 @@ const FAQPage = () => {
           <ModalCloseButton />
           <ModalBody>
             <FormControl
-              id="faq-question"
+              id="faq-title"
               isRequired
-              isInvalid={isAddSubmitting && newQuestion.trim() === ""}
+              isInvalid={isAddSubmitting && newTitle.trim() === ""}
             >
-              <FormLabel>Question</FormLabel>
+              <FormLabel>Title</FormLabel>
               <Input
-                placeholder="Enter question"
-                value={newQuestion}
-                onChange={(e) => setNewQuestion(e.target.value)}
+                placeholder="Enter FAQ title"
+                value={newTitle}
+                onChange={(e) => setNewTitle(e.target.value)}
               />
-              {isAddSubmitting && newQuestion.trim() === "" && (
-                <FormErrorMessage>Question is required.</FormErrorMessage>
+              {isAddSubmitting && newTitle.trim() === "" && (
+                <FormErrorMessage>Title is required.</FormErrorMessage>
               )}
             </FormControl>
 
             <FormControl
-              id="faq-answer"
+              id="faq-content"
               isRequired
               mt={4}
-              isInvalid={isAddSubmitting && newAnswer.trim() === ""}
+              isInvalid={isAddSubmitting && newContent.trim() === ""}
             >
-              <FormLabel>Answer</FormLabel>
+              <FormLabel>Content</FormLabel>
               <Textarea
-                placeholder="Enter answer"
-                value={newAnswer}
-                onChange={(e) => setNewAnswer(e.target.value)}
+                placeholder="Enter FAQ content"
+                value={newContent}
+                onChange={(e) => setNewContent(e.target.value)}
               />
-              {isAddSubmitting && newAnswer.trim() === "" && (
-                <FormErrorMessage>Answer is required.</FormErrorMessage>
+              {isAddSubmitting && newContent.trim() === "" && (
+                <FormErrorMessage>Content is required.</FormErrorMessage>
               )}
             </FormControl>
           </ModalBody>
@@ -298,8 +356,8 @@ const FAQPage = () => {
               mr={3}
               onClick={() => {
                 onClose();
-                setNewQuestion("");
-                setNewAnswer("");
+                setNewTitle("");
+                setNewContent("");
                 setIsAddSubmitting(false);
               }}
             >
@@ -316,7 +374,6 @@ const FAQPage = () => {
         </ModalContent>
       </Modal>
 
-      {/* Edit FAQ Modal */}
       <Modal
         isOpen={isEditModalOpen}
         onClose={() => {
@@ -330,35 +387,35 @@ const FAQPage = () => {
           <ModalCloseButton />
           <ModalBody>
             <FormControl
-              id="edit-faq-question"
+              id="edit-faq-title"
               isRequired
-              isInvalid={isEditSubmitting && currentQuestion.trim() === ""}
+              isInvalid={isEditSubmitting && currentTitle.trim() === ""}
             >
-              <FormLabel>Question</FormLabel>
+              <FormLabel>Title</FormLabel>
               <Input
-                placeholder="Enter new question"
-                value={currentQuestion}
-                onChange={(e) => setCurrentQuestion(e.target.value)}
+                placeholder="Enter new title"
+                value={currentTitle}
+                onChange={(e) => setCurrentTitle(e.target.value)}
               />
-              {isEditSubmitting && currentQuestion.trim() === "" && (
-                <FormErrorMessage>Question is required.</FormErrorMessage>
+              {isEditSubmitting && currentTitle.trim() === "" && (
+                <FormErrorMessage>Title is required.</FormErrorMessage>
               )}
             </FormControl>
 
             <FormControl
-              id="edit-faq-answer"
+              id="edit-faq-content"
               isRequired
               mt={4}
-              isInvalid={isEditSubmitting && currentAnswer.trim() === ""}
+              isInvalid={isEditSubmitting && currentContent.trim() === ""}
             >
-              <FormLabel>Answer</FormLabel>
+              <FormLabel>Content</FormLabel>
               <Textarea
-                placeholder="Enter new answer"
-                value={currentAnswer}
-                onChange={(e) => setCurrentAnswer(e.target.value)}
+                placeholder="Enter new content"
+                value={currentContent}
+                onChange={(e) => setCurrentContent(e.target.value)}
               />
-              {isEditSubmitting && currentAnswer.trim() === "" && (
-                <FormErrorMessage>Answer is required.</FormErrorMessage>
+              {isEditSubmitting && currentContent.trim() === "" && (
+                <FormErrorMessage>Content is required.</FormErrorMessage>
               )}
             </FormControl>
           </ModalBody>
@@ -385,7 +442,6 @@ const FAQPage = () => {
         </ModalContent>
       </Modal>
 
-      {/* Delete FAQ Alert Dialog */}
       <AlertDialog
         isOpen={isDeleteOpen}
         leastDestructiveRef={cancelRef}
@@ -395,7 +451,6 @@ const FAQPage = () => {
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
               Delete FAQ
-              <ModalCloseButton />
             </AlertDialogHeader>
 
             <AlertDialogBody>

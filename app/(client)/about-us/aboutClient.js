@@ -7,12 +7,7 @@ import Tag from "../../../components/tag/Tag";
 import CTA from "../../../components/CTA/cta";
 import Journey from "./journey";
 
-import {
-  SkeletonCircle,
-  SkeletonText,
-  Stack,
-  Box,
-} from "@chakra-ui/react";
+import { Skeleton } from "@chakra-ui/react";
 
 const dream = [
   {
@@ -87,11 +82,14 @@ const About = () => {
       try {
         setLoadingTeam(true);
         const response = await fetch("/api/staff");
+
         if (!response.ok) {
           throw new Error("Error fetching staff data");
         }
+
         const data = await response.json();
-        if (data) {
+
+        if ([200, 201].includes(response.status) && data.length > 0) {
           setTeam(data);
           setLoadingTeam(false);
         }
@@ -108,7 +106,7 @@ const About = () => {
       <section className="bg-[url('/images/background.png')] bg-no-repeat bg-cover">
         <div className="container py-20">
           <div className="space-y-6 flex flex-col justify-center">
-            <div className="space-y-8 ">
+            <div className="space-y-8">
               <h1 className="text-main">
                 Shaping the Future of Innovation and Creativity
               </h1>
@@ -141,7 +139,7 @@ const About = () => {
 
         <div>
           <Image
-            src={"/images/about-image.jpg"}
+            src="/images/about-image.jpg"
             width={1000}
             height={1000}
             className="rounded-3xl w-full"
@@ -269,14 +267,20 @@ const About = () => {
 
         {loadingTeam ? (
           <div className="grid sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-10 mt-10">
-            {[...Array(5)].map((_, idx) => (
+            {Array.from({ length: 5 }).map((_, idx) => (
               <div key={idx} className="flex flex-col items-center gap-1">
-                <Stack className="w-full items-center" spacing={4}>
-                  <SkeletonCircle size="32" />
-                  <Box className="w-full">
-                    <SkeletonText noOfLines={2} spacing="2" />
-                  </Box>
-                </Stack>
+                <div className="rounded-xl border-2 border-secondary/20 p-1 flex justify-center w-full">
+                  <Skeleton className="rounded-lg w-full aspect-square" />
+                </div>
+                <div className="w-full mt-2">
+                  <Skeleton
+                    height="20px"
+                    width="60%"
+                    className="mx-auto mb-2"
+                  />
+
+                  <Skeleton height="16px" width="40%" className="mx-auto" />
+                </div>
               </div>
             ))}
           </div>
