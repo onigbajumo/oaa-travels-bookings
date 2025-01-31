@@ -1,5 +1,6 @@
 import connectToMongoDB from '../../../libs/mongodb';
 import Contact from '../../../models/Contact';
+import nodemailer from 'nodemailer';
 
 export default async function handler(req, res) {
   await connectToMongoDB();
@@ -22,7 +23,13 @@ export default async function handler(req, res) {
       });
 
       await newContact.save();
-      res.status(201).json(newContact);
+
+      await sendEmails(newContact);
+
+      res.status(201).json({
+        message: 'Your message has been sent! A confirmation email has been sent to you.',
+        contact: newContact,
+      });
     } catch (error) {
       console.error('Error creating contact:', error);
       res.status(500).json({ error: 'Server error' });
@@ -38,7 +45,7 @@ export default async function handler(req, res) {
         }
         return res.status(200).json(contact);
       } else {
-        const contacts = await Contact.find(); 
+        const contacts = await Contact.find();
         return res.status(200).json(contacts);
       }
     } catch (error) {
@@ -94,7 +101,56 @@ export default async function handler(req, res) {
       res.status(500).json({ error: 'Server error' });
     }
   } else {
-    
     res.status(405).json({ error: 'Method not allowed' });
   }
 }
+
+// Send email notifications to admin & user
+const sendEmails = async (contact) => {
+  const transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+      user: process.env.EMAIL_USERNAME,
+      pass: process.env.EMAIL_PASSWORD,
+    },
+  });
+
+  // **Admin Email Notification**
+  const adminMailOptions = {
+    from: process.env.EMAIL_USERNAME,
+    to: process.env.ADMIN_EMAIL, 
+    subject: `New Contact Inquiry from ${contact.name} ${contact.lastName}`,
+    html: `
+      <p>A new contact inquiry has been received:</p>
+      <p><strong>Name:</strong> ${contact.name} ${contact.lastName}</p>
+      <p><strong>Email:</strong> ${contact.email}</p>
+      <p><strong>Phone:</strong> ${contact.phoneNumber}</p>
+      <p><strong>Project Details:</strong> ${contact.projectDetails}</p>
+      <p><strong>Reasons for Contact:</strong> ${contact.reasonsForContact.join(', ') || 'N/A'}</p>
+    `,
+  };
+
+  // **User Email Confirmation**
+  const userMailOptions = {
+    from: process.env.EMAIL_USER,
+    to: contact.email,
+    subject: `Thank You for Contacting Us!`,
+    html: `
+      <p>Dear ${contact.name},</p>
+      <p>Thank you for reaching out! We have received your message and will get back to you as soon as possible.</p>
+      <p><b>Your Inquiry Details:</b></p>
+      <p><strong>Project Details:</strong> ${contact.projectDetails}</p>
+      <p><strong>Reasons for Contact:</strong> ${contact.reasonsForContact.join(', ') || 'N/A'}</p>
+      <p>We appreciate your interest and look forward to assisting you.</p>
+      <p>Best Regards,</p>
+      <p><strong>Your Company Name</strong></p>
+    `,
+  };
+
+  try {
+    await transporter.sendMail(adminMailOptions);
+    await transporter.sendMail(userMailOptions);
+  } catch (error) {
+    console.error('Error sending emails:', error);
+  }
+};
