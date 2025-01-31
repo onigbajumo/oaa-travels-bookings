@@ -33,36 +33,29 @@ import {
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const StaffPage = () => {
-  // Dummy data for staff
-  const initialStaff = [
-    {
-      _id: "1",
-      name: "John Doe",
-      position: "Software Engineer",
-      image: "https://placehold.co/150.png",
-    },
-    {
-      _id: "2",
-      name: "Jane Smith",
-      position: "Product Manager",
-      image: "https://placehold.co/150.png",
-    },
-  ];
+const fileToBase64 = (file) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
+};
 
-  const [staff, setStaff] = useState(initialStaff);
-  const [loading, setLoading] = useState(false); // No loading needed for dummy data
+const StaffPage = () => {
+  const [staff, setStaff] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   const [newStaff, setNewStaff] = useState({
     name: "",
     position: "",
     image: null,
     imagePreview: "",
   });
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const {
-    isOpen: isEditOpen,
-    onOpen: onEditOpen,
-    onClose: onEditClose,
+    isOpen: isAddOpen,
+    onOpen: onAddOpen,
+    onClose: onAddClose,
   } = useDisclosure();
 
   const [currentStaff, setCurrentStaff] = useState({
@@ -72,6 +65,11 @@ const StaffPage = () => {
     imagePreview: "",
   });
   const [currentId, setCurrentId] = useState(null);
+  const {
+    isOpen: isEditOpen,
+    onOpen: onEditOpen,
+    onClose: onEditClose,
+  } = useDisclosure();
 
   const {
     isOpen: isDeleteOpen,
@@ -86,12 +84,27 @@ const StaffPage = () => {
 
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Simulate fetching staff (no API call needed)
   useEffect(() => {
-    setLoading(false); // Set loading to false immediately
+    const fetchStaff = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch("/api/staff");
+        if (!response.ok) {
+          throw new Error(`Error fetching staff: ${response.status}`);
+        }
+        const data = await response.json();
+        setStaff(data);
+      } catch (error) {
+        toast.error(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStaff();
   }, []);
 
-  const handleAddStaff = () => {
+  const handleAddStaff = async () => {
     const { name, position, image } = newStaff;
 
     if (name.trim() === "" || position.trim() === "" || !image) {
@@ -102,36 +115,48 @@ const StaffPage = () => {
 
     setIsAddSubmitting(true);
 
-    // Simulate adding a new staff member
-    const newStaffData = {
-      _id: String(staff.length + 1), // Generate a simple ID
-      name: name.trim(),
-      position: position.trim(),
-      image: URL.createObjectURL(image), // Use the image preview URL
-    };
+    try {
+      const base64Image = await fileToBase64(image);
 
-    setStaff([newStaffData, ...staff]);
-    toast.success(
-      `Staff member "${newStaffData.name}" has been added successfully.`
-    );
-    onClose();
-    setNewStaff({
-      name: "",
-      position: "",
-      image: null,
-      imagePreview: "",
-    });
-    setIsAddSubmitting(false);
+      const response = await fetch("/api/staff", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: name.trim(),
+          position: position.trim(),
+          image: base64Image,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error adding staff: ${response.statusText}`);
+      }
+
+      const createdStaff = await response.json();
+
+      setStaff((prev) => [createdStaff, ...prev]);
+
+      toast.success(`Staff member has been added successfully.`);
+      onAddClose();
+      setNewStaff({
+        name: "",
+        position: "",
+        image: null,
+        imagePreview: "",
+      });
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setIsAddSubmitting(false);
+    }
   };
 
-  const handleEditStaff = () => {
+  const handleEditStaff = async () => {
     const { name, position, image, imagePreview } = currentStaff;
 
-    if (
-      name.trim() === "" ||
-      position.trim() === "" ||
-      (!image && !imagePreview)
-    ) {
+    if (name.trim() === "" || position.trim() === "") {
       toast.error("All fields are required.");
       setIsEditSubmitting(false);
       return;
@@ -139,44 +164,73 @@ const StaffPage = () => {
 
     setIsEditSubmitting(true);
 
-    // Simulate updating a staff member
-    const updatedStaff = {
-      _id: currentId,
-      name: name.trim(),
-      position: position.trim(),
-      image: image ? URL.createObjectURL(image) : imagePreview,
-    };
+    try {
+      let finalImage = imagePreview;
+      if (image) {
+        finalImage = await fileToBase64(image);
+      }
 
-    const updatedStaffList = staff.map((s) =>
-      s._id === currentId ? updatedStaff : s
-    );
+      const response = await fetch("/api/staff", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: currentId,
+          name: name.trim(),
+          position: position.trim(),
+          image: finalImage,
+        }),
+      });
 
-    setStaff(updatedStaffList);
-    toast.success(
-      `Staff member "${updatedStaff.name}" has been updated successfully.`
-    );
-    handleCloseEditModal();
-    setIsEditSubmitting(false);
+      if (!response.ok) {
+        throw new Error(`Error updating staff: ${response.statusText}`);
+      }
+
+      const updatedStaffData = await response.json();
+
+      setStaff((prevStaff) =>
+        prevStaff.map((s) => (s._id === currentId ? updatedStaffData : s))
+      );
+
+      toast.success(`Staff member has been updated successfully.`);
+      handleCloseEditModal();
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setIsEditSubmitting(false);
+    }
   };
 
-  const handleDeleteStaff = () => {
-    if (staffToDelete) {
-      // Simulate deleting a staff member
-      const updatedStaffList = staff.filter((s) => s._id !== staffToDelete);
-      setStaff(updatedStaffList);
+  const handleDeleteStaff = async () => {
+    if (!staffToDelete) return;
+
+    try {
+      const response = await fetch(`/api/staff?id=${staffToDelete}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error deleting staff: ${response.statusText}`);
+      }
+
+      setStaff((prevStaff) => prevStaff.filter((s) => s._id !== staffToDelete));
       toast.info("Staff member has been deleted successfully.");
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
       onDeleteClose();
     }
   };
 
-  const handleOpenEditModal = (staffMember, id) => {
+  const handleOpenEditModal = (staffMember) => {
     setCurrentStaff({
       name: staffMember.name,
       position: staffMember.position,
       image: null,
       imagePreview: staffMember.image,
     });
-    setCurrentId(id);
+    setCurrentId(staffMember._id);
     onEditOpen();
   };
 
@@ -218,10 +272,10 @@ const StaffPage = () => {
     }
   };
 
-  const filteredStaff = staff.filter(
-    (s) =>
-      s.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      s.position.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredStaff = staff.filter((s) =>
+    [s.name, s.position].some((field) =>
+      field.toLowerCase().includes(searchQuery.toLowerCase())
+    )
   );
 
   return (
@@ -243,12 +297,11 @@ const StaffPage = () => {
             />
           </div>
         </div>
-
         <div>
           <Button
             leftIcon={<BsPlus />}
             colorScheme="blue"
-            onClick={onOpen}
+            onClick={onAddOpen}
             className="flex items-center gap-2"
           >
             Add Staff
@@ -292,11 +345,7 @@ const StaffPage = () => {
                   aria-label="Options"
                 />
                 <MenuList>
-                  <MenuItem
-                    onClick={() =>
-                      handleOpenEditModal(staffMember, staffMember._id)
-                    }
-                  >
+                  <MenuItem onClick={() => handleOpenEditModal(staffMember)}>
                     Edit
                   </MenuItem>
                   <MenuItem
@@ -312,11 +361,10 @@ const StaffPage = () => {
         )}
       </div>
 
-      {/* Add Staff Modal */}
       <Modal
-        isOpen={isOpen}
+        isOpen={isAddOpen}
         onClose={() => {
-          onClose();
+          onAddClose();
           setNewStaff({
             name: "",
             position: "",
@@ -400,7 +448,7 @@ const StaffPage = () => {
               variant="ghost"
               mr={3}
               onClick={() => {
-                onClose();
+                onAddClose();
                 setNewStaff({
                   name: "",
                   position: "",
@@ -423,7 +471,6 @@ const StaffPage = () => {
         </ModalContent>
       </Modal>
 
-      {/* Edit Staff Modal */}
       <Modal
         isOpen={isEditOpen}
         onClose={() => {
@@ -536,7 +583,6 @@ const StaffPage = () => {
         </ModalContent>
       </Modal>
 
-      {/* Delete Confirmation Dialog */}
       <AlertDialog
         isOpen={isDeleteOpen}
         leastDestructiveRef={cancelRef}

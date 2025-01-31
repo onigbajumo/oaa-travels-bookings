@@ -2,7 +2,6 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { BsPlus, BsSearch, BsThreeDotsVertical } from "react-icons/bs";
-import { FaStar } from "react-icons/fa";
 import {
   Modal,
   ModalOverlay,
@@ -35,60 +34,50 @@ import {
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const TestimonialsPage = () => {
-  // Dummy data for testimonials
-  const initialTestimonials = [
-    {
-      _id: "1",
-      name: "John Doe",
-      work: "Software Engineer",
-      rating: 5,
-      testimonial: "Great service! Highly recommended.",
-      image: "https://via.placeholder.com/150",
-    },
-    {
-      _id: "2",
-      name: "Jane Smith",
-      work: "Product Manager",
-      rating: 4,
-      testimonial: "Very professional and efficient.",
-      image: "https://via.placeholder.com/150",
-    },
-  ];
+const fileToBase64 = (file) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
+};
 
-  const [testimonials, setTestimonials] = useState(initialTestimonials);
-  const [loading, setLoading] = useState(false); // No loading needed for dummy data
+const TestimonialsPage = () => {
+  const [testimonials, setTestimonials] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   const [newTestimonial, setNewTestimonial] = useState({
     name: "",
-    work: "",
-    rating: 0,
-    testimonial: "",
+    message: "",
     image: null,
     imagePreview: "",
   });
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isAddOpen,
+    onOpen: onAddOpen,
+    onClose: onAddClose,
+  } = useDisclosure();
+
+  const [currentTestimonial, setCurrentTestimonial] = useState({
+    name: "",
+    message: "",
+    image: null,
+    imagePreview: "",
+  });
+  const [currentId, setCurrentId] = useState(null);
   const {
     isOpen: isEditOpen,
     onOpen: onEditOpen,
     onClose: onEditClose,
   } = useDisclosure();
 
-  const [currentTestimonial, setCurrentTestimonial] = useState({
-    name: "",
-    work: "",
-    rating: 0,
-    testimonial: "",
-    image: null,
-    imagePreview: "",
-  });
-  const [currentId, setCurrentId] = useState(null);
-
+  const [testimonialToDelete, setTestimonialToDelete] = useState(null);
   const {
     isOpen: isDeleteOpen,
     onOpen: onDeleteOpen,
     onClose: onDeleteClose,
   } = useDisclosure();
-  const [testimonialToDelete, setTestimonialToDelete] = useState(null);
   const cancelRef = useRef();
 
   const [isAddSubmitting, setIsAddSubmitting] = useState(false);
@@ -96,21 +85,32 @@ const TestimonialsPage = () => {
 
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Simulate fetching testimonials (no API call needed)
   useEffect(() => {
-    setLoading(false); // Set loading to false immediately
+    const fetchTestimonials = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch("/api/testimonial");
+        if (!response.ok) {
+          throw new Error(
+            `Error fetching testimonials: ${response.statusText}`
+          );
+        }
+        const data = await response.json();
+        setTestimonials(data);
+      } catch (error) {
+        toast.error(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTestimonials();
   }, []);
 
-  const handleAddTestimonial = () => {
-    const { name, work, rating, testimonial, image } = newTestimonial;
+  const handleAddTestimonial = async () => {
+    const { name, message, image } = newTestimonial;
 
-    if (
-      name.trim() === "" ||
-      work.trim() === "" ||
-      rating === 0 ||
-      testimonial.trim() === "" ||
-      !image
-    ) {
+    if (name.trim() === "" || message.trim() === "" || !image) {
       toast.error("All fields are required.");
       setIsAddSubmitting(false);
       return;
@@ -118,43 +118,47 @@ const TestimonialsPage = () => {
 
     setIsAddSubmitting(true);
 
-    // Simulate adding a new testimonial
-    const newTestimonialData = {
-      _id: String(testimonials.length + 1), // Generate a simple ID
-      name: name.trim(),
-      work: work.trim(),
-      rating,
-      testimonial: testimonial.trim(),
-      image: URL.createObjectURL(image), // Use the image preview URL
-    };
+    try {
+      const base64Image = await fileToBase64(image);
 
-    setTestimonials([newTestimonialData, ...testimonials]);
-    toast.success(
-      `Testimonial from "${newTestimonialData.name}" has been added successfully.`
-    );
-    onClose();
-    setNewTestimonial({
-      name: "",
-      work: "",
-      rating: 0,
-      testimonial: "",
-      image: null,
-      imagePreview: "",
-    });
-    setIsAddSubmitting(false);
+      const response = await fetch("/api/testimonial", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: name.trim(),
+          message: message.trim(),
+          image: base64Image,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error adding testimonial: ${response.statusText}`);
+      }
+
+      const created = await response.json();
+      setTestimonials((prev) => [created, ...prev]);
+
+      toast.success(
+        `Testimonial from "${created.name}" has been added successfully.`
+      );
+      onAddClose();
+      setNewTestimonial({
+        name: "",
+        message: "",
+        image: null,
+        imagePreview: "",
+      });
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setIsAddSubmitting(false);
+    }
   };
 
-  const handleEditTestimonial = () => {
-    const { name, work, rating, testimonial, image, imagePreview } =
-      currentTestimonial;
+  const handleEditTestimonial = async () => {
+    const { name, message, image, imagePreview } = currentTestimonial;
 
-    if (
-      name.trim() === "" ||
-      work.trim() === "" ||
-      rating === 0 ||
-      testimonial.trim() === "" ||
-      (!image && !imagePreview)
-    ) {
+    if (name.trim() === "" || message.trim() === "") {
       toast.error("All fields are required.");
       setIsEditSubmitting(false);
       return;
@@ -162,59 +166,83 @@ const TestimonialsPage = () => {
 
     setIsEditSubmitting(true);
 
-    // Simulate updating a testimonial
-    const updatedTestimonial = {
-      _id: currentId,
-      name: name.trim(),
-      work: work.trim(),
-      rating,
-      testimonial: testimonial.trim(),
-      image: image ? URL.createObjectURL(image) : imagePreview,
-    };
+    try {
+      let finalImage = imagePreview;
+      if (image) {
+        finalImage = await fileToBase64(image);
+      }
 
-    const updatedTestimonials = testimonials.map((t) =>
-      t._id === currentId ? updatedTestimonial : t
-    );
+      const response = await fetch("/api/testimonial", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: currentId,
+          name: name.trim(),
+          message: message.trim(),
+          image: finalImage,
+        }),
+      });
 
-    setTestimonials(updatedTestimonials);
-    toast.success(
-      `Testimonial from "${updatedTestimonial.name}" has been updated successfully.`
-    );
-    handleCloseEditModal();
-    setIsEditSubmitting(false);
+      if (!response.ok) {
+        throw new Error(`Error updating testimonial: ${response.statusText}`);
+      }
+
+      const updated = await response.json();
+
+      setTestimonials((prev) =>
+        prev.map((t) => (t._id === currentId ? updated : t))
+      );
+
+      toast.success(
+        `Testimonial from "${updated.name}" has been updated successfully.`
+      );
+      handleCloseEditModal();
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setIsEditSubmitting(false);
+    }
   };
 
-  const handleDeleteTestimonial = () => {
-    if (testimonialToDelete) {
-      // Simulate deleting a testimonial
-      const updatedTestimonials = testimonials.filter(
-        (t) => t._id !== testimonialToDelete
+  const handleDeleteTestimonial = async () => {
+    if (!testimonialToDelete) return;
+    try {
+      const response = await fetch(
+        `/api/testimonial?id=${testimonialToDelete}`,
+        {
+          method: "DELETE",
+        }
       );
-      setTestimonials(updatedTestimonials);
+      if (!response.ok) {
+        throw new Error(`Error deleting testimonial: ${response.statusText}`);
+      }
+
+      setTestimonials((prev) =>
+        prev.filter((t) => t._id !== testimonialToDelete)
+      );
       toast.info("Testimonial has been deleted successfully.");
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
       onDeleteClose();
     }
   };
 
-  const handleOpenEditModal = (testimonial, id) => {
+  const handleOpenEditModal = (testimonialObj) => {
     setCurrentTestimonial({
-      name: testimonial.name,
-      work: testimonial.work,
-      rating: testimonial.rating,
-      testimonial: testimonial.testimonial,
+      name: testimonialObj.name,
+      message: testimonialObj.message,
       image: null,
-      imagePreview: testimonial.image,
+      imagePreview: testimonialObj.image,
     });
-    setCurrentId(id);
+    setCurrentId(testimonialObj._id);
     onEditOpen();
   };
 
   const handleCloseEditModal = () => {
     setCurrentTestimonial({
       name: "",
-      work: "",
-      rating: 0,
-      testimonial: "",
+      message: "",
       image: null,
       imagePreview: "",
     });
@@ -249,20 +277,12 @@ const TestimonialsPage = () => {
     }
   };
 
-  const handleAddRating = (star) => {
-    setNewTestimonial({ ...newTestimonial, rating: star });
-  };
-
-  const handleEditRating = (star) => {
-    setCurrentTestimonial({ ...currentTestimonial, rating: star });
-  };
-
-  const filteredTestimonials = testimonials.filter(
-    (t) =>
-      t.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      t.work.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      t.testimonial.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredTestimonials = testimonials.filter((t) => {
+    const q = searchQuery.toLowerCase();
+    return (
+      t.name.toLowerCase().includes(q) || t.message.toLowerCase().includes(q)
+    );
+  });
 
   return (
     <div className="space-y-5">
@@ -288,7 +308,7 @@ const TestimonialsPage = () => {
           <Button
             leftIcon={<BsPlus />}
             colorScheme="blue"
-            onClick={onOpen}
+            onClick={onAddOpen}
             className="flex items-center gap-2"
           >
             Add Testimonial
@@ -318,19 +338,8 @@ const TestimonialsPage = () => {
                   <div className="text-gray-800 text-lg font-semibold">
                     {testimonial.name}
                   </div>
-                  <div className="flex mt-1">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <FaStar
-                        key={star}
-                        className="mr-1"
-                        color={
-                          star <= testimonial.rating ? "#FFC107" : "#E4E5E9"
-                        }
-                      />
-                    ))}
-                  </div>
                   <div className="mt-2 text-gray-600">
-                    &quot;{testimonial.testimonial}&quot;
+                    &quot;{testimonial.message}&quot;
                   </div>
                 </div>
               </div>
@@ -343,11 +352,7 @@ const TestimonialsPage = () => {
                   aria-label="Options"
                 />
                 <MenuList>
-                  <MenuItem
-                    onClick={() =>
-                      handleOpenEditModal(testimonial, testimonial._id)
-                    }
-                  >
+                  <MenuItem onClick={() => handleOpenEditModal(testimonial)}>
                     Edit
                   </MenuItem>
                   <MenuItem
@@ -363,16 +368,13 @@ const TestimonialsPage = () => {
         )}
       </div>
 
-      {/* Add Testimonial Modal */}
       <Modal
-        isOpen={isOpen}
+        isOpen={isAddOpen}
         onClose={() => {
-          onClose();
+          onAddClose();
           setNewTestimonial({
             name: "",
-            work: "",
-            rating: 0,
-            testimonial: "",
+            message: "",
             image: null,
             imagePreview: "",
           });
@@ -404,72 +406,26 @@ const TestimonialsPage = () => {
             </FormControl>
 
             <FormControl
-              id="testimonial-work"
-              isRequired
-              isInvalid={isAddSubmitting && newTestimonial.work.trim() === ""}
-              mb={4}
-            >
-              <FormLabel>Work</FormLabel>
-              <Input
-                placeholder="Enter work"
-                value={newTestimonial.work}
-                onChange={(e) =>
-                  setNewTestimonial({ ...newTestimonial, work: e.target.value })
-                }
-              />
-              {isAddSubmitting && newTestimonial.work.trim() === "" && (
-                <FormErrorMessage>Work is required.</FormErrorMessage>
-              )}
-            </FormControl>
-
-            <FormControl
-              id="testimonial-rating"
-              isRequired
-              isInvalid={isAddSubmitting && newTestimonial.rating === 0}
-              mb={4}
-            >
-              <FormLabel>Rating</FormLabel>
-              <div className="flex">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <IconButton
-                    key={star}
-                    icon={<FaStar />}
-                    variant="ghost"
-                    aria-label={`${star} Star`}
-                    className="mr-1"
-                    color={
-                      star <= newTestimonial.rating ? "#FFC107" : "#E4E5E9"
-                    }
-                    onClick={() => handleAddRating(star)}
-                  />
-                ))}
-              </div>
-              {isAddSubmitting && newTestimonial.rating === 0 && (
-                <FormErrorMessage>Rating is required.</FormErrorMessage>
-              )}
-            </FormControl>
-
-            <FormControl
               id="testimonial-text"
               isRequired
               isInvalid={
-                isAddSubmitting && newTestimonial.testimonial.trim() === ""
+                isAddSubmitting && newTestimonial.message.trim() === ""
               }
               mb={4}
             >
-              <FormLabel>Testimonial</FormLabel>
+              <FormLabel>Message</FormLabel>
               <Textarea
-                placeholder="Enter testimonial"
-                value={newTestimonial.testimonial}
+                placeholder="Enter testimonial message"
+                value={newTestimonial.message}
                 onChange={(e) =>
                   setNewTestimonial({
                     ...newTestimonial,
-                    testimonial: e.target.value,
+                    message: e.target.value,
                   })
                 }
               />
-              {isAddSubmitting && newTestimonial.testimonial.trim() === "" && (
-                <FormErrorMessage>Testimonial is required.</FormErrorMessage>
+              {isAddSubmitting && newTestimonial.message.trim() === "" && (
+                <FormErrorMessage>Message is required.</FormErrorMessage>
               )}
             </FormControl>
 
@@ -504,12 +460,10 @@ const TestimonialsPage = () => {
               variant="ghost"
               mr={3}
               onClick={() => {
-                onClose();
+                onAddClose();
                 setNewTestimonial({
                   name: "",
-                  work: "",
-                  rating: 0,
-                  testimonial: "",
+                  message: "",
                   image: null,
                   imagePreview: "",
                 });
@@ -529,7 +483,6 @@ const TestimonialsPage = () => {
         </ModalContent>
       </Modal>
 
-      {/* Edit Testimonial Modal */}
       <Modal
         isOpen={isEditOpen}
         onClose={() => {
@@ -567,79 +520,27 @@ const TestimonialsPage = () => {
             </FormControl>
 
             <FormControl
-              id="edit-testimonial-work"
-              isRequired
-              isInvalid={
-                isEditSubmitting && currentTestimonial.work.trim() === ""
-              }
-              mb={4}
-            >
-              <FormLabel>Work</FormLabel>
-              <Input
-                placeholder="Enter work"
-                value={currentTestimonial.work}
-                onChange={(e) =>
-                  setCurrentTestimonial({
-                    ...currentTestimonial,
-                    work: e.target.value,
-                  })
-                }
-              />
-              {isEditSubmitting && currentTestimonial.work.trim() === "" && (
-                <FormErrorMessage>Work is required.</FormErrorMessage>
-              )}
-            </FormControl>
-
-            <FormControl
-              id="edit-testimonial-rating"
-              isRequired
-              isInvalid={isEditSubmitting && currentTestimonial.rating === 0}
-              mb={4}
-            >
-              <FormLabel>Rating</FormLabel>
-              <div className="flex">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <IconButton
-                    key={star}
-                    icon={<FaStar />}
-                    variant="ghost"
-                    aria-label={`${star} Star`}
-                    className="mr-1"
-                    color={
-                      star <= currentTestimonial.rating ? "#FFC107" : "#E4E5E9"
-                    }
-                    onClick={() => handleEditRating(star)}
-                  />
-                ))}
-              </div>
-              {isEditSubmitting && currentTestimonial.rating === 0 && (
-                <FormErrorMessage>Rating is required.</FormErrorMessage>
-              )}
-            </FormControl>
-
-            <FormControl
               id="edit-testimonial-text"
               isRequired
               isInvalid={
-                isEditSubmitting && currentTestimonial.testimonial.trim() === ""
+                isEditSubmitting && currentTestimonial.message.trim() === ""
               }
               mb={4}
             >
-              <FormLabel>Testimonial</FormLabel>
+              <FormLabel>Message</FormLabel>
               <Textarea
                 placeholder="Enter testimonial"
-                value={currentTestimonial.testimonial}
+                value={currentTestimonial.message}
                 onChange={(e) =>
                   setCurrentTestimonial({
                     ...currentTestimonial,
-                    testimonial: e.target.value,
+                    message: e.target.value,
                   })
                 }
               />
-              {isEditSubmitting &&
-                currentTestimonial.testimonial.trim() === "" && (
-                  <FormErrorMessage>Testimonial is required.</FormErrorMessage>
-                )}
+              {isEditSubmitting && currentTestimonial.message.trim() === "" && (
+                <FormErrorMessage>Message is required.</FormErrorMessage>
+              )}
             </FormControl>
 
             <FormControl
@@ -696,7 +597,6 @@ const TestimonialsPage = () => {
         </ModalContent>
       </Modal>
 
-      {/* Delete Confirmation Dialog */}
       <AlertDialog
         isOpen={isDeleteOpen}
         leastDestructiveRef={cancelRef}
