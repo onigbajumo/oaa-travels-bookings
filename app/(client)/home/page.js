@@ -11,13 +11,6 @@ import Courses from "../../../components/courses/course";
 
 const offer = [
   {
-    title: "IT Solution",
-    icon: "/icons/web.svg",
-    image: "/images/service-1.jpg",
-    desc: "Providing cutting-edge IT solutions and services to businesses and organisations.",
-    path: "/services",
-  },
-  {
     title: "Creative Tech Programs",
     icon: "/icons/creative.svg",
     image: "/images/service-2.jpg",
@@ -166,12 +159,12 @@ const Home = () => {
         </p>
 
         <div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-10 mt-10">
             {offer.map((item, index) => (
               <div
                 key={index}
                 style={{ backgroundImage: `url(${item.image})` }}
-                className="bg-cover bg-center p-4 rounded-xl flex flex-col items-center w-full aspect-[3/2] relative group  transition-all ease-in-out duration-700"
+                className="bg-cover bg-center p-4 rounded-xl flex flex-col items-center w-full aspect-square relative group  transition-all ease-in-out duration-700"
               >
                 <div className="absolute bottom-0 left-0 bg-main/80 group-hover:bg-main group-hover:h-full rounded-xl p-4 w-full group-hover:flex flex-col justify-between transition-all ease-in-out duration-700">
                   <div className="space-y-3">
@@ -184,12 +177,12 @@ const Home = () => {
                   </p>
 
                   <div className="hidden group-hover:flex transition-all ease-in-out duration-700">
-                    <Link
+                    {/* <Link
                       href={item.path}
                       className=" rounded-full text-white text-center border-white text-base border-2 px-4 py-2 font-medium"
                     >
                       View More
-                    </Link>
+                    </Link> */}
                   </div>
                 </div>
               </div>
@@ -215,7 +208,7 @@ const Home = () => {
             <div className="space-y-5">
               <h3 className="font-bold text-main">Key Features</h3>
 
-              <div className="space-y-4">
+              <div className="space-y-6">
                 {benefits.map((item, index) => (
                   <div key={index} className="flex items-start gap-3">
                     <div className="bg-secondary/20 p-2 rounded-md text-secondary">
@@ -225,7 +218,7 @@ const Home = () => {
                     <div>
                       <h4>{item.title}</h4>
 
-                      <p className="text-sm w-full lg:w-[80%]">{item.desc}</p>
+                      {/* <p className="text-sm w-full lg:w-[80%]">{item.desc}</p> */}
                     </div>
                   </div>
                 ))}

@@ -22,6 +22,7 @@ const Navigation = () => {
     pathname.startsWith("/author") ||
     pathname.startsWith("/superadmin") ||
     pathname.startsWith("/reset-password") ||
+    pathname.startsWith("/accept-invite") ||
     pathname.startsWith("/forgot-password")
   ) {
     return null;

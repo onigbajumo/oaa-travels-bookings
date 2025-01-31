@@ -3,58 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import Tag from "../tag/Tag";
 import { FaStar } from "react-icons/fa";
+import courses from "@/content/data";
 
-const skill = [
-  {
-    title: "Full Stack Development",
-    category: "development",
-    desc: "Master front-end and back-end technologies to build dynamic, responsive websites and applications",
-    duration: "6 months",
-    rating: "4.5",
-    path: "course",
-    image: "https://placehold.co/500.png",
-    tag: "most popular",
-  },
-  {
-    title: "Full Stack Development",
-    category: "development",
-    desc: "Master front-end and back-end technologies to build dynamic, responsive websites and applications",
-    duration: "6 months",
-    rating: "4.5",
-    path: "course",
-    image: "https://placehold.co/500.png",
-  },
-  {
-    title: "Full Stack Development",
-    category: "development",
-    desc: "Master front-end and back-end technologies to build dynamic, responsive websites and applications",
-    duration: "6 months",
-    rating: "4.5",
-    path: "course",
-    image: "https://placehold.co/500.png",
-    tag: "most popular",
-  },
-  {
-    title: "Full Stack Development",
-    category: "development",
-    desc: "Master front-end and back-end technologies to build dynamic, responsive websites and applications",
-    duration: "6 months",
-    rating: "4.5",
-    path: "course",
-    image: "https://placehold.co/500.png",
-    tag: "most popular",
-  },
-  {
-    title: "Full Stack Development",
-    category: "development",
-    desc: "Master front-end and back-end technologies to build dynamic, responsive websites and applications",
-    duration: "6 months",
-    rating: "4.5",
-    path: "course",
-    image: "https://placehold.co/500.png",
-    tag: "most popular",
-  },
-];
 
 const Courses = ({ limit, heading, subHeading }) => {
   return (
@@ -66,7 +16,7 @@ const Courses = ({ limit, heading, subHeading }) => {
 
         <div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-10">
-            {skill.slice(0, limit).map((item, index) => (
+            {courses.slice(0, limit).map((item, index) => (
               <div
                 key={index}
                 className="bg-white rounded-2xl p-2 md:p-3 hover:shadow-lg transition-all ease-in-out duration-300"
@@ -92,7 +42,7 @@ const Courses = ({ limit, heading, subHeading }) => {
                     {item.category}
                   </p>
                   <h3 className="text-black font-bold">{item.title}</h3>
-                  <p className="text-[#C4C4C4]">{item.desc}</p>
+                  <p className="text-[#C4C4C4] short">{item.description}</p>
                   <div className="flex justify-between w-full">
                     <p className="text-[#C4C4C4]">{item.duration}</p>
                     <p className="text-black font-semibold flex items-center gap-2">
@@ -104,7 +54,7 @@ const Courses = ({ limit, heading, subHeading }) => {
 
                 <div className="flex mt-2">
                   <Link
-                    href={`/upskill-program/${item.path}`}
+                    href={`/upskill-program/${item.slug}`}
                     className="bg-main lg:bg-transparent hover:bg-main rounded-full text-white lg:text-main hover:text-white text-center text-base px-4 py-2 border border-main font-medium transition-all ease-in-out duration-300"
                   >
                     Get Started

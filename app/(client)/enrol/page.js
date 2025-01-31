@@ -1,0 +1,47 @@
+import React from "react";
+import Enrol from "./enrolClient";
+
+/**
+ * Formats the query parameter into a readable title.
+ *
+ * @param {string} query
+ * @returns {string}
+ */
+
+function formatQueryToTitle(query) {
+  let title = query.replace(/-s-/g, "'s ");
+
+  title = title.replace(/-/g, " ");
+
+  title = title.replace(/[^a-zA-Z0-9\s']/g, "");
+
+//   title = title.replace(/\b\w/g, (char) => char.toUpperCase());
+
+  return title;
+}
+
+export async function generateMetadata({ searchParams }, parent) {
+  const q = searchParams.course;
+
+  let title;
+
+  if (q) {
+    const formattedQ = formatQueryToTitle(q);
+
+    title = `Enrol for ${formattedQ} course`;
+  } else {
+    title = "Enrol for a creative program";
+  }
+
+  return {
+    title,
+    description: `You're just a few steps away from starting your learning
+                journey!`,
+  };
+}
+
+const page = () => {
+  return <Enrol />;
+};
+
+export default page;

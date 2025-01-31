@@ -8,6 +8,10 @@ import Testimony from "../../../components/testimonial/testimonials";
 import FAQs from "../../../components/faq";
 import Courses from "../../../components/courses/course";
 
+export const metadata = {
+  title: "Upskill Program",
+}
+
 const benefits = [
   {
     title: "Online and Virtual Classes for flexibility",
@@ -89,7 +93,12 @@ const Page = () => {
           </div>
 
           <div className="hidden md:block">
-            <Image src={"/images/upskill.png"} width={600} height={400} alt="hero" />
+            <Image
+              src={"/images/upskill.png"}
+              width={600}
+              height={400}
+              alt="hero"
+            />
           </div>
         </div>
       </section>
@@ -160,43 +169,45 @@ const Page = () => {
         </div>
       </section>
 
-      <section className="container py-20 bg-main">
-        <div className="space-y-5 text-white">
-          <div className="border-l-4 border-white pl-2 pr-5 rounded-tr-full rounded-br-full bg-secondary w-fit text-white font-semibold text-sm py-2">
-            How it Works
+      <section className="py-20 bg-main">
+        <div className="container">
+          <div className="space-y-5 text-white">
+            <div className="border-l-4 border-white pl-2 pr-5 rounded-tr-full rounded-br-full bg-secondary w-fit text-white font-semibold text-sm py-2">
+              How it Works
+            </div>
+            <h2 className="">Your Journey to Expertise</h2>
+            <p className="text-white w-full md:w-2/3">
+              Embark on a seamless journey to mastery with our step-by-step
+              guide, crafted to ensure you achieve your learning goals and
+              thrive in the digital world
+            </p>
           </div>
-          <h2 className="">Your Journey to Expertise</h2>
-          <p className="text-white w-full md:w-2/3">
-            Embark on a seamless journey to mastery with our step-by-step guide,
-            crafted to ensure you achieve your learning goals and thrive in the
-            digital world
-          </p>
-        </div>
 
-        <div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-20 mt-10">
-            {why.map((item, index) => (
-              <div key={index} className="flex flex-col items-center gap-2">
-                <div className="flex justify-center">
-                  <Image
-                    src={item.icon}
-                    width={1000}
-                    height={1000}
-                    alt={item.title}
-                    className="aspect-square w-16 rounded object-cover"
-                  />
-                </div>
+          <div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-20 mt-10">
+              {why.map((item, index) => (
+                <div key={index} className="flex flex-col items-center gap-2">
+                  <div className="flex justify-center">
+                    <Image
+                      src={item.icon}
+                      width={1000}
+                      height={1000}
+                      alt={item.title}
+                      className="aspect-square w-16 rounded object-cover"
+                    />
+                  </div>
 
-                <div className="space-y-4">
-                  <h3 className="text-white text-center font-semibold text-xl">
-                    {item.title}
-                  </h3>
-                  <p className="text-center text-white text-base">
-                    {item.desc}
-                  </p>
+                  <div className="space-y-4">
+                    <h3 className="text-white text-center font-semibold text-xl">
+                      {item.title}
+                    </h3>
+                    <p className="text-center text-white text-base">
+                      {item.desc}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>

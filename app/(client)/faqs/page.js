@@ -1,6 +1,9 @@
 import React from "react";
 import FAQs from "../../../components/faq";
-import Image from "next/image";
+
+export const metadata = {
+  title: "FAQs",
+}
 
 const FAQ = () => {
   return (

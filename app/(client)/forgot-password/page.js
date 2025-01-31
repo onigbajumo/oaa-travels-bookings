@@ -1,13 +1,13 @@
 import React from 'react'
-import Courses from './coursesClient'
+import ForgotPasswordPage from './forgotClient'
 
 export const metadata = {
-  title: "Creative Tech Programs",
-}
+  title: `Forgot Password`,
+};
 
 const page = () => {
   return (
-    <Courses />
+    <ForgotPasswordPage />
   )
 }
 
