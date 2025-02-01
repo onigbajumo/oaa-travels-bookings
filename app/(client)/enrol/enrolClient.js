@@ -1,5 +1,6 @@
 "use client";
-import React, { Suspense } from "react";
+
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { IoIosArrowForward } from "react-icons/io";
 import { useSearchParams } from "next/navigation";
@@ -7,13 +8,44 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import courses from "@/content/data";
+
+import { Skeleton, SkeletonText } from "@chakra-ui/react";
+
 import FAQs from "@/components/faq";
 
-const Enrol = () => {
+export default function EnrolPage() {
   const searchParams = useSearchParams();
   const slug = searchParams.get("course") || "";
-  const course = courses.find((course) => course.slug === slug);
+
+  const [course, setCourse] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [fetchError, setFetchError] = useState(null);
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (!slug) return;
+    const getCourse = async () => {
+      try {
+        setIsLoading(true);
+        setFetchError(null);
+
+        const res = await fetch(`/api/courses?slug=${slug}`);
+        if (!res.ok) {
+          throw new Error("Failed to fetch course");
+        }
+        const data = await res.json();
+        setCourse(data);
+      } catch (error) {
+        console.error("Error fetching course:", error);
+        setFetchError(error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    getCourse();
+  }, [slug]);
 
   const validationSchema = Yup.object({
     firstName: Yup.string().required("First Name is required"),
@@ -45,16 +77,87 @@ const Enrol = () => {
       terms: false,
     },
     validationSchema,
-    onSubmit: (values) => {
-      console.log(values);
-      toast.success("Enrollment successful!");
+    onSubmit: async (values) => {
+      try {
+        setIsSubmitting(true);
+
+        const payload = {
+          courseSlug: slug,
+          ...values,
+        };
+
+        const res = await fetch("/api/enroll", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        if (!res.ok) {
+          throw new Error("Failed to enroll. Please try again.");
+        }
+
+        toast.success("Enrollment successful!");
+        formik.resetForm();
+      } catch (err) {
+        console.error(err);
+        toast.error(err.message || "Something went wrong!");
+      } finally {
+        setIsSubmitting(false);
+      }
     },
   });
 
-  const filteredPaymentPlans = course?.payments.filter(
+  const filteredPaymentPlans = course?.payments?.filter(
     (payment) =>
       payment.mode.toLowerCase() === formik.values.learningMode.toLowerCase()
   );
+
+  const renderSkeleton = () => {
+    return (
+      <>
+        <section className="bg-[url('/images/background.png')] bg-no-repeat bg-cover">
+          <div className="container py-20">
+            <Skeleton height="25px" width="40%" mb="5" />
+            <SkeletonText noOfLines={2} spacing="3" />
+            <Skeleton height="40px" width="150px" mt="5" borderRadius="full" />
+          </div>
+        </section>
+
+        <section className="bg-[#F4F7F8] py-20">
+          <div className="container flex justify-center w-full md:w-3/4 lg:w-2/3">
+            <div className="w-full bg-white border-2 rounded-xl p-5">
+              <Skeleton height="25px" width="60%" mb="4" />
+              <SkeletonText noOfLines={4} spacing="4" />
+              <div className="grid md:grid-cols-2 gap-5 gap-y-8 mt-5">
+                {[...Array(8)].map((_, i) => (
+                  <Skeleton key={i} height="45px" />
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      </>
+    );
+  };
+
+  if (isLoading) {
+    return (
+      <>
+        {renderSkeleton()}
+        <FAQs limit={4} />
+      </>
+    );
+  }
+
+  if (fetchError || !course) {
+    return (
+      <div className="container py-20">
+        <p className="text-center text-lg font-medium">
+          {fetchError || "Course not found."}
+        </p>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -63,26 +166,25 @@ const Enrol = () => {
           <div className="flex items-center gap-2 flex-wrap mb-5">
             <Link href="/" className="hover:text-secondary">
               Home
-            </Link>{" "}
-            <IoIosArrowForward />{" "}
+            </Link>
+            <IoIosArrowForward />
             <Link
               href="/upskill-program/courses"
               className="hover:text-secondary"
             >
               All courses
-            </Link>{" "}
-            <IoIosArrowForward />{" "}
+            </Link>
+            <IoIosArrowForward />
             <Link
-              href={`/upskill-program/${course?.slug}`}
+              href={`/upskill-program/${course.slug}`}
               className="hover:text-secondary"
             >
-              {course?.title}
+              {course.title}
             </Link>
-            <IoIosArrowForward />{" "}
-            <Link href="#" className="text-gray-500">
-              Enrol
-            </Link>
+            <IoIosArrowForward />
+            <span className="text-gray-500">Enrol</span>
           </div>
+
           <div className="space-y-6 flex flex-col justify-center">
             <div className="space-y-8">
               <h1 className="text-main capitalize">
@@ -111,7 +213,7 @@ const Enrol = () => {
               className="mt-5 bg-white border-2 rounded-xl p-5 grid md:grid-cols-2 gap-5 gap-y-8"
             >
               <div className="flex flex-col">
-                <label>First Name</label>
+                <label htmlFor="firstName">First Name</label>
                 <input
                   type="text"
                   id="firstName"
@@ -121,13 +223,13 @@ const Enrol = () => {
                   onBlur={formik.handleBlur}
                   value={formik.values.firstName}
                 />
-                {formik.touched.firstName && formik.errors.firstName ? (
+                {formik.touched.firstName && formik.errors.firstName && (
                   <div className="text-red-500">{formik.errors.firstName}</div>
-                ) : null}
+                )}
               </div>
 
               <div className="flex flex-col">
-                <label>Last Name</label>
+                <label htmlFor="lastName">Last Name</label>
                 <input
                   type="text"
                   id="lastName"
@@ -137,13 +239,13 @@ const Enrol = () => {
                   onBlur={formik.handleBlur}
                   value={formik.values.lastName}
                 />
-                {formik.touched.lastName && formik.errors.lastName ? (
+                {formik.touched.lastName && formik.errors.lastName && (
                   <div className="text-red-500">{formik.errors.lastName}</div>
-                ) : null}
+                )}
               </div>
 
               <div className="flex flex-col">
-                <label>Phone Number</label>
+                <label htmlFor="phoneNumber">Phone Number</label>
                 <input
                   type="tel"
                   id="phoneNumber"
@@ -153,15 +255,15 @@ const Enrol = () => {
                   onBlur={formik.handleBlur}
                   value={formik.values.phoneNumber}
                 />
-                {formik.touched.phoneNumber && formik.errors.phoneNumber ? (
+                {formik.touched.phoneNumber && formik.errors.phoneNumber && (
                   <div className="text-red-500">
                     {formik.errors.phoneNumber}
                   </div>
-                ) : null}
+                )}
               </div>
 
               <div className="flex flex-col">
-                <label>Email Address</label>
+                <label htmlFor="email">Email Address</label>
                 <input
                   type="email"
                   id="email"
@@ -171,13 +273,13 @@ const Enrol = () => {
                   onBlur={formik.handleBlur}
                   value={formik.values.email}
                 />
-                {formik.touched.email && formik.errors.email ? (
+                {formik.touched.email && formik.errors.email && (
                   <div className="text-red-500">{formik.errors.email}</div>
-                ) : null}
+                )}
               </div>
 
               <div className="flex flex-col">
-                <label>Gender</label>
+                <label htmlFor="gender">Gender</label>
                 <select
                   id="gender"
                   name="gender"
@@ -189,13 +291,13 @@ const Enrol = () => {
                   <option value="male">Male</option>
                   <option value="female">Female</option>
                 </select>
-                {formik.touched.gender && formik.errors.gender ? (
+                {formik.touched.gender && formik.errors.gender && (
                   <div className="text-red-500">{formik.errors.gender}</div>
-                ) : null}
+                )}
               </div>
 
               <div className="flex flex-col">
-                <label>State</label>
+                <label htmlFor="state">State</label>
                 <select
                   id="state"
                   name="state"
@@ -207,13 +309,13 @@ const Enrol = () => {
                   <option value="oyo">Oyo</option>
                   <option value="lagos">Lagos</option>
                 </select>
-                {formik.touched.state && formik.errors.state ? (
+                {formik.touched.state && formik.errors.state && (
                   <div className="text-red-500">{formik.errors.state}</div>
-                ) : null}
+                )}
               </div>
 
               <div className="flex flex-col">
-                <label>Learning Mode</label>
+                <label htmlFor="learningMode">Learning Mode</label>
                 <select
                   id="learningMode"
                   name="learningMode"
@@ -222,21 +324,21 @@ const Enrol = () => {
                   value={formik.values.learningMode}
                 >
                   <option value="">Select mode</option>
-                  {course?.mode.map((mode, index) => (
+                  {course.mode.map((mode, index) => (
                     <option key={index} value={mode.toLowerCase()}>
                       {mode}
                     </option>
                   ))}
                 </select>
-                {formik.touched.learningMode && formik.errors.learningMode ? (
+                {formik.touched.learningMode && formik.errors.learningMode && (
                   <div className="text-red-500">
                     {formik.errors.learningMode}
                   </div>
-                ) : null}
+                )}
               </div>
 
               <div className="flex flex-col">
-                <label>Payment Plan</label>
+                <label htmlFor="paymentPlan">Payment Plan</label>
                 <select
                   id="paymentPlan"
                   name="paymentPlan"
@@ -252,11 +354,11 @@ const Enrol = () => {
                     </option>
                   ))}
                 </select>
-                {formik.touched.paymentPlan && formik.errors.paymentPlan ? (
+                {formik.touched.paymentPlan && formik.errors.paymentPlan && (
                   <div className="text-red-500">
                     {formik.errors.paymentPlan}
                   </div>
-                ) : null}
+                )}
               </div>
 
               <div className="md:col-span-2">
@@ -274,17 +376,18 @@ const Enrol = () => {
                     <span className="text-main">Terms & Conditions</span>
                   </span>
                 </label>
-                {formik.touched.terms && formik.errors.terms ? (
+                {formik.touched.terms && formik.errors.terms && (
                   <div className="text-red-500">{formik.errors.terms}</div>
-                ) : null}
+                )}
               </div>
 
               <div className="md:col-span-2 flex justify-center mb-6">
                 <button
                   type="submit"
+                  disabled={isSubmitting}
                   className="bg-main text-white rounded-full text-center text-base px-7 py-3 font-medium"
                 >
-                  Proceed with Application
+                  {isSubmitting ? "Processing..." : "Proceed with Application"}
                 </button>
               </div>
             </form>
@@ -295,12 +398,4 @@ const Enrol = () => {
       <FAQs limit={4} />
     </>
   );
-};
-
-const EnrolPage = () => (
-  <Suspense fallback={<div>Loading...</div>}>
-    <Enrol />
-  </Suspense>
-);
-
-export default EnrolPage;
+}
