@@ -83,7 +83,7 @@ const Courses = ({ limit, heading, subHeading }) => {
           <p className="uppercase text-[#828282] font-semibold text-xs md:text-base">
             {item.category}
           </p>
-          <h3 className="text-black font-bold">{item.title}</h3>
+          <h3 className="text-black font-bold capitalize">{item.title}</h3>
           <p className="text-[#C4C4C4] short">{item.description}</p>
 
           <div className="flex justify-between w-full">
