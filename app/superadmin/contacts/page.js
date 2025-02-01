@@ -208,7 +208,7 @@ const Page = () => {
                     </Td>
                     <Td>
                       {contact.createdAt
-                        ? new Date(contact.createdAt).toLocaleDateString()
+                        ? new Date(contact.createdAt).toLocaleDateString("en-GB")
                         : "N/A"}
                     </Td>
                     <Td>

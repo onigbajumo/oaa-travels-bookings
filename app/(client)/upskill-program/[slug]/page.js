@@ -236,7 +236,7 @@ export default function Page() {
               Flexible Learning Modes
             </span>
             <h4 className="capitalize font-semibold">
-              {course.mode.join(" & ")}
+              {course?.mode?.join(" & ")}
             </h4>
           </div>
         </section>
@@ -353,7 +353,7 @@ export default function Page() {
                     key={i}
                     className="border-2 border-main px-4 py-1 rounded-xl text-center"
                   >
-                    <h5 className="font-semibold">{skill}</h5>
+                    <h5 className="font-semibold capitalize">{skill}</h5>
                   </div>
                 ))}
               </div>
@@ -387,7 +387,7 @@ export default function Page() {
             >
               <h3 className="text-main font-semibold">Meet Your Instructor</h3>
               <div className="flex items-start gap-4">
-                <div className="bg-[#F4F7F8] rounded-full w-64">
+                <div className="bg-[#F4F7F8] rounded-full w-32">
                   <Image
                     src={course.instructor?.image}
                     width={1000}
@@ -423,9 +423,16 @@ export default function Page() {
                     </h4>
                     <p>{payment.description}</p>
                     <div className="flex gap-2 items-end">
-                      <h5 className="font-semibold">{payment.price}</h5>
+                      <h5 className="font-semibold">
+                        {new Intl.NumberFormat("en-NG", {
+                          style: "currency",
+                          currency: "NGN",
+                          minimumFractionDigits: 0,
+                          maximumFractionDigits: 0,
+                        }).format(payment.price)}
+                      </h5>
                       {payment.plan === "Monthly" && (
-                        <span className="text-sm">/ 2 months</span>
+                        <span className="text-sm">/ duration of 2 months</span>
                       )}
                     </div>
                     <div className="flex">

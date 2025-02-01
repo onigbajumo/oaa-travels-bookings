@@ -1,8 +1,6 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { BsPlus, BsSearch, BsThreeDotsVertical } from "react-icons/bs";
-import { AiOutlineClose, AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import {
   Modal,
   ModalOverlay,
@@ -20,7 +18,6 @@ import {
   MenuList,
   MenuItem,
   IconButton,
-  Avatar,
   Image,
   AlertDialog,
   AlertDialogBody,
@@ -30,7 +27,6 @@ import {
   AlertDialogOverlay,
   FormControl,
   FormLabel,
-  FormErrorMessage,
   Select,
   Checkbox,
   CheckboxGroup,
@@ -42,48 +38,73 @@ import {
   Th,
   Td,
 } from "@chakra-ui/react";
+import { BsPlus, BsSearch, BsThreeDotsVertical } from "react-icons/bs";
+import { AiOutlineClose, AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const CoursesPage = () => {
-  const initialCourses = [
-    {
-      title: "Frontend Web Development",
-      rating: "4.5",
-      slug: "frontend-web-development",
-      category: "development",
-      description: "Learn to build dynamic, responsive websites...",
-      duration: "6",
-      tag: "Beginner",
-      mode: ["Onsite", "Virtual"],
-      image: "https://placehold.co/500.png",
-      highlights: ["Comprehensive Curriculum", "Hands-On Projects"],
-      skills: ["html", "css"],
-      instructor: "John Doe",
-      curriculum: [
-        {
-          module: "Module 1: Introduction",
-          topics: ["HTML Basics"],
-        },
-      ],
-      payments: [
-        { mode: "Virtual", plan: "One-time", price: "₦200,000" },
-        { mode: "Onsite", plan: "One-time", price: "₦250,000" },
-      ],
-    },
-  ];
+const instructorMap = {
+  development: {
+    name: "John Doe",
+    image: "https://placehold.co/500.png",
+    bio: "John is a full-stack developer with 10+ years experience.",
+    experience: "Senior Fullstack Developer | 10+ Years of Experience",
+  },
+  design: {
+    name: "Jane Smith",
+    image: "https://placehold.co/500.png",
+    bio: "Jane is a seasoned UI/UX designer with 8 years experience.",
+    experience: "Lead UI/UX Designer | 8+ Years of Experience",
+  },
+  marketing: {
+    name: "Mike Johnson",
+    image: "https://placehold.co/500.png",
+    bio: "Mike is a growth marketing expert with 6 years experience.",
+    experience: "Growth Marketing Specialist | 6+ Years of Experience",
+  },
+  management: {
+    name: "Sarah Williams",
+    image: "https://placehold.co/500.png",
+    bio: "Sarah has led product teams for over a decade.",
+    experience: "Product Manager | 10+ Years of Experience",
+  },
+};
 
-  const [courses, setCourses] = useState(initialCourses);
-  const [loading, setLoading] = useState(false);
+const ratingOptions = [
+  "0.5",
+  "1.0",
+  "1.5",
+  "2.0",
+  "2.5",
+  "3.0",
+  "3.5",
+  "4.0",
+  "4.5",
+  "5.0",
+];
+
+async function toBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
+}
+
+export default function CoursesPage() {
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-
   const [isEditing, setIsEditing] = useState(false);
-
   const [currentCourseIndex, setCurrentCourseIndex] = useState(null);
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [newCourse, setNewCourse] = useState({
     title: "",
+    rating: "4.5",
     category: "",
     description: "",
     duration: "1",
@@ -93,7 +114,6 @@ const CoursesPage = () => {
     imagePreview: "",
     highlights: [],
     skills: [],
-    instructor: "",
     curriculum: [],
     payments: [],
     newHighlight: "",
@@ -116,19 +136,31 @@ const CoursesPage = () => {
   const cancelRef = useRef();
   const [courseToDeleteIndex, setCourseToDeleteIndex] = useState(null);
 
-  const instructors = [
-    "John Doe",
-    "Jane Smith",
-    "Mike Johnson",
-    "Sarah Williams",
-    "David Brown",
-  ];
+  useEffect(() => {
+    fetchAllCourses();
+  }, []);
+
+  const fetchAllCourses = async () => {
+    try {
+      setLoading(true);
+      const res = await fetch("/api/courses");
+      if (!res.ok) throw new Error("Failed to fetch courses");
+      const data = await res.json();
+      setCourses(data);
+    } catch (error) {
+      toast.error("Error fetching courses");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleOpenNewCourseModal = () => {
     setIsEditing(false);
     setCurrentCourseIndex(null);
     setNewCourse({
       title: "",
+      rating: "4.5",
       category: "",
       description: "",
       duration: "1",
@@ -138,7 +170,6 @@ const CoursesPage = () => {
       imagePreview: "",
       highlights: [],
       skills: [],
-      instructor: "",
       curriculum: [],
       payments: [],
       newHighlight: "",
@@ -147,21 +178,40 @@ const CoursesPage = () => {
     onOpen();
   };
 
-  const handleOpenEditCourseModal = (index) => {
-    setIsEditing(true);
-    setCurrentCourseIndex(index);
-    const course = courses[index];
-    setNewCourse({
-      ...course,
-      image: null,
-      imagePreview: course.image,
-      newHighlight: "",
-      newSkill: "",
-    });
-    onOpen();
+  const handleOpenEditCourseModal = async (index) => {
+    try {
+      setIsEditing(true);
+      setCurrentCourseIndex(index);
+      const existing = courses[index];
+      let durationNum = "1";
+      if (existing.duration) {
+        const parsed = parseInt(existing.duration, 10);
+        if (!isNaN(parsed)) durationNum = parsed.toString();
+      }
+      setNewCourse({
+        ...existing,
+        rating: existing.rating || "4.5",
+        duration: durationNum,
+        image: null,
+        imagePreview: existing.image,
+        newHighlight: "",
+        newSkill: "",
+      });
+      onOpen();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  const handleAddOrEditCourse = () => {
+  const getFinalImage = async () => {
+    if (newCourse.image) {
+      const base64Str = await toBase64(newCourse.image);
+      return base64Str;
+    }
+    return newCourse.imagePreview;
+  };
+
+  const handleAddOrEditCourse = async () => {
     if (
       !newCourse.title ||
       !newCourse.category ||
@@ -175,58 +225,95 @@ const CoursesPage = () => {
       return;
     }
 
-    let imageUrl = newCourse.imagePreview;
-    if (newCourse.image) {
-      imageUrl = URL.createObjectURL(newCourse.image);
+    try {
+      setIsSubmitting(true);
+
+      const durationString = `${newCourse.duration} months`;
+
+      const matchedInstructor = instructorMap[newCourse.category] || {
+        name: "Unknown Instructor",
+        image: "https://placehold.co/500.png",
+        bio: "No data available",
+        experience: "N/A",
+      };
+
+      const finalImage = await getFinalImage();
+
+      const finalCourseData = {
+        title: newCourse.title,
+        rating: newCourse.rating,
+        category: newCourse.category,
+        description: newCourse.description,
+        duration: durationString,
+        tag: newCourse.tag,
+        mode: newCourse.mode,
+        image: finalImage,
+        highlights: newCourse.highlights,
+        skills: newCourse.skills,
+        instructor: matchedInstructor,
+        curriculum: newCourse.curriculum,
+        payments: newCourse.payments,
+      };
+
+      if (!isEditing) {
+        const res = await fetch("/api/courses", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(finalCourseData),
+        });
+        if (!res.ok) throw new Error("Failed to create course");
+        toast.success("Course added successfully");
+        onClose();
+        fetchAllCourses();
+      } else {
+        const existingCourse = courses[currentCourseIndex];
+        if (!existingCourse._id) {
+          toast.error("Cannot edit. Missing course ID");
+          return;
+        }
+        finalCourseData.id = existingCourse._id;
+        const res = await fetch("/api/courses", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(finalCourseData),
+        });
+        if (!res.ok) throw new Error("Failed to update course");
+        toast.success("Course updated successfully");
+        onClose();
+        fetchAllCourses();
+      }
+    } catch (err) {
+      toast.error("Error saving course");
+      console.error(err);
+    } finally {
+      setIsSubmitting(false);
     }
-
-    const slug = newCourse.title.toLowerCase().replace(/ /g, "-");
-
-    const payments = [];
-    newCourse.mode.forEach((mode) => {
-      const oneTime = newCourse.payments.find(
-        (p) => p.mode === mode && p.plan === "One-time"
-      ) || { mode, plan: "One-time", price: "" };
-
-      const monthly = newCourse.payments.find(
-        (p) => p.mode === mode && p.plan === "Monthly"
-      ) || { mode, plan: "Monthly", price: "" };
-
-      payments.push(oneTime, monthly);
-    });
-
-    const updatedCourse = {
-      ...newCourse,
-      image: imageUrl,
-      slug,
-      rating: newCourse.rating ? newCourse.rating : "4.5",
-      payments,
-    };
-
-    if (!isEditing) {
-      setCourses([updatedCourse, ...courses]);
-      toast.success("Course added successfully");
-    } else {
-      const updatedCourses = [...courses];
-      updatedCourses[currentCourseIndex] = updatedCourse;
-      setCourses(updatedCourses);
-      toast.success("Course updated successfully");
-    }
-
-    onClose();
   };
 
   const handleDeleteCourse = (index) => {
     setCourseToDeleteIndex(index);
     onDeleteOpen();
   };
-
-  const confirmDeleteCourse = () => {
-    const updatedCourses = [...courses];
-    updatedCourses.splice(courseToDeleteIndex, 1);
-    setCourses(updatedCourses);
-    onDeleteClose();
-    toast.success("Course deleted successfully");
+  const confirmDeleteCourse = async () => {
+    if (courseToDeleteIndex == null) return;
+    const course = courses[courseToDeleteIndex];
+    if (!course._id) {
+      toast.error("Cannot delete. Missing ID");
+      onDeleteClose();
+      return;
+    }
+    try {
+      const res = await fetch(`/api/courses?id=${course._id}`, {
+        method: "DELETE",
+      });
+      if (!res.ok) throw new Error("Failed to delete course");
+      toast.success("Course deleted successfully");
+      onDeleteClose();
+      fetchAllCourses();
+    } catch (err) {
+      toast.error("Error deleting course");
+      console.error(err);
+    }
   };
 
   const handleAddHighlight = () => {
@@ -238,14 +325,10 @@ const CoursesPage = () => {
       });
     }
   };
-
-  const handleRemoveHighlight = (index) => {
-    const updatedHighlights = [...newCourse.highlights];
-    updatedHighlights.splice(index, 1);
-    setNewCourse({
-      ...newCourse,
-      highlights: updatedHighlights,
-    });
+  const handleRemoveHighlight = (idx) => {
+    const updated = [...newCourse.highlights];
+    updated.splice(idx, 1);
+    setNewCourse({ ...newCourse, highlights: updated });
   };
 
   const handleAddSkill = () => {
@@ -257,26 +340,17 @@ const CoursesPage = () => {
       });
     }
   };
-
-  const handleRemoveSkill = (index) => {
-    const updatedSkills = [...newCourse.skills];
-    updatedSkills.splice(index, 1);
-    setNewCourse({
-      ...newCourse,
-      skills: updatedSkills,
-    });
+  const handleRemoveSkill = (idx) => {
+    const updated = [...newCourse.skills];
+    updated.splice(idx, 1);
+    setNewCourse({ ...newCourse, skills: updated });
   };
 
   const handleOpenModuleModal = () => {
     setCurrentModuleIndex(null);
-    setCurrentModule({
-      title: "",
-      topics: [],
-      newTopic: "",
-    });
+    setCurrentModule({ title: "", topics: [], newTopic: "" });
     setIsCurriculumOpen(true);
   };
-
   const handleAddTopic = () => {
     if (currentModule.newTopic) {
       setCurrentModule({
@@ -286,11 +360,10 @@ const CoursesPage = () => {
       });
     }
   };
-
   const handleSaveModule = () => {
     if (currentModule.title && currentModule.topics.length > 0) {
       if (currentModuleIndex === null) {
-        const newModule = {
+        const newMod = {
           module: `Module ${newCourse.curriculum.length + 1}: ${
             currentModule.title
           }`,
@@ -298,58 +371,59 @@ const CoursesPage = () => {
         };
         setNewCourse({
           ...newCourse,
-          curriculum: [...newCourse.curriculum, newModule],
+          curriculum: [...newCourse.curriculum, newMod],
         });
       } else {
-        const updatedCurriculum = [...newCourse.curriculum];
-        updatedCurriculum[currentModuleIndex] = {
-          ...updatedCurriculum[currentModuleIndex],
+        const updatedCurr = [...newCourse.curriculum];
+        updatedCurr[currentModuleIndex] = {
+          ...updatedCurr[currentModuleIndex],
           module: `Module ${currentModuleIndex + 1}: ${currentModule.title}`,
           topics: currentModule.topics,
         };
-        setNewCourse({
-          ...newCourse,
-          curriculum: updatedCurriculum,
-        });
+        setNewCourse({ ...newCourse, curriculum: updatedCurr });
       }
       setIsCurriculumOpen(false);
       setCurrentModule({ title: "", topics: [], newTopic: "" });
       setCurrentModuleIndex(null);
     }
   };
-
   const handleEditModule = (index) => {
     const mod = newCourse.curriculum[index];
-
     const [_, ...rest] = mod.module.split(": ");
     const title = rest.join(": ").trim();
-
     setCurrentModuleIndex(index);
-    setCurrentModule({
-      title: title,
-      topics: [...mod.topics],
-      newTopic: "",
-    });
+    setCurrentModule({ title, topics: [...mod.topics], newTopic: "" });
     setIsCurriculumOpen(true);
   };
-
   const handleDeleteModule = (index) => {
-    const updatedCurriculum = [...newCourse.curriculum];
-    updatedCurriculum.splice(index, 1);
-
-    const reNumbered = updatedCurriculum.map((m, i) => {
+    const updated = [...newCourse.curriculum];
+    updated.splice(index, 1);
+    const reNumbered = updated.map((m, i) => {
       const [_, ...rest] = m.module.split(": ");
       const t = rest.join(": ").trim();
-      return {
-        ...m,
-        module: `Module ${i + 1}: ${t}`,
-      };
+      return { ...m, module: `Module ${i + 1}: ${t}` };
     });
+    setNewCourse({ ...newCourse, curriculum: reNumbered });
+  };
 
-    setNewCourse({
-      ...newCourse,
-      curriculum: reNumbered,
-    });
+  const handlePriceChange = (value, planType, mode) => {
+    const updatedPayments = [...newCourse.payments];
+    const idx = updatedPayments.findIndex(
+      (p) => p.mode === mode && p.plan === planType
+    );
+    if (idx > -1) {
+      updatedPayments[idx].price = value;
+    } else {
+      updatedPayments.push({ mode, plan: planType, price: value });
+    }
+    setNewCourse({ ...newCourse, payments: updatedPayments });
+  };
+
+  const handleCategoryChange = (cat) => {
+    setNewCourse((prev) => ({
+      ...prev,
+      category: cat,
+    }));
   };
 
   return (
@@ -369,7 +443,6 @@ const CoursesPage = () => {
             />
           </div>
         </div>
-
         <Button
           colorScheme="blue"
           leftIcon={<BsPlus />}
@@ -379,48 +452,52 @@ const CoursesPage = () => {
         </Button>
       </div>
 
-      <div className="flex flex-col gap-3 mt-5">
-        {courses.map((course, index) => (
-          <div key={course.slug} className="border-2 rounded-xl p-4">
-            <div className="flex justify-between items-start">
-              <div className="flex gap-4">
-                <Image src={course.image} boxSize="100px" objectFit="cover" />
-                <div>
-                  <h4 className="text-lg font-semibold">{course.title}</h4>
-                  <p className="text-sm text-gray-500">{course.category}</p>
-                  <div className="flex gap-2 mt-2">
-                    {course.mode.map((m) => (
-                      <span
-                        key={m}
-                        className="bg-blue-100 text-blue-800 px-2 py-1 rounded"
-                      >
-                        {m}
-                      </span>
-                    ))}
+      {loading ? (
+        <p>Loading courses...</p>
+      ) : (
+        <div className="flex flex-col gap-3 mt-5">
+          {courses.map((course, index) => (
+            <div key={course._id || index} className="border-2 rounded-xl p-4">
+              <div className="flex justify-between items-start">
+                <div className="flex gap-4">
+                  <Image src={course.image} boxSize="100px" objectFit="cover" />
+                  <div>
+                    <h4 className="text-lg font-semibold">{course.title}</h4>
+                    <p className="text-sm text-gray-500">{course.category}</p>
+                    <div className="flex gap-2 mt-2">
+                      {course.mode.map((m) => (
+                        <span
+                          key={m}
+                          className="bg-blue-100 text-blue-800 px-2 py-1 rounded"
+                        >
+                          {m}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <Menu>
-                <MenuButton
-                  as={IconButton}
-                  aria-label="Options"
-                  icon={<BsThreeDotsVertical />}
-                  variant="outline"
-                />
-                <MenuList>
-                  <MenuItem onClick={() => handleOpenEditCourseModal(index)}>
-                    Edit
-                  </MenuItem>
-                  <MenuItem onClick={() => handleDeleteCourse(index)}>
-                    Delete
-                  </MenuItem>
-                </MenuList>
-              </Menu>
+                <Menu>
+                  <MenuButton
+                    as={IconButton}
+                    aria-label="Options"
+                    icon={<BsThreeDotsVertical />}
+                    variant="outline"
+                  />
+                  <MenuList>
+                    <MenuItem onClick={() => handleOpenEditCourseModal(index)}>
+                      Edit
+                    </MenuItem>
+                    <MenuItem onClick={() => handleDeleteCourse(index)}>
+                      Delete
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       <AlertDialog
         isOpen={isDeleteOpen}
@@ -469,12 +546,26 @@ const CoursesPage = () => {
             </FormControl>
 
             <FormControl isRequired>
+              <FormLabel>Rating</FormLabel>
+              <Select
+                value={newCourse.rating}
+                onChange={(e) =>
+                  setNewCourse({ ...newCourse, rating: e.target.value })
+                }
+              >
+                {ratingOptions.map((r) => (
+                  <option key={r} value={r}>
+                    {r}
+                  </option>
+                ))}
+              </Select>
+            </FormControl>
+
+            <FormControl isRequired>
               <FormLabel>Category</FormLabel>
               <Select
                 value={newCourse.category}
-                onChange={(e) =>
-                  setNewCourse({ ...newCourse, category: e.target.value })
-                }
+                onChange={(e) => handleCategoryChange(e.target.value)}
               >
                 <option value="">Select Category</option>
                 <option value="design">Design</option>
@@ -504,7 +595,7 @@ const CoursesPage = () => {
                   }
                 >
                   {[1, 2, 3, 4, 5, 6].map((n) => (
-                    <option key={n} value={n}>
+                    <option key={n} value={n.toString()}>
                       {n} Month{n > 1 ? "s" : ""}
                     </option>
                   ))}
@@ -624,23 +715,6 @@ const CoursesPage = () => {
             </FormControl>
 
             <FormControl isRequired>
-              <FormLabel>Instructor</FormLabel>
-              <Select
-                value={newCourse.instructor}
-                onChange={(e) =>
-                  setNewCourse({ ...newCourse, instructor: e.target.value })
-                }
-              >
-                <option value="">Select Instructor</option>
-                {instructors.map((inst, i) => (
-                  <option key={i} value={inst}>
-                    {inst}
-                  </option>
-                ))}
-              </Select>
-            </FormControl>
-
-            <FormControl isRequired>
               <FormLabel>Curriculum</FormLabel>
               <Button onClick={handleOpenModuleModal}>Add Module</Button>
               <Table mt={2}>
@@ -689,23 +763,6 @@ const CoursesPage = () => {
                     (p) => p.mode === mode && p.plan === "Monthly"
                   ) || { mode, plan: "Monthly", price: "" };
 
-                  const handlePriceChange = (value, planType) => {
-                    const updatedPayments = [...newCourse.payments];
-                    const idx = updatedPayments.findIndex(
-                      (p) => p.mode === mode && p.plan === planType
-                    );
-                    if (idx > -1) {
-                      updatedPayments[idx].price = value;
-                    } else {
-                      updatedPayments.push({
-                        mode,
-                        plan: planType,
-                        price: value,
-                      });
-                    }
-                    setNewCourse({ ...newCourse, payments: updatedPayments });
-                  };
-
                   return (
                     <div key={mode} className="border p-4 rounded">
                       <h4 className="font-semibold mb-2">{mode} Plans</h4>
@@ -714,10 +771,14 @@ const CoursesPage = () => {
                           <FormLabel>One-time Payment</FormLabel>
                           <Input
                             placeholder="Enter price"
-                            type="number"
-                            value={oneTime.price.replace(/\D/g, "")} 
+                            type="text"
+                            value={oneTime.price}
                             onChange={(e) =>
-                              handlePriceChange(e.target.value, "One-time")
+                              handlePriceChange(
+                                e.target.value,
+                                "One-time",
+                                mode
+                              )
                             }
                           />
                         </div>
@@ -725,10 +786,10 @@ const CoursesPage = () => {
                           <FormLabel>Monthly Payment</FormLabel>
                           <Input
                             placeholder="Enter price"
-                            type="number"
-                            value={monthly.price.replace(/\D/g, "")} 
+                            type="text"
+                            value={monthly.price}
                             onChange={(e) =>
-                              handlePriceChange(e.target.value, "Monthly")
+                              handlePriceChange(e.target.value, "Monthly", mode)
                             }
                           />
                         </div>
@@ -744,8 +805,18 @@ const CoursesPage = () => {
             <Button variant="ghost" mr={3} onClick={onClose}>
               Cancel
             </Button>
-            <Button colorScheme="blue" onClick={handleAddOrEditCourse}>
-              {isEditing ? "Save Changes" : "Create Course"}
+            <Button
+              colorScheme="blue"
+              onClick={handleAddOrEditCourse}
+              disabled={isSubmitting}
+            >
+              {isSubmitting
+                ? isEditing
+                  ? "Saving"
+                  : "Creating"
+                : isEditing
+                ? "Save Changes"
+                : "Create Course"}
             </Button>
           </ModalFooter>
         </ModalContent>
@@ -821,6 +892,4 @@ const CoursesPage = () => {
       </Modal>
     </div>
   );
-};
-
-export default CoursesPage;
+}

@@ -281,7 +281,7 @@ export default function Page() {
                     </Td>
                     <Td>
                       {en.createdAt
-                        ? new Date(en.createdAt).toLocaleDateString()
+                        ? new Date(en.createdAt).toLocaleDateString("en-GB")
                         : "N/A"}
                     </Td>
                     <Td>
