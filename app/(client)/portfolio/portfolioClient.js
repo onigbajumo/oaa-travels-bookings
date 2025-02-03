@@ -5,37 +5,9 @@ import Image from "next/image";
 import { CgArrowRight } from "react-icons/cg";
 import CTA from "../../../components/CTA/cta";
 import Testimony from "../../../components/testimonial/testimonials";
+import { projects } from "@/content/data";
 
-const projects = [
-  {
-    title: "Market Assist E-commerce Platform Development",
-    description:
-      "Developed a digital marketplace that connects users with local market runners for personal shopping assistance. Features include price comparison, product discovery, and live chat functionalities.",
-    image: "https://placehold.co/500.png",
-    path: "#",
-    logo: "https://placehold.co/100.png",
-    type: "Web",
-    client: "INTERNAL DEVELOPMENT (Ehizua Hub)",
-  },
-  {
-    title: "Project 2",
-    description: "Project 2 description",
-    image: "https://placehold.co/500.png",
-    path: "#",
-    logo: "https://placehold.co/100.png",
-    type: "Digital Marketing",
-    client: "Client 2",
-  },
-  {
-    title: "Project 3",
-    description: "Project 3 description",
-    image: "https://placehold.co/500.png",
-    path: "#",
-    logo: "https://placehold.co/300x100.png",
-    type: "Web Development",
-    client: "Client 3",
-  },
-];
+
 
 const Portfolio = () => {
   const [filterType, setFilterType] = useState("all");
@@ -147,7 +119,7 @@ const Portfolio = () => {
 
                 <div className="flex items-center justify-between mt-5">
                   <Link
-                    href={project.path}
+                    href={`/portfolio/${project.slug}`}
                     className="bg-main lg:bg-transparent hover:bg-main rounded-full text-white lg:text-main hover:text-white text-center text-base px-4 py-2 border border-main font-medium transition-all ease-in-out duration-300 flex items-center gap-2"
                   >
                     Learn More <CgArrowRight />
