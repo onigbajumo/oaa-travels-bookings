@@ -68,7 +68,7 @@ const Portfolio = () => {
           <div className="grid md:grid-cols-2 gap-5">
             <div>
               <Image
-                src={project.image}
+                src={project.coverImage}
                 alt={project.title}
                 width={1000}
                 height={1000}
