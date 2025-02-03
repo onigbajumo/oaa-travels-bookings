@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../context/AuthContext";
+import Image from "next/image";
 
 /**
  * @param {Object} props
@@ -27,7 +28,7 @@ export default function ProtectedRoute({ children, allowedRoles = [] }) {
   }, [loading, isAuthenticated, userRole, allowedRoles, router]);
 
   if (loading || !isAuthenticated) {
-    return <p>Loading...</p>;
+    return <div className="w-full h-screen grid place-content-center"><Image src="/icon.png" width={70} height={70} /></div>;
   }
 
   return <>{children}</>;

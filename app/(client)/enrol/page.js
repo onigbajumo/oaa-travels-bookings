@@ -1,5 +1,6 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Enrol from "./enrolClient";
+import Image from "next/image";
 
 /**
  * Formats the query parameter into a readable title.
@@ -15,7 +16,7 @@ function formatQueryToTitle(query) {
 
   title = title.replace(/[^a-zA-Z0-9\s']/g, "");
 
-//   title = title.replace(/\b\w/g, (char) => char.toUpperCase());
+  //   title = title.replace(/\b\w/g, (char) => char.toUpperCase());
 
   return title;
 }
@@ -41,7 +42,17 @@ export async function generateMetadata({ searchParams }, parent) {
 }
 
 const page = () => {
-  return <Enrol />;
+  return (
+    <Suspense
+      fallback={
+        <div className="w-full h-screen grid place-content-center">
+          <Image src="/icon.png" width={70} height={70} />
+        </div>
+      }
+    >
+      <Enrol />
+    </Suspense>
+  );
 };
 
 export default page;

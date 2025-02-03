@@ -1,246 +1,210 @@
-const courses = [
+export const blogs = [
   {
-    title: "Frontend Web Development",
-    rating: "4.5",
-    slug: "frontend-web-development",
-    category: "development",
-    description: `Learn to build dynamic, responsive websites and applications
-                    from scratch. This course offers an in-depth exploration of both
-                    front-end and back-end development, equipping you with the
-                    skills to create robust and scalable web applications`,
-    duration: "6 months",
-    tag: "Beginner",
-    mode: ["Onsite", "Virtual"],
+    title: "How to become a full-stack developer",
+    body: "Learn how to become a full-stack developer with our step-by-step guide.",
     image: "https://placehold.co/500.png",
-    highlights: [
-      "Comprehensive Curriculum",
-      "Hands-On Projects",
-      "Beginner Friendly",
-      "Flexible Learning Modes",
-    ],
-    skills: ["html", "css", "javascript", "react", "nodejs", "mongodb"],
-    instructor: {
-      name: "John Doe",
-      image: "https://placehold.co/500.png",
-      bio: "John is a seasoned full-stack developer with over 10 years of experience in building web applications. He has worked with several startups and tech companies, helping them build scalable and robust web applications.",
-      experience: "Senior Fullstack Developer | 10+ Years of Experience",
-    },
-    curriculum: [
-      {
-        module: "Module 1: Introduction to Web Development",
-        topics: [
-          "Introduction to Web Development",
-          "HTML Basics",
-          "CSS Basics",
-          "JavaScript Basics",
-        ],
-      },
-      {
-        module: "Module 2: Front-End Development",
-        topics: [
-          "Advanced CSS",
-          "Responsive Layouts",
-          "JavaScript DOM Manipulation",
-          "Frameworks (React, Vue, or Angular)",
-        ],
-      },
-      {
-        module: "Module 3: Back-End & Database",
-        topics: [
-          "Node.js & Express",
-          "APIs & RESTful Services",
-          "Database (MongoDB, SQL)",
-          "Authentication & Security",
-        ],
-      },
-    ],
-    payments: [
-        { mode: "Virtual", plan: "One-time", price: "₦200,000" },
-        { mode: "Onsite", plan: "One-time", price: "₦250,000" },
-        { mode: "Virtual", plan: "Monthly", price: "₦200,000" },
-        { mode: "Onsite", plan: "Monthly", price: "₦250,000" },
-      ],
+    category: "Blog",
+    slug: "how-to-become-a-full-stack-developer",
+    author: "John Doe",
+    date: "Octoebr 12, 2021",
+    isFeatured: false,
   },
   {
-    title: "Full-Stack Web Development",
-    rating: "1.5",
-    slug: "full-stack-web-development",
-    category: "development",
-    description: `Learn to build dynamic, responsive websites and applications
-                    from scratch. This course offers an in-depth exploration of both
-                    front-end and back-end development, equipping you with the
-                    skills to create robust and scalable web applications`,
-    duration: "7 months",
-    tag: "Advanced",
-    mode: ["Onsite", "Virtual"],
+    title: "Mastering JavaScript",
+    body: "A complete guide to mastering JavaScript for web development.",
     image: "https://placehold.co/500.png",
-    highlights: [
-      "Comprehensive Curriculum",
-      "Hands-On Projects",
-      "Beginner Friendly",
-      "Flexible Learning Modes",
-    ],
-    skills: ["html", "css", "javascript", "react", "nodejs", "mongodb"],
-    instructor: {
-      name: "John Doe",
-      image: "https://placehold.co/500.png",
-      bio: "John is a seasoned full-stack developer with over 10 years of experience in building web applications. He has worked with several startups and tech companies, helping them build scalable and robust web applications.",
-      experience: "Senior Fullstack Developer | 10+ Years of Experience",
-    },
-    curriculum: [
-      {
-        module: "Module 1: Introduction to Web Development",
-        topics: [
-          "Introduction to Web Development",
-          "HTML Basics",
-          "CSS Basics",
-          "JavaScript Basics",
-        ],
-      },
-      {
-        module: "Module 2: Front-End Development",
-        topics: [
-          "Advanced CSS",
-          "Responsive Layouts",
-          "JavaScript DOM Manipulation",
-          "Frameworks (React, Vue, or Angular)",
-        ],
-      },
-      {
-        module: "Module 3: Back-End & Database",
-        topics: [
-          "Node.js & Express",
-          "APIs & RESTful Services",
-          "Database (MongoDB, SQL)",
-          "Authentication & Security",
-        ],
-      },
-    ],
-    payments: [
-        { mode: "Virtual", plan: "One-time", price: "₦200,000" },
-        { mode: "Onsite", plan: "One-time", price: "₦250,000" },
-      ],
+    category: "Blog",
+    slug: "mastering-javascript",
+    author: "John Doe",
+    date: "Octoebr 12, 2021",
+    isFeatured: false,
   },
   {
-    title: "Full-Stack Web Development",
-    rating: "3.5",
-    slug: "full-stack-web-development",
-    category: "development",
-    description: `Learn to build dynamic, responsive websites and applications
-                    from scratch. This course offers an in-depth exploration of both
-                    front-end and back-end development, equipping you with the
-                    skills to create robust and scalable web applications`,
-    duration: "2 months",
-    tag: "Intermediate",
-    mode: ["Onsite", "Virtual"],
+    title: "Understanding React Hooks",
+    body: "A deep dive into React Hooks and how to use them effectively.A deep dive into React Hooks and how to use them effectively.A deep dive into React Hooks and how to use them effectively.A deep dive into React Hooks and how to use them effectively.A deep dive into React Hooks and how to use them effectively.A deep dive into React Hooks and how to use them effectively.A deep dive into React Hooks and how to use them effectively.A deep dive into React Hooks and how to use them effectively.A deep dive into React Hooks and how to use them effectively.A deep dive into React Hooks and how to use them effectively.A deep dive into React Hooks and how to use them effectively.",
     image: "https://placehold.co/500.png",
-    highlights: [
-      "Comprehensive Curriculum",
-      "Hands-On Projects",
-      "Beginner Friendly",
-      "Flexible Learning Modes",
-    ],
-    skills: ["html", "css", "javascript", "react", "nodejs", "mongodb"],
-    instructor: {
-      name: "John Doe",
-      image: "https://placehold.co/500.png",
-      bio: "John is a seasoned full-stack developer with over 10 years of experience in building web applications. He has worked with several startups and tech companies, helping them build scalable and robust web applications.",
-      experience: "Senior Fullstack Developer | 10+ Years of Experience",
-    },
-    curriculum: [
-      {
-        module: "Module 1: Introduction to Web Development",
-        topics: [
-          "Introduction to Web Development",
-          "HTML Basics",
-          "CSS Basics",
-          "JavaScript Basics",
-        ],
-      },
-      {
-        module: "Module 2: Front-End Development",
-        topics: [
-          "Advanced CSS",
-          "Responsive Layouts",
-          "JavaScript DOM Manipulation",
-          "Frameworks (React, Vue, or Angular)",
-        ],
-      },
-      {
-        module: "Module 3: Back-End & Database",
-        topics: [
-          "Node.js & Express",
-          "APIs & RESTful Services",
-          "Database (MongoDB, SQL)",
-          "Authentication & Security",
-        ],
-      },
-    ],
-    payments: [
-        { mode: "Virtual", plan: "One-time", price: "₦200,000" },
-        { mode: "Onsite", plan: "One-time", price: "₦250,000" },
-      ],
+    category: "Blog",
+    slug: "understanding-react-hooks",
+    author: "John Doe",
+    date: "Octoebr 12, 2021",
+    isFeatured: false,
   },
   {
-    title: "UI UX design",
-    rating: "4.5",
-    slug: "ui-ux-design",
-    category: "design",
-    description: `Learn to build dynamic, responsive websites and applications
-                    from scratch. This course offers an in-depth exploration of both
-                    front-end and back-end development, equipping you with the
-                    skills to create robust and scalable web applications`,
-    duration: "3 months",
-    tag: "Beginner",
-    mode: ["Onsite", "Virtual"],
+    title: "Understanding React Hooks",
+    body: "A deep dive into React Hooks and how to use them effectively.A deep dive into React Hooks and how to use them effectively.A deep dive into React Hooks and how to use them effectively.A deep dive into React Hooks and how to use them effectively.A deep dive into React Hooks and how to use them effectively.",
     image: "https://placehold.co/500.png",
-    highlights: [
-      "Comprehensive Curriculum",
-      "Hands-On Projects",
-      "Beginner Friendly",
-      "Flexible Learning Modes",
-    ],
-    skills: ["html", "css", "javascript", "react", "nodejs", "mongodb"],
-    instructor: {
-      name: "John Doe",
-      image: "https://placehold.co/500.png",
-      bio: "John is a seasoned full-stack developer with over 10 years of experience in building web applications. He has worked with several startups and tech companies, helping them build scalable and robust web applications.",
-      experience: "Senior Fullstack Developer | 10+ Years of Experience",
-    },
-    curriculum: [
-      {
-        module: "Module 1: Introduction to Web Development",
-        topics: [
-          "Introduction to Web Development",
-          "HTML Basics",
-          "CSS Basics",
-          "JavaScript Basics",
-        ],
-      },
-      {
-        module: "Module 2: Front-End Development",
-        topics: [
-          "Advanced CSS",
-          "Responsive Layouts",
-          "JavaScript DOM Manipulation",
-          "Frameworks (React, Vue, or Angular)",
-        ],
-      },
-      {
-        module: "Module 3: Back-End & Database",
-        topics: [
-          "Node.js & Express",
-          "APIs & RESTful Services",
-          "Database (MongoDB, SQL)",
-          "Authentication & Security",
-        ],
-      },
-    ],
-    payments: [
-        { mode: "Virtual", plan: "One-time", price: "₦200,000" },
-        { mode: "Onsite", plan: "One-time", price: "₦250,000" },
-      ],
+    category: "Blog",
+    slug: "understanding-react-hooks",
+    author: "John Doe",
+    date: "Octoebr 12, 2021",
+    isFeatured: true,
   },
 ];
 
-export default courses;
+export const projects = [
+  {
+    title: "Market Assist E-commerce Platform Development",
+    industry: "E-commerce",
+    year: "2021",
+    location: "Lagos, Nigeria",
+    description:
+      "Developed a digital marketplace that connects users with local market runners for personal shopping assistance. Features include price comparison, product discovery, and live chat functionalities.",
+    coverImage: "https://placehold.co/500.png",
+    slug: "new-project",
+    logo: "https://placehold.co/100.png",
+    type: "Web Development",
+    client: "INTERNAL DEVELOPMENT (Ehizua Hub)",
+    projectLink: "https://marketassist.com",
+    features: ["Price comparison", "Product discovery", "Live chat"],
+    challenges: {
+      heading:
+        "Developing Market Assist came with several challenges, each requiring strategic solutions to ensure the platform effectively enhances the shopping experience in local markets.",
+      data: [
+        {
+          problem: { title: "Problem 1", description: "Description 1" },
+          solution: ["Solution 1", "Solution 2"],
+        },
+        {
+          problem: { title: "Problem 1", description: "Description 1" },
+          solution: ["Solution 1", "Solution 2"],
+        },
+      ],
+    },
+    technology: ["React", "Next.js", "Tailwind CSS", "Firebase"],
+    team: [
+      {
+        title: "Product Manager",
+        role: "Oversaw the strategy, execution, and launch of Market Assist.",
+      },
+      {
+        title: "UI/UX Designer",
+        role: "Designed the user interface and experience for Market Assist.",
+      },
+      {
+        title: "Frontend Developer",
+        role: "Developed the frontend for Market Assist using React and Tailwind CSS.",
+      },
+      {
+        title: "Backend Developer",
+        role: "Developed the backend for Market Assist using Firebase.",
+      },
+    ],
+    gallery: [
+      "https://placehold.co/500.png",
+      "https://placehold.co/500.png",
+      "https://placehold.co/500.png",
+    ],
+    conclusion:
+      "Market Assist is a digital marketplace that connects users with local market runners for personal shopping assistance. The platform enhances the shopping experience in local markets by providing price comparison, product discovery, and live chat functionalities.",
+  },
+  {
+    title: "Market Assist E-commerce Platform Development",
+    industry: "E-commerce",
+    year: "2021",
+    location: "Lagos, Nigeria",
+    description:
+      "Developed a digital marketplace that connects users with local market runners for personal shopping assistance. Features include price comparison, product discovery, and live chat functionalities.",
+    coverImage: "https://placehold.co/500.png",
+    slug: "new-project",
+    logo: "https://placehold.co/100.png",
+    type: "Web Development",
+    client: "INTERNAL DEVELOPMENT (Ehizua Hub)",
+    projectLink: "https://marketassist.com",
+    features: ["Price comparison", "Product discovery", "Live chat"],
+    challenges: {
+      heading:
+        "Developing Market Assist came with several challenges, each requiring strategic solutions to ensure the platform effectively enhances the shopping experience in local markets.",
+      data: [
+        {
+          problem: { title: "Problem 1", description: "Description 1" },
+          solution: ["Solution 1", "Solution 2"],
+        },
+        {
+          problem: { title: "Problem 1", description: "Description 1" },
+          solution: ["Solution 1", "Solution 2"],
+        },
+      ],
+    },
+    technology: ["React", "Next.js", "Tailwind CSS", "Firebase"],
+    team: [
+      {
+        title: "Product Manager",
+        role: "Oversaw the strategy, execution, and launch of Market Assist.",
+      },
+      {
+        title: "UI/UX Designer",
+        role: "Designed the user interface and experience for Market Assist.",
+      },
+      {
+        title: "Frontend Developer",
+        role: "Developed the frontend for Market Assist using React and Tailwind CSS.",
+      },
+      {
+        title: "Backend Developer",
+        role: "Developed the backend for Market Assist using Firebase.",
+      },
+    ],
+    gallery: [
+      "https://placehold.co/500.png",
+      "https://placehold.co/500.png",
+      "https://placehold.co/500.png",
+    ],
+    conclusion:
+      "Market Assist is a digital marketplace that connects users with local market runners for personal shopping assistance. The platform enhances the shopping experience in local markets by providing price comparison, product discovery, and live chat functionalities.",
+  },
+  {
+    title: "Market Assist E-commerce Platform Development",
+    industry: "E-commerce",
+    year: "2021",
+    location: "Lagos, Nigeria",
+    description:
+      "Developed a digital marketplace that connects users with local market runners for personal shopping assistance. Features include price comparison, product discovery, and live chat functionalities.",
+    coverImage: "https://placehold.co/500.png",
+    slug: "new-project",
+    logo: "https://placehold.co/100.png",
+    type: "Web Development",
+    client: "INTERNAL DEVELOPMENT (Ehizua Hub)",
+    projectLink: "https://marketassist.com",
+    features: ["Price comparison", "Product discovery", "Live chat"],
+    challenges: {
+      heading:
+        "Developing Market Assist came with several challenges, each requiring strategic solutions to ensure the platform effectively enhances the shopping experience in local markets.",
+      data: [
+        {
+          problem: { title: "Problem 1", description: "Description 1" },
+          solution: ["Solution 1", "Solution 2"],
+        },
+        {
+          problem: { title: "Problem 1", description: "Description 1" },
+          solution: ["Solution 1", "Solution 2"],
+        },
+      ],
+    },
+    technology: ["React", "Next.js", "Tailwind CSS", "Firebase"],
+    team: [
+      {
+        title: "Product Manager",
+        role: "Oversaw the strategy, execution, and launch of Market Assist.",
+      },
+      {
+        title: "UI/UX Designer",
+        role: "Designed the user interface and experience for Market Assist.",
+      },
+      {
+        title: "Frontend Developer",
+        role: "Developed the frontend for Market Assist using React and Tailwind CSS.",
+      },
+      {
+        title: "Backend Developer",
+        role: "Developed the backend for Market Assist using Firebase.",
+      },
+    ],
+    gallery: [
+      "https://placehold.co/500.png",
+      "https://placehold.co/500.png",
+      "https://placehold.co/500.png",
+    ],
+    conclusion:
+      "Market Assist is a digital marketplace that connects users with local market runners for personal shopping assistance. The platform enhances the shopping experience in local markets by providing price comparison, product discovery, and live chat functionalities.",
+  },
+];

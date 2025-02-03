@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 const options = ["Web Design", "Collaboration", "Mobile App Design", "Others"];
 
@@ -12,6 +13,8 @@ const Form = () => {
     projectDetails: "",
     reasonsForContact: [],
   });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleInputChangeContact = (e) => {
     const { name, value } = e.target;
@@ -39,18 +42,39 @@ const Form = () => {
     });
   };
 
-  const handleSubmitContact = (event) => {
+  const handleSubmitContact = async (event) => {
     event.preventDefault();
-    console.log(formDataContact);
+    setIsSubmitting(true);
 
-    setFormDataContact({
-      name: "",
-      lastName: "",
-      email: "",
-      phoneNumber: "",
-      projectDetails: "",
-      reasonsForContact: [],
-    });
+    try {
+      const response = await fetch("/api/contacts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formDataContact),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to send message. Please try again.");
+      }
+
+      toast.success("Your message has been sent successfully!");
+
+      setFormDataContact({
+        name: "",
+        lastName: "",
+        email: "",
+        phoneNumber: "",
+        projectDetails: "",
+        reasonsForContact: [],
+      });
+    } catch (error) {
+      toast.error(error.message);
+      console.error(error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -119,7 +143,8 @@ const Form = () => {
           <label className="font-bold text-sm">What service do you need?</label>
           <div className="flex flex-wrap gap-3">
             {options.map((option) => {
-              const isSelected = formDataContact.reasonsForContact.includes(option);
+              const isSelected =
+                formDataContact.reasonsForContact.includes(option);
               return (
                 <div
                   key={option}
@@ -156,7 +181,7 @@ const Form = () => {
             className="bg-[#134574] text-sm md:text-md text-white rounded-full p-3 px-12 py-4 font-bold"
             type="submit"
           >
-            Send Message
+            {isSubmitting ? "Sending..." : "Send Message"}
           </button>
         </div>
       </form>

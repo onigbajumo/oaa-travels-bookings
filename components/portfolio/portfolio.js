@@ -5,37 +5,7 @@ import Image from "next/image";
 import { CgArrowRight } from "react-icons/cg";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import Tag from "../../components/tag/Tag";
-
-const projects = [
-  {
-    title: "Market Assist E-commerce Platform Development",
-    description:
-      "Developed a digital marketplace that connects users with local market runners for personal shopping assistance. Features include price comparison, product discovery, and live chat functionalities.",
-    image: "https://placehold.co/500.png",
-    path: "#",
-    logo: "https://placehold.co/100.png",
-    type: "Web Development",
-    client: "INTERNAL DEVELOPMENT (Ehizua Hub)",
-  },
-  {
-    title: "Project 2",
-    description: "Project 2 description",
-    image: "https://placehold.co/500.png",
-    path: "#",
-    logo: "https://placehold.co/100.png",
-    type: "Web Development",
-    client: "Client 2",
-  },
-  {
-    title: "Project 3",
-    description: "Project 3 description",
-    image: "https://placehold.co/500.png",
-    path: "#",
-    logo: "https://placehold.co/300x100.png",
-    type: "Web Development",
-    client: "Client 3",
-  },
-];
+import { projects } from "@/content/data";
 
 const Portfolio = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -98,7 +68,7 @@ const Portfolio = () => {
           <div className="grid md:grid-cols-2 gap-5">
             <div>
               <Image
-                src={project.image}
+                src={project.coverImage}
                 alt={project.title}
                 width={1000}
                 height={1000}
@@ -133,7 +103,7 @@ const Portfolio = () => {
                 <p className="">{project.description}</p>
                 <div className="flex items-center justify-between">
                   <Link
-                    href={project.path}
+                    href={`/portfolio/${project.slug}`}
                     className="bg-main lg:bg-transparent hover:bg-main rounded-full text-white lg:text-main hover:text-white text-center text-base px-4 py-2 border border-main font-medium transition-all ease-in-out duration-300 flex items-center gap-2"
                   >
                     Learn More <CgArrowRight />

@@ -62,6 +62,10 @@ const Navigation = () => {
       title: "iEnterprise",
       path: "/i-enterprise",
     },
+    {
+      title: "Blog",
+      path: "/blog",
+    },
   ];
 
   return (

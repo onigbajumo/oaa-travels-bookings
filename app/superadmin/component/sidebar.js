@@ -62,42 +62,47 @@ const Sidebar = () => {
     {
       name: "Dashboard",
       icon: <CiGrid42 size="20" />,
-      path: "/admin",
+      path: "/superadmin",
     },
     {
       name: "Staffs",
       icon: <MdOutlinePermMedia size="20" />,
-      path: "/admin/staffs",
+      path: "/superadmin/staffs",
     },
     {
       name: "Blogs",
       icon: <MdOutlineArticle size="20" />,
-      path: "/admin/blog",
+      path: "/superadmin/blog",
     },
     {
       name: "Courses",
       icon: <PiBooks size="20" />,
-      path: "/admin/courses",
+      path: "/superadmin/courses",
     },
     {
       name: "Courses Enrollment",
       icon: <PiBooks size="20" />,
-      path: "/admin/enrollment",
+      path: "/superadmin/enrollment",
     },
     {
       name: "Contact Messages",
       icon: <LuMessageSquareText size="20" />,
-      path: "/admin/contacts",
+      path: "/superadmin/contacts",
     },
+    // {
+    //   name: "All Users",
+    //   icon: <PiUsersBold size="20" />,
+    //   path: "/superadmin/users",
+    // },
     {
       name: "FAQs",
       icon: <PiUsersBold size="20" />,
-      path: "/admin/faqs",
+      path: "/superadmin/faqs",
     },
     {
       name: "Testimonials",
       icon: <PiUsersBold size="20" />,
-      path: "/admin/testimonials",
+      path: "/superadmin/testimonials",
     },
     
   ];

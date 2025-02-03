@@ -1,11 +1,13 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Testimony from "../../../components/testimonial/testimonials";
 import Work from "../../../components/workWithUs/work";
 import Image from "next/image";
 import Tag from "../../../components/tag/Tag";
 import CTA from "../../../components/CTA/cta";
 import Journey from "./journey";
+
+import { Skeleton } from "@chakra-ui/react";
 
 const dream = [
   {
@@ -42,49 +44,6 @@ const dream = [
   },
 ];
 
-const team = [
-  {
-    name: "John Doe",
-    position: "CEO",
-    image: "https://placehold.co/500.png",
-  },
-  {
-    name: "Jane Doe",
-    position: "CTO",
-    image: "https://placehold.co/500.png",
-  },
-  {
-    name: "John Doe",
-    position: "CEO",
-    image: "https://placehold.co/500.png",
-  },
-  {
-    name: "Jane Doe",
-    position: "CTO",
-    image: "https://placehold.co/500.png",
-  },
-  {
-    name: "John Doe",
-    position: "CEO",
-    image: "https://placehold.co/500.png",
-  },
-  {
-    name: "Jane Doe",
-    position: "CTO",
-    image: "https://placehold.co/500.png",
-  },
-  {
-    name: "John Doe",
-    position: "CEO",
-    image: "https://placehold.co/500.png",
-  },
-  {
-    name: "Jane Doe",
-    position: "CTO",
-    image: "https://placehold.co/500.png",
-  },
-];
-
 const values = [
   {
     title: "Innovation",
@@ -115,12 +74,39 @@ const values = [
 const About = () => {
   const [activeTab, setActiveTab] = useState("mission");
 
+  const [team, setTeam] = useState([]);
+  const [loadingTeam, setLoadingTeam] = useState(true);
+
+  useEffect(() => {
+    const fetchTeamData = async () => {
+      try {
+        setLoadingTeam(true);
+        const response = await fetch("/api/staff");
+
+        if (!response.ok) {
+          throw new Error("Error fetching staff data");
+        }
+
+        const data = await response.json();
+
+        if ([200, 201].includes(response.status) && data.length > 0) {
+          setTeam(data);
+          setLoadingTeam(false);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchTeamData();
+  }, []);
+
   return (
     <>
       <section className="bg-[url('/images/background.png')] bg-no-repeat bg-cover">
         <div className="container py-20">
           <div className="space-y-6 flex flex-col justify-center">
-            <div className="space-y-8 ">
+            <div className="space-y-8">
               <h1 className="text-main">
                 Shaping the Future of Innovation and Creativity
               </h1>
@@ -153,7 +139,7 @@ const About = () => {
 
         <div>
           <Image
-            src={"/images/about-image.jpg"}
+            src="/images/about-image.jpg"
             width={1000}
             height={1000}
             className="rounded-3xl w-full"
@@ -161,7 +147,6 @@ const About = () => {
           />
         </div>
 
-        {/* Services grid */}
         <div className="md:col-span-2">
           <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4">
             {dream.map((item, index) => (
@@ -230,7 +215,6 @@ const About = () => {
             </div>
 
             <div className="mt-8">
-              {/* Mission Content */}
               {activeTab === "mission" && (
                 <div className="bg-white rounded-lg p-5">
                   <p>
@@ -242,7 +226,6 @@ const About = () => {
                 </div>
               )}
 
-              {/* Vision Content */}
               {activeTab === "vision" && (
                 <div className="bg-white rounded-lg p-5">
                   <p>
@@ -253,7 +236,6 @@ const About = () => {
                 </div>
               )}
 
-              {/* Core Values Content */}
               {activeTab === "values" && (
                 <div className="bg-white rounded-lg p-5 md:columns-2 space-y-4">
                   {values.map((item, index) => (
@@ -283,29 +265,53 @@ const About = () => {
           </p>
         </div>
 
-        <div className="mt-10">
-          <div className="grid sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-10">
-            {team.map((item, index) => (
-              <div key={index} className="flex flex-col items-center gap-1">
-                <div className="rounded-xl border-2 border-secondary/20 p-1 flex justify-center ">
-                  <Image
-                    src={item.image}
-                    width={500}
-                    height={500}
-                    alt={item.name}
-                    className="rounded-lg w-full object-cover aspect-square"
-                  />
+        {loadingTeam ? (
+          <div className="grid sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-10 mt-10">
+            {Array.from({ length: 5 }).map((_, idx) => (
+              <div key={idx} className="flex flex-col items-center gap-1">
+                <div className="rounded-xl border-2 border-secondary/20 p-1 flex justify-center w-full">
+                  <Skeleton className="rounded-lg w-full aspect-square" />
                 </div>
-                <div>
-                  <h4 className="font-semibold text-center text-main">
-                    {item.name}
-                  </h4>
-                  <p className="text-sm text-center">{item.position}</p>
+                <div className="w-full mt-2">
+                  <Skeleton
+                    height="20px"
+                    width="60%"
+                    className="mx-auto mb-2"
+                  />
+
+                  <Skeleton height="16px" width="40%" className="mx-auto" />
                 </div>
               </div>
             ))}
           </div>
-        </div>
+        ) : (
+          <div className="mt-10">
+            <div className="grid sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-10">
+              {team.map((item) => (
+                <div
+                  key={item._id}
+                  className="flex flex-col items-center gap-1"
+                >
+                  <div className="rounded-xl border-2 border-secondary/20 p-1 flex justify-center w-full">
+                    <Image
+                      src={item.image}
+                      width={500}
+                      height={500}
+                      alt={item.name}
+                      className="rounded-lg w-full object-cover aspect-square"
+                    />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-center text-main capitalize">
+                      {item.name}
+                    </h4>
+                    <p className="text-sm text-center">{item.position}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </section>
 
       <Work />

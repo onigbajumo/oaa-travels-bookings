@@ -8,6 +8,7 @@ import CTA from "../../../components/CTA/cta";
 import Testimony from "../../../components/testimonial/testimonials";
 import FAQs from "../../../components/faq";
 import Courses from "../../../components/courses/course";
+import FeaturedBlogs from "@/components/featuredBlog";
 
 const offer = [
   {
@@ -282,6 +283,8 @@ const Home = () => {
       />
 
       <Portfolio />
+
+      <FeaturedBlogs />
 
       <CTA
         pinkText="Ehizua way"
