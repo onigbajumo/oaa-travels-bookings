@@ -130,7 +130,6 @@ const sendEmails = async (contact) => {
     `,
   };
 
-  // **User Email Confirmation**
   const userMailOptions = {
     from: process.env.EMAIL_USER,
     to: contact.email,

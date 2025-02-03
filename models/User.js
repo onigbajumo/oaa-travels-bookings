@@ -9,6 +9,7 @@ const UserSchema = new mongoose.Schema(
     role: { type: String, enum: ['user', 'admin', 'superadmin'], default: 'user' },
     token: { type: String },
     isVerified: { type: Boolean, default: false },
+    isActive: { type: Boolean, default: true },
     tokenExpires: { type: Date },
   },
   { timestamps: true }
