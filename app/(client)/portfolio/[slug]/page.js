@@ -19,7 +19,7 @@ export async function generateMetadata({ params }, parent) {
     title: portfolio.title || "portfolio not found",
     description: portfolio.description || "portfolio not found",
     openGraph: {
-      images: [portfolio.image, ...previousImages],
+      images: [portfolio.coverImage, ...previousImages],
     },
   };
 }

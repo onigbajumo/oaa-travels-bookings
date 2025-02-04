@@ -15,7 +15,7 @@ const FeaturedBlogs = () => {
         const response = await fetch("/api/blogs");
         const data = await response.json();
         if ([200, 201].includes(response.status) && data.length > 0) {
-          setBlogs(data);
+          setBlogs(data.reverse());
           setIsLoading(false);
         }
       } catch (error) {

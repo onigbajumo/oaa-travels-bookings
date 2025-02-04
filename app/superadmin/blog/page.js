@@ -101,7 +101,7 @@ export default function BlogsPage() {
       });
       if (!res.ok) throw new Error("Failed to fetch blogs");
       const data = await res.json();
-      setBlogs(data);
+      setBlogs(data.reverse());
     } catch (error) {
       toast.error("Error fetching blogs");
       console.error(error);

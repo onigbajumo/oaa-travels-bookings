@@ -73,7 +73,8 @@ export function AuthProvider({ children }) {
       const data = await response.json();
       console.log("Login Response:", data);
   
-      const { accessToken, refreshToken } = data;
+      const { tokens, user } = data;
+      const { accessToken, refreshToken } = tokens;
   
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);
@@ -87,15 +88,15 @@ export function AuthProvider({ children }) {
   
       setToken(accessToken);
       setIsAuthenticated(true);
-      setUserRole(decodedAccessToken.role);
+      setUserRole(user.role);
   
       const expirationTime = decodedAccessToken.exp * 1000 - Date.now();
       setExpirationTimeout(expirationTime);
   
       toast.success("Login successful!");
   
-      if (decodedAccessToken.role) {
-        router.push(`/${decodedAccessToken.role}`);
+      if (user.role) {
+        router.push(`/${user.role}`);
       } else {
         router.push("/home");
       }
@@ -106,7 +107,6 @@ export function AuthProvider({ children }) {
       setLoading(false);
     }
   };
-  
   
   const logout = () => {
     localStorage.removeItem("accessToken");

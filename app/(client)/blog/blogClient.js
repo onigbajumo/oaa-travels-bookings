@@ -25,7 +25,7 @@ export default function Blogs() {
         const response = await fetch("/api/blogs");
         const data = await response.json();
         if ([200, 201].includes(response.status) && data.length > 0) {
-          setBlogsData(data);
+          setBlogsData(data.reverse());
           setIsLoading(false);
         }
       } catch (error) {
