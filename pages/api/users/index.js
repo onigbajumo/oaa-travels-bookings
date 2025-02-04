@@ -12,40 +12,46 @@ export default async function handler(req, res) {
 
   if (req.method === 'GET') {
     try {
-
       const users = await User.find({ role: { $ne: 'superadmin' } }).select('-password');
-      res.status(200).json(users);
+      return res.status(200).json(users);
     } catch (error) {
       console.error('Error fetching users:', error);
-      res.status(500).json({ error: 'Server error' });
+      return res.status(500).json({ error: 'Server error' });
     }
-  } else if (req.method === 'PUT') {
-    
+  } 
+  
+  else if (req.method === 'PUT') {
     try {
-      const { id } = req.body;
+      const { id, isActive } = req.body;
 
-      if (!id) {
-        return res.status(400).json({ error: 'User ID is required' });
+      if (!id || typeof isActive !== "boolean") {
+        return res.status(400).json({ error: 'User ID and a valid isActive (true/false) value are required' });
       }
 
-      const userToDeactivate = await User.findById(id);
-      if (!userToDeactivate) {
+      const userToUpdate = await User.findById(id);
+      if (!userToUpdate) {
         return res.status(404).json({ error: 'User not found' });
       }
 
-      if (userToDeactivate.role === 'superadmin') {
-        return res.status(403).json({ error: 'Cannot deactivate a Superadmin' });
+      if (userToUpdate.role === 'superadmin') {
+        return res.status(403).json({ error: 'Cannot modify a Superadmin' });
       }
 
-      userToDeactivate.isActive = false;
-      await userToDeactivate.save();
+      userToUpdate.isActive = isActive; // Assign the boolean value directly
+      await userToUpdate.save();
 
-      res.status(200).json({ message: 'User has been deactivated' });
+      return res.status(200).json({ 
+        message: `User has been ${isActive ? 'activated' : 'deactivated'}`, 
+        user: userToUpdate 
+      });
+
     } catch (error) {
-      console.error('Error deactivating user:', error);
-      res.status(500).json({ error: 'Server error' });
+      console.error('Error updating user status:', error);
+      return res.status(500).json({ error: 'Server error' });
     }
-  } else {
-    res.status(405).json({ error: 'Method not allowed' });
+  } 
+  
+  else {
+    return res.status(405).json({ error: 'Method not allowed' });
   }
 }

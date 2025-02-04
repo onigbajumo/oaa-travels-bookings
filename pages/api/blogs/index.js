@@ -65,9 +65,9 @@ export default async function handler(req, res) {
         imageUrl = uploadedImage.secure_url;
       }
 
-      
+    
       if (isFeatured) {
-        await Blog.updateMany({}, { isFeatured: false });
+        await Blog.updateMany({ isFeatured: true }, { isFeatured: false });
       }
 
       const newBlog = new Blog({
@@ -128,8 +128,10 @@ export default async function handler(req, res) {
       }
 
       if (isFeatured) {
-        await Blog.updateMany({}, { isFeatured: false });
+        await Blog.updateMany({ isFeatured: true }, { isFeatured: false });
       }
+
+      updates.isFeatured = isFeatured;
 
       const updatedBlog = await Blog.findByIdAndUpdate(id, updates, { new: true });
 

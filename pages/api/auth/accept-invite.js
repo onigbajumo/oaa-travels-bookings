@@ -8,7 +8,6 @@ export default async function acceptInvite(req, res) {
 
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  // Get token from URL query parameters instead of request body
   const { token } = req.query;
   const { password } = req.body;
 
