@@ -6,11 +6,8 @@ import Image from "next/image";
 import { FaStar } from "react-icons/fa";
 import { BiFilter } from "react-icons/bi";
 import { IoIosArrowForward } from "react-icons/io";
-
 import { Skeleton, SkeletonText } from "@chakra-ui/react";
-
 import CTA from "@/components/CTA/cta";
-import {blogs} from "@/content/data";
 import Testimony from "@/components/testimonial/testimonials";
 import Tag from "@/components/tag/Tag";
 
@@ -25,11 +22,12 @@ export default function Blogs() {
     const fetchBlogs = async () => {
       try {
         setIsLoading(true);
-
-        setTimeout(() => {
-          setBlogsData(blogs);
+        const response = await fetch("/api/blogs");
+        const data = await response.json();
+        if ([200, 201].includes(response.status) && data.length > 0) {
+          setBlogsData(data.reverse());
           setIsLoading(false);
-        }, 1000);
+        }
       } catch (error) {
         console.error("Error fetching blogs:", error);
       }
@@ -40,7 +38,7 @@ export default function Blogs() {
 
   const categories = useMemo(() => {
     const uniqueCategories = Array.from(
-      new Set(blogsData.map((b) => b.category))
+      new Set(blogsData.map((b) => b.category?.name).filter((cat) => !!cat))
     );
     return ["Category", ...uniqueCategories];
   }, [blogsData]);
@@ -48,7 +46,8 @@ export default function Blogs() {
   const filteredBlogs = useMemo(() => {
     return blogsData.filter((item) => {
       const matchesCategory =
-        selectedCategory === "Category" || item.category === selectedCategory;
+        selectedCategory === "Category" ||
+        item.category?.name === selectedCategory;
       const matchesSearch = item.title
         .toLowerCase()
         .includes(searchTerm.toLowerCase());
@@ -113,7 +112,7 @@ export default function Blogs() {
               </p>
 
               <div className="flex flex-col md:flex-row gap-4 p-2 bg-white/50 rounded-xl md:rounded-full md:w-fit">
-                <div className="flex items-center gap-2 ">
+                <div className="flex items-center gap-2">
                   <BiFilter /> Filter by:
                 </div>
 
@@ -150,8 +149,14 @@ export default function Blogs() {
 
       <section className="py-20 bg-[#F4F7F8]">
         <div className="container">
-          <div className="mb-7">
+          <div className="mb-7 space-y-3">
             <Tag text="Featured Article" />
+            <h2 className="text-main">Editor’s Pick: Must-Read Insights</h2>
+
+            <p>
+              Expert opinions, industry trends, and actionable strategies
+              from our top articles.
+            </p>
           </div>
           {isLoading ? (
             <Skeleton height="300px" className="rounded-xl" />
@@ -170,8 +175,10 @@ export default function Blogs() {
                     className="rounded-xl object-cover aspect-[3/2] lg:aspect-[2/1]"
                   />
                   {featuredBlog.category && (
-                    <div className="absolute top-2 right-2 bg-white text-secondary px-3 py-1 rounded-full text-sm">
-                      {featuredBlog.category}
+                    <div className="absolute top-2 right-2 bg-white text-secondary px-3 py-1 rounded-full text-sm capitalize">
+                      {featuredBlog.category.name
+                        ? featuredBlog.category.name
+                        : featuredBlog.category}
                     </div>
                   )}
                 </div>
@@ -183,7 +190,9 @@ export default function Blogs() {
                   <p className="text-[#C4C4C4] short">{featuredBlog.body}</p>
                   <div className="flex justify-between">
                     <p className="text-[#C4C4C4]">{featuredBlog.author}</p>
-                    <p className="text-black">{featuredBlog.date}</p>
+                    <p className="text-black">
+                      {new Date(featuredBlog.date).toLocaleDateString("en-GB")}
+                    </p>
                   </div>
                   <div className="flex mt-2">
                     <Link
@@ -202,8 +211,13 @@ export default function Blogs() {
 
       <section className="py-20 bg-[#F4F7F8]">
         <div className="container">
-          <div className="mb-7">
-            <Tag text="Latest Articles" />
+        <div className="mb-7 space-y-3">
+            <Tag text="Latest Blog Posts" />
+            <h2 className="text-main">Latest Articles & Expert Opinions</h2>
+
+            <p>
+            Stay ahead with fresh insights on technology, business, and creative innovation.
+            </p>
           </div>
           <div className="mt-10">
             {isLoading ? (
@@ -231,8 +245,10 @@ export default function Blogs() {
                           className="rounded-xl object-cover aspect-[3/2]"
                         />
                         {item.category && (
-                          <div className="absolute top-2 right-2 bg-white text-secondary px-3 py-1 rounded-full text-sm">
-                            {item.category}
+                          <div className="absolute top-2 right-2 bg-white text-secondary px-3 py-1 rounded-full text-sm capitalize">
+                            {item.category.name
+                              ? item.category.name
+                              : item.category}
                           </div>
                         )}
                       </div>
@@ -245,7 +261,9 @@ export default function Blogs() {
 
                       <div className="flex justify-between">
                         <p className="text-[#C4C4C4]">{item.author}</p>
-                        <p className="text-black">{item.date}</p>
+                        <p className="text-black">
+                          {new Date(item.date).toLocaleDateString("en-GB")}
+                        </p>
                       </div>
 
                       <div className="flex mt-2">

@@ -5,13 +5,14 @@ import Link from "next/link";
 import { FiMenu, FiX, FiLogOut } from "react-icons/fi";
 import {
   PiArrowsInLineHorizontalFill,
-  PiArrowsOutLineHorizontalFill, PiBooks, PiUsersBold
+  PiArrowsOutLineHorizontalFill, PiBooks, PiUsersBold, PiTagSimple
 } from "react-icons/pi";
 import Image from "next/image";
 import { CiGrid42 } from "react-icons/ci";
-import { MdOutlineArticle, MdOutlinePermMedia } from "react-icons/md";
+import { MdOutlineArticle, MdOutlinePermMedia, MdOutlineReviews } from "react-icons/md";
 import { useAuth } from "@/context/AuthContext";
-import { LuMessageSquareText } from "react-icons/lu";
+import { LuMessageSquareText, LuBriefcaseBusiness } from "react-icons/lu";
+import { RiQuestionnaireLine } from "react-icons/ri";
 
 const Sidebar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -75,6 +76,11 @@ const Sidebar = () => {
       path: "/superadmin/blog",
     },
     {
+      name: "Portfolios",
+      icon: <LuBriefcaseBusiness size="20" />,
+      path: "/superadmin/portfolios",
+    },
+    {
       name: "Courses",
       icon: <PiBooks size="20" />,
       path: "/superadmin/courses",
@@ -85,24 +91,29 @@ const Sidebar = () => {
       path: "/superadmin/enrollment",
     },
     {
+      name: "Categories",
+      icon: <PiTagSimple size="20" />,
+      path: "/superadmin/categories",
+    },
+    {
+      name: "Testimonials",
+      icon: <MdOutlineReviews size="20" />,
+      path: "/superadmin/testimonials",
+    },
+    {
+      name: "Users",
+      icon: <PiUsersBold size="20" />,
+      path: "/superadmin/users",
+    },
+    {
       name: "Contact Messages",
       icon: <LuMessageSquareText size="20" />,
       path: "/superadmin/contacts",
     },
-    // {
-    //   name: "All Users",
-    //   icon: <PiUsersBold size="20" />,
-    //   path: "/superadmin/users",
-    // },
     {
       name: "FAQs",
-      icon: <PiUsersBold size="20" />,
+      icon: <RiQuestionnaireLine size="20" />,
       path: "/superadmin/faqs",
-    },
-    {
-      name: "Testimonials",
-      icon: <PiUsersBold size="20" />,
-      path: "/superadmin/testimonials",
     },
     
   ];

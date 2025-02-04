@@ -335,7 +335,7 @@ const TestimonialsPage = () => {
                   className="rounded-full"
                 />
                 <div>
-                  <div className="text-gray-800 text-lg font-semibold">
+                  <div className="text-gray-800 text-lg font-semibold capitalize">
                     {testimonial.name}
                   </div>
                   <div className="mt-2 text-gray-600">

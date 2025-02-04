@@ -5,13 +5,14 @@ import Link from "next/link";
 import { FiMenu, FiX, FiLogOut } from "react-icons/fi";
 import {
   PiArrowsInLineHorizontalFill,
-  PiArrowsOutLineHorizontalFill, PiBooks, PiUsersBold
+  PiArrowsOutLineHorizontalFill, PiBooks, PiUsersBold, PiTagSimple
 } from "react-icons/pi";
 import Image from "next/image";
 import { CiGrid42 } from "react-icons/ci";
-import { MdOutlineArticle, MdOutlinePermMedia } from "react-icons/md";
+import { MdOutlineArticle, MdOutlinePermMedia, MdOutlineReviews } from "react-icons/md";
 import { useAuth } from "@/context/AuthContext";
-import { LuMessageSquareText } from "react-icons/lu";
+import { LuMessageSquareText, LuBriefcaseBusiness } from "react-icons/lu";
+import { RiQuestionnaireLine } from "react-icons/ri";
 
 const Sidebar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -75,6 +76,11 @@ const Sidebar = () => {
       path: "/admin/blog",
     },
     {
+      name: "Portfolios",
+      icon: <LuBriefcaseBusiness size="20" />,
+      path: "/admin/portfolios",
+    },
+    {
       name: "Courses",
       icon: <PiBooks size="20" />,
       path: "/admin/courses",
@@ -85,19 +91,24 @@ const Sidebar = () => {
       path: "/admin/enrollment",
     },
     {
+      name: "Categories",
+      icon: <PiTagSimple size="20" />,
+      path: "/admin/categories",
+    },
+    {
+      name: "Testimonials",
+      icon: <MdOutlineReviews size="20" />,
+      path: "/admin/testimonials",
+    },
+    {
       name: "Contact Messages",
       icon: <LuMessageSquareText size="20" />,
       path: "/admin/contacts",
     },
     {
       name: "FAQs",
-      icon: <PiUsersBold size="20" />,
+      icon: <RiQuestionnaireLine size="20" />,
       path: "/admin/faqs",
-    },
-    {
-      name: "Testimonials",
-      icon: <PiUsersBold size="20" />,
-      path: "/admin/testimonials",
     },
     
   ];
