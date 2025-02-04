@@ -154,7 +154,7 @@ export default function PortfolioPage() {
       const res = await fetch("/api/portfolios");
       if (!res.ok) throw new Error("Failed to fetch portfolios");
       const data = await res.json();
-      setPortfolios(data);
+      setPortfolios(data.reverse());
     } catch (error) {
       toast.error("Error fetching portfolios");
       console.error(error);
@@ -519,7 +519,7 @@ export default function PortfolioPage() {
                     objectFit="cover"
                   />
                   <div>
-                    <h4 className="text-lg font-semibold">{portfolio.title}</h4>
+                    <h4 className="text-lg font-semibold capitalize">{portfolio.title}</h4>
                     <p className="text-sm text-gray-500">
                       {portfolio.industry}
                     </p>

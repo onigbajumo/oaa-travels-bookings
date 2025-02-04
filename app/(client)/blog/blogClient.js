@@ -24,12 +24,13 @@ export default function Blogs() {
         setIsLoading(true);
         const response = await fetch("/api/blogs");
         const data = await response.json();
-        setBlogsData(data);
+        if ([200, 201].includes(response.status) && data.length > 0) {
+          setBlogsData(data);
+          setIsLoading(false);
+        }
       } catch (error) {
         console.error("Error fetching blogs:", error);
-      } finally {
-        setIsLoading(false);
-      }
+      } 
     };
 
     fetchBlogs();

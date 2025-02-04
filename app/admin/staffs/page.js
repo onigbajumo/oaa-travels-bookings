@@ -328,7 +328,7 @@ const StaffPage = () => {
                   className="rounded-full"
                 />
                 <div>
-                  <div className="text-gray-800 text-lg font-semibold">
+                  <div className="text-gray-800 text-lg font-semibold capitalize">
                     {staffMember.name}
                   </div>
                   <div className="text-sm text-gray-500">

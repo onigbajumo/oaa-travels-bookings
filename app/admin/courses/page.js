@@ -462,7 +462,7 @@ export default function CoursesPage() {
                 <div className="flex gap-4">
                   <Image src={course.image} boxSize="100px" objectFit="cover" />
                   <div>
-                    <h4 className="text-lg font-semibold">{course.title}</h4>
+                    <h4 className="text-lg font-semibold capitalize">{course.title}</h4>
                     <p className="text-sm text-gray-500">{course.category}</p>
                     <div className="flex gap-2 mt-2">
                       {course.mode.map((m) => (

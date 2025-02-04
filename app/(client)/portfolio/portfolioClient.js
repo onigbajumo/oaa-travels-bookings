@@ -21,7 +21,7 @@ const Portfolio = () => {
           throw new Error("Failed to fetch portfolios");
         }
         const data = await res.json();
-        setProjects(data);
+        setProjects(data.reverse());
       } catch (error) {
         console.error("Error fetching portfolios:", error);
       } finally {

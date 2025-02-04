@@ -9,24 +9,23 @@ const FeaturedBlogs = () => {
   const [blogs, setBlogs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Fetch blogs from API on component mount
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
         const response = await fetch("/api/blogs");
         const data = await response.json();
-        setBlogs(data);
+        if ([200, 201].includes(response.status) && data.length > 0) {
+          setBlogs(data);
+          setIsLoading(false);
+        }
       } catch (error) {
         console.error("Error fetching blogs:", error);
-      } finally {
-        setIsLoading(false);
-      }
+      } 
     };
 
     fetchBlogs();
   }, []);
 
-  // Render three skeleton cards while loading
   const renderSkeletonCards = () => {
     return Array.from({ length: 3 }).map((_, index) => (
       <div
@@ -52,7 +51,6 @@ const FeaturedBlogs = () => {
     ));
   };
 
-  // Render blog cards (showing only the first 3)
   const renderBlogs = () => {
     return blogs.slice(0, 3).map((item, index) => (
       <div

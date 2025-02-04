@@ -284,7 +284,7 @@ const CategoriesPage = () => {
               className="flex justify-between items-start p-4 md:p-7 rounded-xl border-2"
             >
               <div className="flex-1">
-                <h4 className="text-gray-800 text-lg font-semibold">
+                <h4 className="text-gray-800 text-lg font-semibold capitalize">
                   {category.name}
                 </h4>
                 <p className="text-gray-600 mt-2">
