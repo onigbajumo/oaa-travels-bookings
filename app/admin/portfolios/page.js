@@ -52,8 +52,11 @@ const industryOptions = [
 
 const typeOptions = [
   { value: "Web Development", label: "Web Development" },
+  { value: "Web Application", label: "Web Application" },
   { value: "Mobile App", label: "Mobile App" },
   { value: "Desktop Application", label: "Desktop Application" },
+  { value: "Branding and Identity", label: "Branding and Identity" },
+  { value: "Marketing", label: "Marketing" },
   { value: "Other", label: "Other" },
 ];
 
@@ -61,22 +64,27 @@ const teamOptions = [
   {
     value: "Project Manager",
     label: "Project Manager",
-    role: "Managed project and oversaw progress",
+    role: "Oversaw the strategy, execution, and launch of the project.",
   },
   {
     value: "UI/UX Designer",
     label: "UI/UX Designer",
-    role: "Designed user interfaces and experience",
+    role: "Created intuitive interfaces and seamless user experience.",
   },
   {
     value: "Frontend Developer",
     label: "Frontend Developer",
-    role: "Built client-side application",
+    role: "Developed the interactive elements of the platform.",
   },
   {
     value: "Backend Developer",
     label: "Backend Developer",
-    role: "Developed server-side functionality",
+    role: "Built a robust and scalable system to handle transactions",
+  },
+  {
+    value: "Data Analyst",
+    label: "Data Analyst",
+    role: "Implemented insights for pricing models and user behavior.",
   },
 ];
 

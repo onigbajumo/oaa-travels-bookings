@@ -45,30 +45,31 @@ import "react-toastify/dist/ReactToastify.css";
 
 const instructorMap = {
   development: {
-    name: "John Doe",
+    name: "Development Instructors",
     image: "https://placehold.co/500.png",
-    bio: "John is a full-stack developer with 10+ years experience.",
-    experience: "Senior Fullstack Developer | 10+ Years of Experience",
+    bio: "Our development instructors are experienced full-stack developers with 10+ years of industry experience, specializing in frontend, backend, and DevOps.",
+    experience: "Senior Fullstack Developers | 10+ Years of Experience",
   },
   design: {
-    name: "Jane Smith",
+    name: "Design Instructors",
     image: "https://placehold.co/500.png",
-    bio: "Jane is a seasoned UI/UX designer with 8 years experience.",
-    experience: "Lead UI/UX Designer | 8+ Years of Experience",
+    bio: "Our design instructors are seasoned UI/UX professionals with 8+ years of experience, focusing on user-centered design, accessibility, and interaction design.",
+    experience: "Lead UI/UX Designers | 8+ Years of Experience",
   },
   marketing: {
-    name: "Mike Johnson",
+    name: "Marketing Instructors",
     image: "https://placehold.co/500.png",
-    bio: "Mike is a growth marketing expert with 6 years experience.",
-    experience: "Growth Marketing Specialist | 6+ Years of Experience",
+    bio: "Our marketing instructors are experts in digital marketing, SEO, and growth strategies, helping businesses scale effectively with 6+ years of experience.",
+    experience: "Growth Marketing Specialists | 6+ Years of Experience",
   },
   management: {
-    name: "Sarah Williams",
+    name: "Management Instructors",
     image: "https://placehold.co/500.png",
-    bio: "Sarah has led product teams for over a decade.",
-    experience: "Product Manager | 10+ Years of Experience",
+    bio: "Our management instructors have led product and project teams for over a decade, focusing on leadership, agile methodologies, and strategic planning.",
+    experience: "Product Managers & Agile Coaches | 10+ Years of Experience",
   },
 };
+
 
 const ratingOptions = [
   "0.5",
