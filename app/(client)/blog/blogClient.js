@@ -30,7 +30,7 @@ export default function Blogs() {
         }
       } catch (error) {
         console.error("Error fetching blogs:", error);
-      } 
+      }
     };
 
     fetchBlogs();
@@ -149,8 +149,14 @@ export default function Blogs() {
 
       <section className="py-20 bg-[#F4F7F8]">
         <div className="container">
-          <div className="mb-7">
+          <div className="mb-7 space-y-3">
             <Tag text="Featured Article" />
+            <h2 className="text-main">Editor’s Pick: Must-Read Insights</h2>
+
+            <p>
+              Expert opinions, industry trends, and actionable strategies
+              from our top articles.
+            </p>
           </div>
           {isLoading ? (
             <Skeleton height="300px" className="rounded-xl" />
@@ -205,8 +211,13 @@ export default function Blogs() {
 
       <section className="py-20 bg-[#F4F7F8]">
         <div className="container">
-          <div className="mb-7">
-            <Tag text="Latest Articles" />
+        <div className="mb-7 space-y-3">
+            <Tag text="Latest Blog Posts" />
+            <h2 className="text-main">Latest Articles & Expert Opinions</h2>
+
+            <p>
+            Stay ahead with fresh insights on technology, business, and creative innovation.
+            </p>
           </div>
           <div className="mt-10">
             {isLoading ? (

@@ -41,9 +41,9 @@ export default function LoginPage() {
               alt="logo"
             />
           </div>
-          <h2 className="text-center font-semibold text-3xl">Welcome</h2>
+          <h3 className="text-center">Welcome</h3>
           <p className="text-center text-sm text-[#525252]">
-            Please enter your credentials to gain access to the Julia Torres Portal.
+            Please enter your credentials to gain access.
           </p>
         </div>
 

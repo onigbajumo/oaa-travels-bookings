@@ -35,13 +35,12 @@ function ResetPasswordContent() {
     }
 
     try {
-      const response = await fetch("/api/auth/reset-password", {
+      const response = await fetch(`/api/auth/reset-password?token=${token}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          token,
           newPassword: values.newPassword,
         }),
       });
@@ -95,9 +94,9 @@ function ResetPasswordContent() {
                 alt="logo"
               />
             </div>
-            <h2 className="text-center font-semibold text-3xl">
+            <h3 className="text-center">
               Reset Your Password
-            </h2>
+            </h3>
             <p className="text-center text-sm text-[#525252]">
               Please enter your new password below.
             </p>

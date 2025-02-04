@@ -9,7 +9,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <ProtectedRoute requiredRoles={["admin"]}>
-      <div className="flex">
+      <div className="flex max-w-[1920px] mx-auto">
         <Sidebar />
         <div className="w-full">
         <Header />
