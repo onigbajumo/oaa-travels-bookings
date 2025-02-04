@@ -214,7 +214,7 @@ export default function Programs() {
           <div className="rounded-xl bg-[#F4F7F8] p-6 space-y-3">
             <PiRocketDuotone className="text-secondary text-3xl" />
             <span className="text-black font-medium">Team Number</span>
-            <h4 className="capitalize font-semibold">{project.teamNumber}</h4>
+            <h4 className="capitalize font-semibold">{project?.teamNumber}</h4>
           </div>
 
           <div className="rounded-xl bg-[#F4F7F8] p-6 space-y-3">
