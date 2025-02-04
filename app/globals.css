@@ -51,6 +51,14 @@ body {
   height: 100px;
 }
 
+.quill-editor .ql-toolbar {
+  @apply sticky top-0 z-10;
+}
+
+.quill-editor .ql-container {
+  @apply max-h-[calc(50vh-3rem)] overflow-y-auto text-black;
+}
+
 h1 {
   @apply text-2xl sm:text-4xl lg:text-5xl font-extrabold lg:leading-[60px];
 }

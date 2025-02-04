@@ -154,8 +154,8 @@ export default function Blogs() {
             <h2 className="text-main">Editor’s Pick: Must-Read Insights</h2>
 
             <p>
-              Expert opinions, industry trends, and actionable strategies
-              from our top articles.
+              Expert opinions, industry trends, and actionable strategies from
+              our top articles.
             </p>
           </div>
           {isLoading ? (
@@ -187,7 +187,10 @@ export default function Blogs() {
                   <h3 className="text-black font-bold capitalize mt-2">
                     {featuredBlog.title}
                   </h3>
-                  <p className="text-[#C4C4C4] short">{featuredBlog.body}</p>
+                  <div
+                        className="text-[#C4C4C4] text-base short"
+                        dangerouslySetInnerHTML={{ __html: featuredBlog.body }}
+                      ></div>
                   <div className="flex justify-between">
                     <p className="text-[#C4C4C4]">{featuredBlog.author}</p>
                     <p className="text-black">
@@ -211,12 +214,13 @@ export default function Blogs() {
 
       <section className="py-20 bg-[#F4F7F8]">
         <div className="container">
-        <div className="mb-7 space-y-3">
+          <div className="mb-7 space-y-3">
             <Tag text="Latest Blog Posts" />
             <h2 className="text-main">Latest Articles & Expert Opinions</h2>
 
             <p>
-            Stay ahead with fresh insights on technology, business, and creative innovation.
+              Stay ahead with fresh insights on technology, business, and
+              creative innovation.
             </p>
           </div>
           <div className="mt-10">
@@ -257,7 +261,10 @@ export default function Blogs() {
                       </h3>
                     </div>
                     <div className="space-y-4 mt-2">
-                      <p className="text-[#C4C4C4] short">{item.body}</p>
+                      <div
+                        className="text-[#C4C4C4] text-base short"
+                        dangerouslySetInnerHTML={{ __html: item.body }}
+                      ></div>
 
                       <div className="flex justify-between">
                         <p className="text-[#C4C4C4]">{item.author}</p>

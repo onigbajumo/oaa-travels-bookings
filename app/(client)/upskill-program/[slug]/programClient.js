@@ -77,34 +77,38 @@ export default function Programs() {
 
   useEffect(() => {
     if (isLoading || !course) return;
-
+  
     const observerOptions = {
-      root: null,
-      rootMargin: "-10% 0px -60% 0px",
-      threshold: [0, 0.3, 0.6, 1],
+      rootMargin: "0px 0px -100% 0px",
+      threshold: 0, 
     };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
-        }
-      });
-    }, observerOptions);
-
-    const sectionElements = sections.map((s) =>
-      document.getElementById(s.id)
-    );
-    sectionElements.forEach((el) => {
+  
+    const observerCallback = (entries) => {
+      const visibleEntries = entries.filter((entry) => entry.isIntersecting);
+      if (visibleEntries.length === 0) return;
+  
+      visibleEntries.sort(
+        (a, b) => a.boundingClientRect.top - b.boundingClientRect.top
+      );
+  
+      setActiveSection(visibleEntries[0].target.id);
+    };
+  
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+  
+    sections.forEach(({ id }) => {
+      const el = document.getElementById(id);
       if (el) observer.observe(el);
     });
-
+  
     return () => {
-      sectionElements.forEach((el) => {
+      sections.forEach(({ id }) => {
+        const el = document.getElementById(id);
         if (el) observer.unobserve(el);
       });
     };
   }, [isLoading, course]);
+  
 
   const renderSkeletonDetailPage = () => {
     return (
@@ -396,11 +400,11 @@ export default function Programs() {
               </p>
               <div className="flex justify-center">
                 <Image
-                  src="https://placehold.co/500x300.png"
+                  src="/images/certificate.jpg"
                   width={1000}
                   height={1000}
                   alt="Certificate"
-                  className="w-full md:w-2/3 rounded-md"
+                  className="w-3/5 rounded-md"
                 />
               </div>
             </div>
@@ -411,9 +415,9 @@ export default function Programs() {
             >
               <h3 className="text-main font-semibold">Meet Your Instructor</h3>
               <div className="flex items-start gap-4">
-                <div className="bg-[#F4F7F8] rounded-full w-32">
+                <div className="bg-[#F4F7F8] rounded-lg w-32">
                   <Image
-                    src={course.instructor?.image}
+                    src="/images/tutor.png"
                     width={1000}
                     height={1000}
                     alt={course.instructor?.name}
@@ -455,9 +459,9 @@ export default function Programs() {
                           maximumFractionDigits: 0,
                         }).format(payment.price)}
                       </h5>
-                      {payment.plan === "Monthly" && (
+                      {/* {payment.plan === "Monthly" && (
                         <span className="text-sm">/ duration of 2 months</span>
-                      )}
+                      )} */}
                     </div>
                     <div className="flex">
                       <Link

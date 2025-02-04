@@ -8,16 +8,21 @@ export async function generateMetadata({ params }, parent) {
   const baseURL = `${protocol}://${host}`;
 
   const slug = params.slug;
-
-  const blog = await fetch(`${baseURL}/api/blogs?slug=${slug}`).then(
-    (res) => res.json()
+  const blog = await fetch(`${baseURL}/api/blogs?slug=${slug}`).then((res) =>
+    res.json()
   );
+
+  const stripHtml = (html) => {
+    return html.replace(/<[^>]*>/g, '').trim();
+  };
 
   const previousImages = (await parent)?.openGraph?.images || [];
 
   return {
     title: blog.title || "blog not found",
-    description: blog.description || "blog not found",
+    description: blog.body
+      ? stripHtml(blog.body)
+      : "blog not found",
     openGraph: {
       images: [blog.image, ...previousImages],
     },

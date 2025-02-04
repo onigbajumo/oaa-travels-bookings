@@ -52,31 +52,37 @@ export default function Programs() {
 
   useEffect(() => {
     if (!project) return;
+  
     const observerOptions = {
       root: null,
-      rootMargin: "-10% 0px -60% 0px",
-      threshold: [0, 0.3, 0.6, 1],
+      threshold: 0.5,
     };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
-        }
-      });
-    }, observerOptions);
-
-    const sectionElements = sections.map((s) => document.getElementById(s.id));
-    sectionElements.forEach((el) => {
-      if (el) observer.observe(el);
-    });
-
+  
+    const observerCallback = (entries) => {
+      const visibleEntries = entries.filter((entry) => entry.isIntersecting);
+  
+      if (visibleEntries.length === 0) return;
+  
+      visibleEntries.sort(
+        (a, b) => a.boundingClientRect.top - b.boundingClientRect.top
+      );
+  
+      setActiveSection(visibleEntries[0].target.id);
+    };
+  
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+  
+    const sectionElements = sections
+      .map((s) => document.getElementById(s.id))
+      .filter(Boolean);
+  
+    sectionElements.forEach((el) => observer.observe(el));
+  
     return () => {
-      sectionElements.forEach((el) => {
-        if (el) observer.unobserve(el);
-      });
+      sectionElements.forEach((el) => observer.unobserve(el));
     };
   }, [project]);
+  
 
   if (loading) {
     return (
@@ -379,7 +385,7 @@ export default function Programs() {
 
             <div id="screen" className="border-b-2 pb-5 scroll-mt-24">
               <h2>Project Screens</h2>
-              <div className="space-y-8 mt-5">
+              <div className="grid md:grid-cols-2 gap-8 mt-5">
                 {project.gallery.map((image, i) => (
                   <div key={i}>
                     <Image
@@ -387,7 +393,7 @@ export default function Programs() {
                       alt={project.title}
                       width={1000}
                       height={1000}
-                      className="rounded-lg w-full"
+                      className="rounded-lg w-full aspect-video object-cover"
                     />
                   </div>
                 ))}
