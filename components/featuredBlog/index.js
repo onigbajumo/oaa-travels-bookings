@@ -1,16 +1,34 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Tag from "../tag/Tag";
 import { Skeleton, SkeletonText } from "@chakra-ui/react";
-import {blogs} from "../../content/data";
 
 const FeaturedBlogs = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [blogs, setBlogs] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
+  // Fetch blogs from API on component mount
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const response = await fetch("/api/blogs");
+        const data = await response.json();
+        setBlogs(data);
+      } catch (error) {
+        console.error("Error fetching blogs:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchBlogs();
+  }, []);
+
+  // Render three skeleton cards while loading
   const renderSkeletonCards = () => {
-    return blogs.map((_, index) => (
+    return Array.from({ length: 3 }).map((_, index) => (
       <div
         key={index}
         className="bg-white rounded-2xl p-2 md:p-3 hover:shadow-lg transition-all ease-in-out duration-300"
@@ -34,6 +52,7 @@ const FeaturedBlogs = () => {
     ));
   };
 
+  // Render blog cards (showing only the first 3)
   const renderBlogs = () => {
     return blogs.slice(0, 3).map((item, index) => (
       <div
@@ -49,9 +68,9 @@ const FeaturedBlogs = () => {
               alt={item.title}
               className="rounded-xl object-cover aspect-[3/2]"
             />
-            {item.category && (
-              <div className="absolute top-2 right-2 bg-white text-secondary px-3 py-1 rounded-full text-sm">
-                {item.category}
+            {item.category && item.category.name && (
+              <div className="absolute top-2 right-2 bg-white text-secondary px-3 py-1 rounded-full text-sm capitalize">
+                {item.category.name}
               </div>
             )}
           </div>
@@ -62,7 +81,9 @@ const FeaturedBlogs = () => {
 
           <div className="flex justify-between">
             <p className="text-[#C4C4C4]">{item.author}</p>
-            <p className="text-black">{item.date}</p>
+            <p className="text-black">
+              {new Date(item.date).toLocaleDateString("en-GB")}
+            </p>
           </div>
 
           <div className="flex mt-2">

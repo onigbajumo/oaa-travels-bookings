@@ -95,6 +95,16 @@ const Sidebar = () => {
       path: "/admin/faqs",
     },
     {
+      name: "Categories",
+      icon: <PiUsersBold size="20" />,
+      path: "/admin/categories",
+    },
+    {
+      name: "Portfolios",
+      icon: <PiUsersBold size="20" />,
+      path: "/admin/portfolios",
+    },
+    {
       name: "Testimonials",
       icon: <PiUsersBold size="20" />,
       path: "/admin/testimonials",
