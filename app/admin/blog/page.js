@@ -32,8 +32,11 @@ import {
 import { BsPlus, BsSearch, BsThreeDotsVertical } from "react-icons/bs";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+import dynamic from 'next/dynamic';
+
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+import 'react-quill/dist/quill.snow.css';
+
 
 async function toBase64(file) {
   return new Promise((resolve, reject) => {

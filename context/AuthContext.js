@@ -10,6 +10,7 @@ const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userRole, setUserRole] = useState(null);
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useState(null);
   const isProcessingRef = useRef(false);
@@ -27,6 +28,7 @@ export function AuthProvider({ children }) {
       if (decodedToken) {
         setIsAuthenticated(true);
         setUserRole(decodedToken.role);
+        setUser({ name: decodedToken.name, role: decodedToken.role, id: decodedToken.id });
 
         const expirationTime = decodedToken.exp * 1000 - Date.now();
         setExpirationTimeout(expirationTime);
@@ -51,6 +53,7 @@ export function AuthProvider({ children }) {
     setToken(null);
     setIsAuthenticated(false);
     setUserRole(null);
+    setUser(null);
     router.push("/");
   };
 
@@ -64,37 +67,38 @@ export function AuthProvider({ children }) {
         },
         body: JSON.stringify({ emailOrPhone: email, password }),
       });
-  
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || "Login failed.");
       }
-  
+
       const data = await response.json();
       console.log("Login Response:", data);
-  
+
       const { tokens, user } = data;
       const { accessToken, refreshToken } = tokens;
-  
+
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);
-  
+
       const decodedAccessToken = jwt.decode(accessToken);
       console.log("Decoded Access Token:", decodedAccessToken);
-  
+
       if (!decodedAccessToken) {
         throw new Error("Failed to decode access token.");
       }
-  
+
       setToken(accessToken);
       setIsAuthenticated(true);
       setUserRole(user.role);
-  
+      setUser(user);
+
       const expirationTime = decodedAccessToken.exp * 1000 - Date.now();
       setExpirationTimeout(expirationTime);
-  
+
       toast.success("Login successful!");
-  
+
       if (user.role) {
         router.push(`/${user.role}`);
       } else {
@@ -107,13 +111,14 @@ export function AuthProvider({ children }) {
       setLoading(false);
     }
   };
-  
+
   const logout = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
     setToken(null);
     setIsAuthenticated(false);
     setUserRole(null);
+    setUser(null);
 
     if (expirationTimeoutRef.current) {
       clearTimeout(expirationTimeoutRef.current);
@@ -176,6 +181,7 @@ export function AuthProvider({ children }) {
       if (decodedNewToken) {
         setIsAuthenticated(true);
         setUserRole(decodedNewToken.role);
+        setUser({ name: decodedNewToken.name, role: decodedNewToken.role, id: decodedNewToken.id });
 
         const newExpirationTime = decodedNewToken.exp * 1000 - Date.now();
         setExpirationTimeout(newExpirationTime);
@@ -217,6 +223,7 @@ export function AuthProvider({ children }) {
         login,
         logout,
         forgotPassword,
+        user,
       }}
     >
       {children}
