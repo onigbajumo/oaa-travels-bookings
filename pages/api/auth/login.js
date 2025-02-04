@@ -28,7 +28,15 @@ export default async function login(req, res) {
 
     const tokens = await generateTokens(user);
 
-    res.status(200).json(tokens);
+    res.status(200).json({
+      message: 'Login successful',
+      user: {
+        id: user._id,
+        name: user.name,
+        role: user.role,
+      },
+      tokens,
+    });
   } catch (error) {
     console.error('Error during login:', error);
     res.status(500).json({ error: 'Internal Server Error' });
