@@ -37,7 +37,7 @@ export default async function handler(req, res) {
     try {
       
       const user = authenticateUser(req);
-      if (!user) {
+      if (!user || !user.name) {
         return res.status(401).json({ error: 'Unauthorized. Please log in.' });
       }
 
@@ -117,6 +117,7 @@ export default async function handler(req, res) {
 
       if (title) {
         updates.slug = await generateUniqueSlug(title);
+        updates.title = title; 
       }
 
       if (image) {

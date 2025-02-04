@@ -9,7 +9,7 @@ export const generateTokens = async (user) => {
   };
 
   const accessToken = jwt.sign(
-    { id: user.id, role: user.role },
+    { id: user.id, role: user.role, name: user.name },
     process.env.JWT_SECRET,
     { expiresIn: roleExpirations[user.role] }
   );
