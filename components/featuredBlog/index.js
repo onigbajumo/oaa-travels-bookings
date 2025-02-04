@@ -20,7 +20,7 @@ const FeaturedBlogs = () => {
         }
       } catch (error) {
         console.error("Error fetching blogs:", error);
-      } 
+      }
     };
 
     fetchBlogs();
@@ -75,7 +75,10 @@ const FeaturedBlogs = () => {
           <h3 className="text-black font-bold capitalize mt-2">{item.title}</h3>
         </div>
         <div className="space-y-4 mt-2">
-          <p className="text-[#C4C4C4] short">{item.body}</p>
+          <div
+            className="text-[#C4C4C4] text-base short"
+            dangerouslySetInnerHTML={{ __html: item.body }}
+          ></div>
 
           <div className="flex justify-between">
             <p className="text-[#C4C4C4]">{item.author}</p>

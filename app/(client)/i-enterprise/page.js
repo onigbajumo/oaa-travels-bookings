@@ -13,24 +13,24 @@ export const metadata = {
 
 const offer = [
   {
+    title: "Cinematography",
+    icon: "/icons/creative.svg",
+    image: "/images/cinema.jpg",
+    desc: "Capture high-quality visuals for events, commercials, and promotional videos",
+    path: "#",
+  },
+  {
+    title: "Event Branding",
+    icon: "/icons/enterprise.svg",
+    image: "/images/branding.png",
+    desc: "Custom branding materials to ensure your event stands out.",
+    path: "#",
+  },
+  {
     title: "IT Solution",
     icon: "/icons/web.svg",
-    image: "/images/service-1.jpg",
+    image: "/images/it-solutions.jpg",
     desc: "Providing cutting-edge IT solutions and services to businesses and organisations.",
-    path: "#",
-  },
-  {
-    title: "Creative Tech Programs",
-    icon: "/icons/creative.svg",
-    image: "/images/service-2.jpg",
-    desc: "Inspiring and educating children in creative technology and STEM fields.",
-    path: "#",
-  },
-  {
-    title: "iEnterprise",
-    icon: "/icons/enterprise.svg",
-    image: "/images/service-4.jpg",
-    desc: "Delivering top-notch event management, printing, and media services to support businesses and events.",
     path: "#",
   },
 ];

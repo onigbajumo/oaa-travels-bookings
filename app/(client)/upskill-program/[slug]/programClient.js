@@ -77,34 +77,38 @@ export default function Programs() {
 
   useEffect(() => {
     if (isLoading || !course) return;
-
+  
     const observerOptions = {
-      root: null,
-      rootMargin: "-10% 0px -60% 0px",
-      threshold: [0, 0.3, 0.6, 1],
+      rootMargin: "0px 0px -100% 0px",
+      threshold: 0, 
     };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
-        }
-      });
-    }, observerOptions);
-
-    const sectionElements = sections.map((s) =>
-      document.getElementById(s.id)
-    );
-    sectionElements.forEach((el) => {
+  
+    const observerCallback = (entries) => {
+      const visibleEntries = entries.filter((entry) => entry.isIntersecting);
+      if (visibleEntries.length === 0) return;
+  
+      visibleEntries.sort(
+        (a, b) => a.boundingClientRect.top - b.boundingClientRect.top
+      );
+  
+      setActiveSection(visibleEntries[0].target.id);
+    };
+  
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+  
+    sections.forEach(({ id }) => {
+      const el = document.getElementById(id);
       if (el) observer.observe(el);
     });
-
+  
     return () => {
-      sectionElements.forEach((el) => {
+      sections.forEach(({ id }) => {
+        const el = document.getElementById(id);
         if (el) observer.unobserve(el);
       });
     };
   }, [isLoading, course]);
+  
 
   const renderSkeletonDetailPage = () => {
     return (

@@ -11,7 +11,6 @@ import {
   ModalCloseButton,
   Button,
   Input,
-  Textarea,
   useDisclosure,
   Menu,
   MenuButton,
@@ -33,6 +32,8 @@ import {
 import { BsPlus, BsSearch, BsThreeDotsVertical } from "react-icons/bs";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 async function toBase64(file) {
   return new Promise((resolve, reject) => {
@@ -46,7 +47,7 @@ async function toBase64(file) {
 export default function BlogsPage() {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [categories, setCategories] = useState([]); 
+  const [categories, setCategories] = useState([]);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isEditing, setIsEditing] = useState(false);
@@ -69,6 +70,15 @@ export default function BlogsPage() {
   } = useDisclosure();
   const cancelRef = useRef();
   const [blogToDeleteIndex, setBlogToDeleteIndex] = useState(null);
+
+  const quillModules = {
+    toolbar: [
+      [{ header: [1, 2, 3, false] }],
+      ["bold", "italic", "underline"],
+      [{ list: "ordered" }, { list: "bullet" }],
+      ["link", "image"],
+    ],
+  };
 
   useEffect(() => {
     fetchAllBlogs();
@@ -133,7 +143,7 @@ export default function BlogsPage() {
         ...existing,
         image: null,
         imagePreview: existing.image,
-        category: existing.category._id, 
+        category: existing.category._id,
       });
       onOpen();
     } catch (err) {
@@ -357,9 +367,7 @@ export default function BlogsPage() {
       <Modal isOpen={isOpen} onClose={onClose} size="xl">
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>
-            {isEditing ? "Edit Blog" : "Add New Blog"}
-          </ModalHeader>
+          <ModalHeader>{isEditing ? "Edit Blog" : "Add New Blog"}</ModalHeader>
           <ModalCloseButton />
           <ModalBody className="space-y-4">
             <FormControl isRequired>
@@ -391,12 +399,18 @@ export default function BlogsPage() {
 
             <FormControl isRequired>
               <FormLabel>Body</FormLabel>
-              <Textarea
-                value={newBlog.body}
-                onChange={(e) =>
-                  setNewBlog({ ...newBlog, body: e.target.value })
-                }
-              />
+
+              <div className="relative max-h-[50vh] overflow-y-auto rounded-md h-[50vh]">
+                <ReactQuill
+                  theme="snow"
+                  modules={quillModules}
+                  value={newBlog.body}
+                  onChange={(content) =>
+                    setNewBlog({ ...newBlog, body: content })
+                  }
+                  className="quill-editor h-full"
+                />
+              </div>
             </FormControl>
 
             <FormControl>

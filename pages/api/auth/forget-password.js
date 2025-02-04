@@ -156,7 +156,7 @@ export default async function handler(req, res) {
 
       <section class="confirmation">
         <h3>Reset Your Ehizua Hub Password</h3>
-        <h1>Hi {name},</h1>
+        <h1>Hi,</h1>
         <p>
           We received a request to reset your Ehizua Hub password. If you made this request, click the button below to set a new password
         </p>
