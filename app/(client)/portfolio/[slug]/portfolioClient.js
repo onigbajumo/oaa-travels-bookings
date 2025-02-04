@@ -379,7 +379,7 @@ export default function Programs() {
 
             <div id="screen" className="border-b-2 pb-5 scroll-mt-24">
               <h2>Project Screens</h2>
-              <div className="space-y-8 mt-5">
+              <div className="grid md:grid-cols-2 gap-8 mt-5">
                 {project.gallery.map((image, i) => (
                   <div key={i}>
                     <Image
@@ -387,7 +387,7 @@ export default function Programs() {
                       alt={project.title}
                       width={1000}
                       height={1000}
-                      className="rounded-lg w-full"
+                      className="rounded-lg w-full aspect-video object-cover"
                     />
                   </div>
                 ))}

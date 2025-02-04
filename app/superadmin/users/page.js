@@ -54,6 +54,7 @@ const UsersPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const [isDeactivateOpen, setIsDeactivateOpen] = useState(false);
+  const [isActivateOpen, setIsActivateOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
 
@@ -94,6 +95,8 @@ const UsersPage = () => {
     setSelectedUser(user);
     if (type === "deactivate") {
       setIsDeactivateOpen(true);
+    } else if (type === "activate") {
+      setIsActivateOpen(true);
     }
   };
 
@@ -105,7 +108,7 @@ const UsersPage = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${getAccessToken()}`,
         },
-        body: JSON.stringify({ id: userId }),
+        body: JSON.stringify({ id: userId, isActive: false }),
       });
       if (!res.ok) throw new Error("Failed to deactivate user");
       toast.success("User has been deactivated.");
@@ -114,6 +117,26 @@ const UsersPage = () => {
     } catch (error) {
       console.error(error);
       toast.error("Failed to deactivate user");
+    }
+  };
+
+  const handleActivate = async (userId) => {
+    try {
+      const res = await fetch("/api/users", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getAccessToken()}`,
+        },
+        body: JSON.stringify({ id: userId, isActive: true }),
+      });
+      if (!res.ok) throw new Error("Failed to activate user");
+      toast.success("User has been activated.");
+      setIsActivateOpen(false);
+      fetchUsers();
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to activate user");
     }
   };
 
@@ -260,11 +283,17 @@ const UsersPage = () => {
                           aria-label="Options"
                         />
                         <MenuList>
-                          {user.isActive && (
+                          {user.isActive ? (
                             <MenuItem
                               onClick={() => confirmAction(user, "deactivate")}
                             >
                               Deactivate
+                            </MenuItem>
+                          ) : (
+                            <MenuItem
+                              onClick={() => confirmAction(user, "activate")}
+                            >
+                              Activate
                             </MenuItem>
                           )}
                         </MenuList>
@@ -284,6 +313,7 @@ const UsersPage = () => {
         </TableContainer>
       </div>
 
+      {/* Deactivation Confirmation Dialog */}
       <AlertDialog
         isOpen={isDeactivateOpen}
         leastDestructiveRef={cancelRef}
@@ -310,6 +340,39 @@ const UsersPage = () => {
                 ml={3}
               >
                 Deactivate
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
+
+      {/* Activation Confirmation Dialog */}
+      <AlertDialog
+        isOpen={isActivateOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={() => setIsActivateOpen(false)}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Activate User
+            </AlertDialogHeader>
+            <AlertDialogBody>
+              Are you sure you want to activate this user?
+            </AlertDialogBody>
+            <AlertDialogFooter>
+              <Button
+                ref={cancelRef}
+                onClick={() => setIsActivateOpen(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                colorScheme="green"
+                onClick={() => handleActivate(selectedUser._id)}
+                ml={3}
+              >
+                Activate
               </Button>
             </AlertDialogFooter>
           </AlertDialogContent>
