@@ -32,7 +32,7 @@ export default function SignupPage() {
       });
 
       if (response.ok) {
-        router.push("/login");
+        router.push("/hub-login");
         toast.success("Account created successfully. Please login.");
       } else {
         const error = await response.json();
@@ -115,7 +115,7 @@ export default function SignupPage() {
 
         <div className="mt-4 text-center text-sm text-[#525252]">
           <Link
-            href="/login"
+            href="/hub-login"
             className="text-main hover:underline hover:text-secondary"
           >
             Already have an account? Login here.

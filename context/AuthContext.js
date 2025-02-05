@@ -74,7 +74,7 @@ export function AuthProvider({ children }) {
       }
 
       const data = await response.json();
-      console.log("Login Response:", data);
+      // console.log("Login Response:", data);
 
       const { tokens, user } = data;
       const { accessToken, refreshToken } = tokens;
@@ -83,7 +83,7 @@ export function AuthProvider({ children }) {
       localStorage.setItem("refreshToken", refreshToken);
 
       const decodedAccessToken = jwt.decode(accessToken);
-      console.log("Decoded Access Token:", decodedAccessToken);
+      // console.log("Decoded Access Token:", decodedAccessToken);
 
       if (!decodedAccessToken) {
         throw new Error("Failed to decode access token.");
@@ -123,7 +123,7 @@ export function AuthProvider({ children }) {
     if (expirationTimeoutRef.current) {
       clearTimeout(expirationTimeoutRef.current);
     }
-    router.push("/login");
+    router.push("/hub-login");
   };
 
   const forgotPassword = async (email) => {

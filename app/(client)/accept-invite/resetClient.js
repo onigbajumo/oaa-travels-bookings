@@ -54,7 +54,7 @@ function ResetPasswordContent() {
       toast.success("Password has been reset successfully!");
 
       setTimeout(() => {
-        router.push("/login");
+        router.push("/hub-login");
       }, 3000);
     } catch (error) {
       console.error("Error resetting password:", error);

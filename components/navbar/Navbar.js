@@ -17,7 +17,7 @@ const Navigation = () => {
   const pathname = usePathname();
 
   if (
-    pathname.startsWith("/login") ||
+    pathname.startsWith("/hub-login") ||
     pathname.startsWith("/admin") ||
     pathname.startsWith("/author") ||
     pathname.startsWith("/superadmin") ||

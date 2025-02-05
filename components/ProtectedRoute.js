@@ -18,7 +18,7 @@ export default function ProtectedRoute({ children, allowedRoles = [] }) {
     if (loading) return;
 
     if (!isAuthenticated) {
-      router.push("/login");
+      router.push("/hub-login");
       return;
     }
 
