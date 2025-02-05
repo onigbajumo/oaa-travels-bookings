@@ -12,15 +12,26 @@ export const metadata = {
 }
 
 const client = [
-  "https://placehold.co/400x100.png",
-  "https://placehold.co/400x100.png",
-  "https://placehold.co/400x100.png",
-  "https://placehold.co/400x100.png",
-  "https://placehold.co/400x100.png",
-  "https://placehold.co/400x100.png",	
-  "https://placehold.co/400x100.png",	
-  "https://placehold.co/400x100.png",	
-  "https://placehold.co/400x100.png",	
+  "/images/marketassist.png",
+]
+
+const tech = [
+  {
+    title: "React JS",
+    icon: "/icons/react.svg"
+  },
+  {
+    title: "Redux",
+    icon: "/icons/redux.svg"
+  },
+  {
+    title: "Amazon Services",
+    icon: "/icons/aws.svg"
+  },
+  {
+    title: "Node JS",
+    icon: "/icons/nodejs.svg"
+  },
 ]
 
 const About = () => {
@@ -69,7 +80,7 @@ const About = () => {
         </div>
 
         <div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mt-10 ">
+        <div className="flex items-center flex-wrap gap-6 lg:gap-20 mt-10 justify-center">
             {client.map((item, index) => (
               <Image
                 width={400}
@@ -77,7 +88,7 @@ const About = () => {
                 key={index}
                 src={item}
                 alt="client"
-                className="w-full h-full object-contain"
+                className="w-fit object-contain max-w-[120px] sm:max-w-[200px]"
               />
             ))}
           </div>
@@ -97,16 +108,19 @@ const About = () => {
         </div>
 
         <div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mt-10 ">
-            {client.map((item, index) => (
+          <div className="flex items-center flex-wrap gap-6 lg:gap-20 mt-10 justify-center">
+            {tech.map((item, index) => (
+              <div key={index} className="flex items-center gap-3">
+              <h4 className="text-xl">{item.title}</h4>
               <Image
                 width={400}
                 height={200}
-                key={index}
-                src={item}
+                
+                src={item.icon}
                 alt="client"
-                className="w-full h-full object-contain"
+                className="w-14 aspect-square object-contain"
               />
+              </div>
             ))}
           </div>
         </div>
