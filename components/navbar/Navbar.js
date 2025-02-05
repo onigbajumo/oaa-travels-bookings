@@ -79,7 +79,7 @@ const Navigation = () => {
               width={400}
               height={400}
               alt="logo"
-              className="w-36 md:w-48"
+              className="w-40 md:w-48 max-h-10"
             />
           </Link>
         </div>
