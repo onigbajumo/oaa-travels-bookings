@@ -13,7 +13,7 @@ const data = [
     description:
       "Gain industry-relevant skills through our comprehensive IT training courses. Our expert-led classes prepare you for today's competitive tech landscape",
     icon: <HiLightBulb />,
-    image: "https://placehold.co/500.png",
+    image: "/images/person-2.jpg",
     heading: "Our training programs includes:",
     details: [
       {
@@ -39,7 +39,7 @@ const data = [
     description:
       "Elevate your business with our range of professional IT services designed to strengthen your digital presence and streamline operations",
     icon: <FaGlobe />,
-    image: "https://placehold.co/500.png",
+    image: "/images/person-2.jpg",
     heading: "Our offerings includes:",
     details: [
       {
@@ -61,7 +61,7 @@ const data = [
     description:
       "Through IEnterprise, we deliver creative solutions that enhance brand identity, boost event impact, and capture life's unforgettable moments",
     icon: <BsXDiamondFill />,
-    image: "https://placehold.co/500.png",
+    image: "/images/person-2.jpg",
     heading: "Our services includes:",
     details: [
       {
@@ -83,7 +83,7 @@ const data = [
     description:
       "At EhizuaHub, we believe in nurturing the next generation of tech innovators. Our Creative Tech School Program is tailored for primary and secondary schools, providing students with essential tech skills that prepare them for the future.",
     icon: <MdPalette />,
-    image: "https://placehold.co/500.png",
+    image: "/images/person-2.jpg",
     heading: "We partner with schools to offer hands-on training in:",
     details: [
       {
