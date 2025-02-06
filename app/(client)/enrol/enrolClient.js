@@ -306,8 +306,12 @@ export default function EnrolPage() {
                   value={formik.values.state}
                 >
                   <option value="">Select state</option>
-                  <option value="oyo">Oyo</option>
                   <option value="lagos">Lagos</option>
+                  <option value="ogun">Ogun</option>
+                  <option value="oyo">Oyo</option>
+                  <option value="osun">Osun</option>
+                  <option value="ondo">Ondo</option>
+                  <option value="ekiti">Ekiti</option>
                 </select>
                 {formik.touched.state && formik.errors.state && (
                   <div className="text-red-500">{formik.errors.state}</div>
