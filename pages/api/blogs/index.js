@@ -41,9 +41,9 @@ export default async function handler(req, res) {
         return res.status(401).json({ error: 'Unauthorized. Please log in.' });
       }
 
-      let { title, body, image, category, isFeatured } = req.body;
+      let { title, body, image, category, description, isFeatured } = req.body;
 
-      if (!title || !body || !category) {
+      if (!title || !body || !category || !description) {
         return res.status(400).json({ error: 'All fields are required' });
       }
 
@@ -72,6 +72,7 @@ export default async function handler(req, res) {
 
       const newBlog = new Blog({
         title,
+        description,
         body,
         image: imageUrl,
         category,
@@ -107,7 +108,7 @@ export default async function handler(req, res) {
   } 
   else if (req.method === 'PUT') {
     try {
-      const { id, title, body, image, category, isFeatured } = req.body;
+      const { id, title, body, image, category, description, isFeatured } = req.body;
 
       if (!id) {
         return res.status(400).json({ error: 'Blog ID is required' });
