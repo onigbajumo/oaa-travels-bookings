@@ -54,7 +54,7 @@ function ResetPasswordContent() {
       toast.success("Password has been reset successfully!");
 
       setTimeout(() => {
-        router.push("/hub-login");
+        router.push("/login");
       }, 3000);
     } catch (error) {
       console.error("Error resetting password:", error);
@@ -88,9 +88,9 @@ function ResetPasswordContent() {
           <div className="space-y-3 mb-8">
             <div className="grid place-content-center">
               <Image
-                src="/logo.png"
-                width={1000}
-                height={1000}
+                src="/MBGMOD.png"
+                width={500}
+                height={500}
                 className="w-52"
                 alt="logo"
               />

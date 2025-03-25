@@ -66,49 +66,9 @@ const Sidebar = () => {
       path: "/admin",
     },
     {
-      name: "Staffs",
-      icon: <MdOutlinePermMedia size="20" />,
-      path: "/admin/staffs",
-    },
-    {
-      name: "Blogs",
-      icon: <MdOutlineArticle size="20" />,
-      path: "/admin/blog",
-    },
-    {
-      name: "Portfolios",
-      icon: <LuBriefcaseBusiness size="20" />,
-      path: "/admin/portfolios",
-    },
-    {
-      name: "Courses",
-      icon: <PiBooks size="20" />,
-      path: "/admin/courses",
-    },
-    {
-      name: "Courses Enrollment",
-      icon: <PiBooks size="20" />,
-      path: "/admin/enrollment",
-    },
-    {
-      name: "Categories",
-      icon: <PiTagSimple size="20" />,
-      path: "/admin/categories",
-    },
-    {
-      name: "Testimonials",
-      icon: <MdOutlineReviews size="20" />,
-      path: "/admin/testimonials",
-    },
-    {
-      name: "Contact Messages",
+      name: "Contestants",
       icon: <LuMessageSquareText size="20" />,
-      path: "/admin/contacts",
-    },
-    {
-      name: "FAQs",
-      icon: <RiQuestionnaireLine size="20" />,
-      path: "/admin/faqs",
+      path: "/admin/contestants",
     },
     
   ];
@@ -144,7 +104,7 @@ const Sidebar = () => {
             <div className="flex justify-between items-center mb-6">
               {isSidebarOpen ? (
                 <Image
-                  src="/logo.png"
+                  src="/MBGMOD.png"
                   width={300}
                   height={50}
                   className="w-40"

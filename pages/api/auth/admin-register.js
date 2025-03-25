@@ -28,11 +28,12 @@ export default async function handler(req, res) {
       name,
       email,
       password: hashedPassword,
-      role: 'admin',
+      isVerified: true,
+      role: 'superadmin',
     });
 
     await newAdmin.save();
-    return res.status(201).json({ message: 'Admin created successfully' });
+    return res.status(201).json({ message: 'Superadmin created successfully' });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Internal Server Error' });

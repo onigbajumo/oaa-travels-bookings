@@ -5,25 +5,18 @@ const ContactSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  lastName: {
-    type: String,
-    required: true,
-  },
   email: {
     type: String,
     required: true,
     lowercase: true,
   },
-  phoneNumber: {
+  phone: {
     type: String,
     required: true,
   },
-  projectDetails: {
+  message: {
     type: String,
     required: true,
-  },
-  reasonsForContact: {
-    type: [String],
   },
   createdAt: {
     type: Date,

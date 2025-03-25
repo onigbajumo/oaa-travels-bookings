@@ -123,7 +123,7 @@ export function AuthProvider({ children }) {
     if (expirationTimeoutRef.current) {
       clearTimeout(expirationTimeoutRef.current);
     }
-    router.push("/hub-login");
+    router.push("/");
   };
 
   const forgotPassword = async (email) => {

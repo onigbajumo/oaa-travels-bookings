@@ -7,19 +7,17 @@ export default async function handler(req, res) {
 
   if (req.method === 'POST') {
     try {
-      const { name, lastName, email, phoneNumber, projectDetails, reasonsForContact } = req.body;
+      const { name, email, phone, message} = req.body;
 
-      if (!name || !lastName || !email || !phoneNumber || !projectDetails) {
+      if (!name || !lastName || !email || !phone || !message) {
         return res.status(400).json({ error: 'All required fields must be provided' });
       }
 
       const newContact = new Contact({
         name,
-        lastName,
         email,
-        phoneNumber,
-        projectDetails,
-        reasonsForContact: reasonsForContact || [],
+        phone,
+        message,
       });
 
       await newContact.save();
@@ -54,7 +52,7 @@ export default async function handler(req, res) {
     }
   } else if (req.method === 'PUT') {
     try {
-      const { id, name, lastName, email, phoneNumber, projectDetails, reasonsForContact } = req.body;
+      const { id, name,  email, phone, message} = req.body;
 
       if (!id) {
         return res.status(400).json({ error: 'Contact ID is required for updating' });
@@ -64,11 +62,9 @@ export default async function handler(req, res) {
         id,
         {
           name,
-          lastName,
           email,
-          phoneNumber,
-          projectDetails,
-          reasonsForContact,
+          phone,
+          message
         },
         { new: true }
       );
@@ -117,7 +113,7 @@ const sendEmails = async (contact) => {
   const adminMailOptions = {
     from: process.env.EMAIL_USERNAME,
     to: process.env.ADMIN_EMAIL, 
-    subject: `New Contact Inquiry from ${contact.name} ${contact.lastName}`,
+    subject: `New Contact Inquiry from ${contact.name}`,
     html: `
 
        <!DOCTYPE html>
@@ -232,22 +228,22 @@ const sendEmails = async (contact) => {
       <section class="confirmation">
          
       <p>A new contact inquiry has been received:</p>
-      <p><strong>Name:</strong> ${contact.name} ${contact.lastName}</p>
+      <p><strong>Name:</strong> ${contact.name}</p>
       <p><strong>Email:</strong> ${contact.email}</p>
-      <p><strong>Phone:</strong> ${contact.phoneNumber}</p>
-      <p><strong>Project Details:</strong> ${contact.projectDetails}</p>
-      <p><strong>Reasons for Contact:</strong> ${contact.reasonsForContact.join(', ') || 'N/A'}</p>
+      <p><strong>Phone:</strong> ${contact.phone}</p>
+      <p><strong>Project Details:</strong> ${contact.message}</p>
+      
 
-        <h4>The Ehizua Hub Team</h4>
+        <h4>The Eighty Degrees Team</h4>
       </section>
 
       <footer class="footer">
         <hr />
         <div>
-          <a href="https://www.instagram.com/ehizuahub" target="_blank">
+          <a href="https://www.instagram.com/" target="_blank">
             <img src="https://www.ehizuahub.com/instagram.svg" alt="instagram" />
           </a>
-          <a href="https://www.facebook.com/ehizuahub" target="_blank">
+          <a href="https://www.facebook.com/" target="_blank">
             <img src="https://www.ehizuahub.com/facbook.svg" alt="Facebook" />
           </a>
         </div>
@@ -270,9 +266,8 @@ const sendEmails = async (contact) => {
       <p>Dear ${contact.name},</p>
       <p>Thank you for reaching out! We have received your message and will get back to you as soon as possible.</p>
       <p><b>Your Inquiry Details:</b></p>
-      <p><strong>Project Details:</strong> ${contact.projectDetails}</p>
-      <p><strong>Reasons for Contact:</strong> ${contact.reasonsForContact.join(', ') || 'N/A'}</p>
-      <p>We appreciate your interest and look forward to assisting you.</p>
+      <p><strong>Message:</strong> ${contact.message}</p>
+      <p>We will get back to you shortly.</p>
       <p>Best Regards,</p>
       <p><strong>Your Company Name</strong></p>
 

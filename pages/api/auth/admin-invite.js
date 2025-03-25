@@ -16,7 +16,7 @@ export default async function inviteAdmin(req, res) {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       if (!existingUser.isVerified && new Date() > existingUser.tokenExpires) {
-        // Remove the expired user record
+        
         await User.findByIdAndDelete(existingUser._id);
       } else {
         return res.status(400).json({ error: 'User already exists or pending verification.' });
@@ -56,7 +56,7 @@ export default async function inviteAdmin(req, res) {
       <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Admin Invitation - Ehizua Hub</title>
+        <title>Admin Invitation - MBGMOD</title>
         <style>
           body {
             font-family: Arial, sans-serif;
@@ -130,14 +130,14 @@ export default async function inviteAdmin(req, res) {
       <body>
         <div class="container">
           <header>
-            <img src="https://www.ehizuahub.com/banner.png" alt="Ehizua Hub Banner" />
+            <img src="https://mbgmod.com/wp-content/uploads/2022/09/BOARD-scaled.jpg" alt="MBGMOD Banner" />
           </header>
 
           <section class="confirmation">
-            <h3>Welcome to Ehizua Hub – Let’s Get Started!</h3>
+            <h3>Welcome to MBGMOD – Let’s Get Started!</h3>
             <h1>Hi ${name},</h1>
             <p>
-              You've been invited to join <strong>Ehizua Hub</strong> as an admin! 🎉
+              You've been invited to join <strong>MBGMOD</strong> as an admin! 🎉
             </p>
             <p>
               Click the button below to accept your invitation and set up your account.
@@ -149,21 +149,21 @@ export default async function inviteAdmin(req, res) {
 
             <p>This invitation link will expire in <strong>24 hours</strong>. If you didn’t request this, please ignore this email.</p>
             <p>Best Regards,</p>
-            <h4>The Ehizua Hub Team</h4>
+            <h4>The MBGMOD Team</h4>
           </section>
 
           <footer class="footer">
             <hr />
             <div>
-              <a href="https://www.instagram.com/ehizuahub">
+              <a href="https://www.instagram.com/mbgmod_international">
                 <img src="https://www.ehizuahub.com/instagram.svg" alt="Instagram" />
               </a>
-              <a href="https://www.facebook.com/ehizuahub">
+              <a href="https://www.facebook.com/">
                 <img src="https://www.ehizuahub.com/facebook.svg" alt="Facebook" />
               </a>
             </div>
             <hr />
-            <small>&copy; 2025 Ehizua Hub. All rights reserved.</small>
+            <small>&copy; 2025 MBGMOD. All rights reserved.</small>
           </footer>
         </div>
       </body>

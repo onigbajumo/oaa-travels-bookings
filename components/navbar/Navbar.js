@@ -45,14 +45,6 @@ const Navigation = () => {
       title: "Upskill Program",
       path: "/upskill-program",
     },
-    // {
-    //   title: "Programs",
-    //   dropdown: true,
-    //   submenu: [
-    //     { title: "Upskill Program", path: "#" },
-    //     { title: "All Programs", path: "#" },
-    //   ],
-    // },
     {
       title: "Portfolio",
       path: "/portfolio",

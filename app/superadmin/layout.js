@@ -1,10 +1,12 @@
 import ProtectedRoute from "../../components/ProtectedRoute";
-import Header from "./component/header";
-import Sidebar from "./component/sidebar";
+import Header from "./components/header";
+import Sidebar from "./components/sidebar";
 
 export const metadata = {
   title: "Management Portal",
 };
+
+
 
 export default function RootLayout({ children }) {
   return (

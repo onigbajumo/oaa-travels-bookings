@@ -18,7 +18,7 @@ export default function ProtectedRoute({ children, allowedRoles = [] }) {
     if (loading) return;
 
     if (!isAuthenticated) {
-      router.push("/hub-login");
+      router.push("/login");
       return;
     }
 
@@ -28,7 +28,7 @@ export default function ProtectedRoute({ children, allowedRoles = [] }) {
   }, [loading, isAuthenticated, userRole, allowedRoles, router]);
 
   if (loading || !isAuthenticated) {
-    return <div className="w-full h-screen grid place-content-center"><Image src="/icon.png" width={70} height={70} /></div>;
+    return <div className="w-full h-screen grid place-content-center"><Image src="/MBGMOD.png" width={70} height={70} /></div>;
   }
 
   return <>{children}</>;

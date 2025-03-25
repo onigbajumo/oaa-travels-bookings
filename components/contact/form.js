@@ -1,49 +1,24 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 
-const options = ["Web Design", "Collaboration", "Mobile App Design", "Others"];
-
-const Form = () => {
-  const [formDataContact, setFormDataContact] = useState({
+export default function ContactForm() {
+  const [formData, setFormData] = useState({
     name: "",
-    lastName: "",
+    phone: "",
     email: "",
-    phoneNumber: "",
-    projectDetails: "",
-    reasonsForContact: [],
+    message: "",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleInputChangeContact = (e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormDataContact((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleCheckboxChangeContact = (option) => {
-    setFormDataContact((prev) => {
-      if (prev.reasonsForContact.includes(option)) {
-        return {
-          ...prev,
-          reasonsForContact: prev.reasonsForContact.filter(
-            (item) => item !== option
-          ),
-        };
-      } else {
-        return {
-          ...prev,
-          reasonsForContact: [...prev.reasonsForContact, option],
-        };
-      }
-    });
-  };
-
-  const handleSubmitContact = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     setIsSubmitting(true);
 
     try {
@@ -52,7 +27,7 @@ const Form = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formDataContact),
+        body: JSON.stringify(formData),
       });
 
       if (!response.ok) {
@@ -60,133 +35,82 @@ const Form = () => {
       }
 
       toast.success("Your message has been sent successfully!");
-
-      setFormDataContact({
-        name: "",
-        lastName: "",
-        email: "",
-        phoneNumber: "",
-        projectDetails: "",
-        reasonsForContact: [],
-      });
+      setFormData({ name: "", phone: "", email: "", message: "" });
     } catch (error) {
       toast.error(error.message);
-      console.error(error);
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="flex justify-center">
-      <form
-        name="contact"
-        onSubmit={handleSubmitContact}
-        className="mt-10 flex flex-col gap-8 text-[#2C3335] bg-white p-8 rounded-xl w-full md:w-4/5"
-      >
-        <div className="flex flex-col gap-8 md:flex-row">
-          <div className="flex flex-col gap-2 md:w-1/2">
-            <label className="font-bold text-sm">First Name</label>
-            <input
-              className="rounded-lg p-4 border border-[#0000001F] outline-none"
-              type="text"
-              placeholder="Enter your first name"
-              name="name"
-              value={formDataContact.name}
-              onChange={handleInputChangeContact}
-              required
-            />
-          </div>
-          <div className="flex flex-col gap-2 md:w-1/2">
-            <label className="font-bold text-sm">Last Name</label>
-            <input
-              className="rounded-lg p-4 border border-[#0000001F] outline-none"
-              type="text"
-              placeholder="Enter your last name"
-              name="lastName"
-              value={formDataContact.lastName}
-              onChange={handleInputChangeContact}
-              required
-            />
-          </div>
-        </div>
+    <div className="flex justify-center items-center min-h-screen p-4">
+      <div className="bg-white shadow-lg p-8 rounded-lg w-full max-w-lg">
+        <h2 className="text-2xl font-semibold text-gray-900 mb-6">Get in touch</h2>
 
-        <div className="flex flex-col gap-8 md:flex-row">
-          <div className="flex flex-col gap-2 md:w-1/2">
-            <label className="font-bold text-sm">Phone</label>
-            <input
-              className="rounded-lg p-4 border border-[#0000001F] outline-none"
-              type="tel"
-              placeholder="Enter your phone number"
-              name="phoneNumber"
-              value={formDataContact.phoneNumber}
-              onChange={handleInputChangeContact}
-              maxLength="14"
-              required
-            />
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="flex gap-4">
+            <div className="flex flex-col w-1/2">
+              <label className="text-sm font-medium text-gray-800">Name</label>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                className="border border-gray-300 p-3 rounded-md outline-none focus:ring-1 focus:ring-gray-500"
+                placeholder="Your name..."
+                required
+              />
+            </div>
+
+            <div className="flex flex-col w-1/2">
+              <label className="text-sm font-medium text-gray-800">Phone</label>
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleInputChange}
+                className="border border-gray-300 p-3 rounded-md outline-none focus:ring-1 focus:ring-gray-500"
+                placeholder="Your phone number..."
+                required
+              />
+            </div>
           </div>
-          <div className="flex flex-col gap-2 md:w-1/2">
-            <label className="font-bold text-sm">Email Address</label>
+
+          <div className="flex flex-col">
+            <label className="text-sm font-medium text-gray-800">Email</label>
             <input
-              className="rounded-lg p-4 border border-[#0000001F] outline-none"
               type="email"
-              placeholder="Enter your email"
               name="email"
-              value={formDataContact.email}
-              onChange={handleInputChangeContact}
+              value={formData.email}
+              onChange={handleInputChange}
+              className="border border-gray-300 p-3 rounded-md outline-none focus:ring-1 focus:ring-gray-500"
+              placeholder="Your email address..."
               required
             />
           </div>
-        </div>
 
-        <div className="flex flex-col gap-2 w-full">
-          <label className="font-bold text-sm">What service do you need?</label>
-          <div className="flex flex-wrap gap-3">
-            {options.map((option) => {
-              const isSelected =
-                formDataContact.reasonsForContact.includes(option);
-              return (
-                <div
-                  key={option}
-                  onClick={() => handleCheckboxChangeContact(option)}
-                  className={`cursor-pointer px-4 py-2 rounded-full border 
-                    ${
-                      isSelected
-                        ? "bg-[#134574] text-white border-[#134574]"
-                        : "text-[#134574] border-[#134574]"
-                    }
-                  `}
-                >
-                  {option}
-                </div>
-              );
-            })}
+          <div className="flex flex-col">
+            <label className="text-sm font-medium text-gray-800">Message</label>
+            <textarea
+              name="message"
+              value={formData.message}
+              onChange={handleInputChange}
+              className="border border-gray-300 p-3 rounded-md outline-none focus:ring-1 focus:ring-gray-500 h-28 resize-none"
+              placeholder="Your message..."
+              required
+            />
           </div>
-        </div>
 
-        <div className="flex flex-col gap-2">
-          <label className="font-bold text-sm">Project Details</label>
-          <input
-            className="rounded-lg p-4 border border-[#0000001F] outline-none"
-            type="text"
-            placeholder="Enter Project Details"
-            name="projectDetails"
-            value={formDataContact.projectDetails}
-            onChange={handleInputChangeContact}
-          />
-        </div>
-
-        <div className="flex justify-center">
           <button
-            className="bg-[#134574] text-sm md:text-md text-white rounded-full p-3 px-12 py-4 font-bold"
             type="submit"
+            className="w-full bg-red-500 text-white text-lg font-semibold py-3 rounded-md hover:bg-red-600 transition"
+            disabled={isSubmitting}
           >
             {isSubmitting ? "Sending..." : "Send Message"}
           </button>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   );
-};
-
-export default Form;
+}
