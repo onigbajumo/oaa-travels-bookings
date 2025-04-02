@@ -214,7 +214,7 @@ export default function ContestantForm() {
   
 
   return (
-    <Box maxW="3xl" mx="auto" mt={10} p={5} shadow="md" borderWidth="1px">
+    <Box maxW="3xl" mx="auto" mt={10} p={5} borderWidth="1px">
       <Heading mb={6}>{steps[step]}</Heading>
       {submitted && (
         <Alert status="success" mb={6}><AlertIcon />Registration submitted successfully!</Alert>
@@ -267,7 +267,7 @@ export default function ContestantForm() {
             onChange={handleChange}
             placeholder="Select age"
         >
-            {Array.from({ length: 32 - 18 + 1 }, (_, i) => 18 + i).map((age) => (
+            {Array.from({ length: 30 - 18 + 1 }, (_, i) => 18 + i).map((age) => (
             <option key={age} value={age}>{age}</option>
             ))}
         </Select>

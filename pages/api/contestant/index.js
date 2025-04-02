@@ -22,6 +22,9 @@ export default async function handler(req, res) {
         leadershipRoles, workExperience, images, attestation
       } = req.body;
 
+      
+  if (!images) return res.status(400).json({ error: 'Please upload Image' });
+
       if (attestation !== true) {
         return res.status(400).json({ error: 'You must agree to the attestation terms.' });
       }
