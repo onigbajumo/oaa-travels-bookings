@@ -37,7 +37,8 @@ const NIGERIAN_STATES = [
 const SOCIAL_MEDIA_OPTIONS = ["Facebook", "Instagram", "X", "TikTok", "Snapchat"];
 
 const COLORS = ["Red", "Blue", "Black", "White", "Pink", "Purple", "Green", "Yellow", "Orange"];
-const DRESS_SIZES = ["XS", "S", "M", "L", "XL", "Size 6", "Size 7", "Size 8", "Size 9", "Size 10", "Size 11", "Size 12", "Size 13", "Size 14"];
+const ACHIVEMENT = ["JSCE", "WASCE/SSCE", "ND", "HND", "COLLEGE", "NCE", "B.Sc", "M.Sc", "Others"];
+const DRESS_SIZES = ["XS", "S", "M", "L", "XL", "Size 6", "Size 8","Size 10", "Size 12", "Size 14"];
 const WAIST_SIZES = ["24", "26", "28", "30", "32", "34", "36", "38", "40+"];
 const SHOE_SIZES = ["36", "37", "38", "39", "40", "41", "42", "43", "44", "45"];
 
@@ -341,9 +342,21 @@ export default function ContestantForm() {
 
       {step === 3 && (
         <VStack spacing={4}>
-          <FormControl><FormLabel>School Achievements</FormLabel>
+          {/* <FormControl><FormLabel>School Achievements</FormLabel>
             <Textarea name="schoolAchievements" value={formData.schoolAchievements} onChange={handleChange} placeholder="e.g. Head Girl, Debate Winner, Science Fair Champion" />
+          </FormControl> */}
+
+          <FormControl><FormLabel>School Achievements</FormLabel>
+
+            <Select name="schoolAchievements" value={formData.schoolAchievements} onChange={handleChange}>
+              <option value="">Select</option>
+              {ACHIVEMENT.map((achiveement) => (
+                <option key={achiveement} value={achiveement}>{achiveement}</option>
+              ))}
+            </Select>
           </FormControl>
+
+
           <FormControl><FormLabel>Activity Involvements</FormLabel><Textarea name="activityInvolvements" value={formData.activityInvolvements} onChange={handleChange} /></FormControl>
           <FormControl><FormLabel>Leadership Roles</FormLabel><Textarea name="leadershipRoles" value={formData.leadershipRoles} onChange={handleChange} /></FormControl>
           <FormControl><FormLabel>Work Experience</FormLabel><Textarea name="workExperience" value={formData.workExperience} onChange={handleChange} /></FormControl>
