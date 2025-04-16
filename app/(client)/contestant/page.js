@@ -44,7 +44,7 @@ const SHOE_SIZES = ["36", "37", "38", "39", "40", "41", "42", "43", "44", "45"];
 
 export default function ContestantForm() {
   const [step, setStep] = useState(0);
-  const [formData, setFormData] = useState({
+  const initialFormState = {
     name: "",
     address: "",
     email: "",
@@ -74,19 +74,13 @@ export default function ContestantForm() {
     workExperience: "",
     images: [],
     attestation: false,
-  });
+  };
+  const [formData, setFormData] = useState(initialFormState);
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const toast = useToast();
 
-  const fileToBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
-  };
+
 
   const handleSocialChange = (index, field, value) => {
     const updated = [...formData.socialMediaHandles];
@@ -143,19 +137,35 @@ export default function ContestantForm() {
     setFormData((prev) => ({ ...prev, images: files }));
   };
 
+
   const handleSubmit = async () => {
     setIsSubmitting(true);
     setSubmitted(false);
   
     try {
-      // Convert all image files to base64
-      const base64Images = await Promise.all(
-        formData.images.map(fileToBase64)
-      );
+      const imageUrls = await Promise.all(
+        formData.images.map(async (file) => {
+          const data = new FormData();
+          data.append("file", file);
+          data.append("upload_preset", "mbgmod"); 
+          data.append("folder", "mbgmod/contestants");
   
+          const res = await fetch("https://api.cloudinary.com/v1_1/digipeng-com/image/upload", {
+            method: "POST",
+            body: data,
+          });
+  
+          const result = await res.json();
+          if (result.secure_url) {
+            return result.secure_url;
+          } else {
+            throw new Error("Image upload failed");
+          }
+        })
+      );
       const payload = {
         ...formData,
-        images: base64Images,
+        images: imageUrls,
       };
   
       const res = await fetch("/api/contestant", {
@@ -169,40 +179,14 @@ export default function ContestantForm() {
         throw new Error(errData.error || "Submission failed");
       }
   
-      toast({ title: "Success", description: "Form submitted successfully", status: "success" });
-      setSubmitted(true);
-      setFormData({
-        name: "",
-        address: "",
-        email: "",
-        phone: "",
-        socialMediaHandles: [{ platform: "", url: "" }],
-        age: "",
-        height: "",
-        stateOfOrigin: "",
-        dateOfBirth: "",
-        placeOfBirth: "",
-        cherishedProfession: "",
-        bestThingAboutAge: "",
-        descriptiveWords: [""],
-        embarrassingMoment: "",
-        favoriteColor: "",
-        dressSize: "",
-        waistSize: "",
-        shoeSize: "",
-        bestAttribute: "",
-        favoriteQuote: "",
-        lifeAmbition: "",
-        reasonForJoining: "",
-        promotionPlan: "",
-        schoolAchievements: "",
-        activityInvolvements: "",
-        leadershipRoles: "",
-        workExperience: "",
-        images: [],
-        attestation: false,
+      toast({
+        title: "Success",
+        description: "Form submitted successfully",
+        status: "success",
       });
+      setFormData(initialFormState);
       setStep(0);
+      setSubmitted(true);
     } catch (err) {
       toast({ title: "Error", description: err.message, status: "error" });
       console.error("Submission error:", err);
@@ -210,8 +194,6 @@ export default function ContestantForm() {
       setIsSubmitting(false);
     }
   };
-  
-
   
 
   return (
@@ -342,9 +324,7 @@ export default function ContestantForm() {
 
       {step === 3 && (
         <VStack spacing={4}>
-          {/* <FormControl><FormLabel>School Achievements</FormLabel>
-            <Textarea name="schoolAchievements" value={formData.schoolAchievements} onChange={handleChange} placeholder="e.g. Head Girl, Debate Winner, Science Fair Champion" />
-          </FormControl> */}
+          
 
           <FormControl><FormLabel>School Achievements</FormLabel>
 

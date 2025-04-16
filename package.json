@@ -12,6 +12,7 @@
     "bcryptjs": "^2.4.3",
     "cloudinary": "^2.5.1",
     "date-fns": "^4.1.0",
+    "formidable": "^3.5.2",
     "html2pdf.js": "^0.10.3",
     "json2csv": "^6.0.0-alpha.2",
     "jsonwebtoken": "^9.0.2",
