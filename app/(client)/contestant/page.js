@@ -106,6 +106,8 @@ export default function ContestantForm() {
     setFormData((prev) => ({ ...prev, images: [...prev.images, ...acceptedFiles] }));
   }, []);
 
+  
+
   const removeImage = (indexToRemove) => {
     setFormData((prev) => ({
       ...prev,
@@ -113,8 +115,24 @@ export default function ContestantForm() {
     }));
   };
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, accept: { 'image/*': [] }, multiple: true });
-
+  // const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, accept: { 'image/*': [] }, multiple: true });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop: (acceptedFiles) => {
+      const validFile = acceptedFiles[0];
+      if (validFile && validFile.size <= 2 * 1024 * 1024) {
+        setFormData((prev) => ({ ...prev, images: [validFile] }));
+      } else {
+        toast({
+          title: "Image too large",
+          description: "Please upload an image less than 2MB.",
+          status: "error",
+        });
+      }
+    },
+    accept: { 'image/*': [] },
+    multiple: false,
+  });
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -136,7 +154,6 @@ export default function ContestantForm() {
     const files = Array.from(e.target.files);
     setFormData((prev) => ({ ...prev, images: files }));
   };
-
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
@@ -356,12 +373,28 @@ export default function ContestantForm() {
               )}
             </Box>
             <Stack direction="row" mt={3} flexWrap="wrap" spacing={3}>
-              {formData.images.map((file, idx) => (
-                <Box key={idx} position="relative">
-                  <ChakraImage src={URL.createObjectURL(file)} alt={`upload-${idx}`} boxSize="100px" objectFit="cover" borderRadius="md" />
-                  <IconButton icon={<FiX />} size="xs" colorScheme="red" position="absolute" top="0" right="0" onClick={() => removeImage(idx)} aria-label="Remove Image" />
-                </Box>
-              ))}
+            {formData.images.length > 0 && (
+  <Box position="relative">
+    <ChakraImage
+      src={URL.createObjectURL(formData.images[0])}
+      alt="upload-preview"
+      boxSize="100px"
+      objectFit="cover"
+      borderRadius="md"
+    />
+    <IconButton
+      icon={<FiX />}
+      size="xs"
+      colorScheme="red"
+      position="absolute"
+      top="0"
+      right="0"
+      onClick={() => setFormData((prev) => ({ ...prev, images: [] }))}
+      aria-label="Remove Image"
+    />
+  </Box>
+)}
+
             </Stack>
           </FormControl>
           <Checkbox name="attestation" isChecked={formData.attestation} onChange={(e) => setFormData((prev) => ({ ...prev, attestation: e.target.checked }))}>

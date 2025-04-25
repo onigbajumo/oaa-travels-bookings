@@ -186,7 +186,7 @@ export default async function handler(req, res) {
     try {
       const data = req.body;
 
-      if (!data.name || !data.email || !data.images?.length) {
+      if (!data.name || !data.email) {
         return res.status(400).json({ error: 'Missing required fields' });
       }
 
