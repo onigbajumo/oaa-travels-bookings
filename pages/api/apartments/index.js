@@ -4,7 +4,6 @@ import Apartment from "../../../models/Apartment";
 export default async function handler(req, res) {
   await connectToMongoDB();
 
-  // 📌 Get all apartments
   if (req.method === "GET") {
     try {
       const apartments = await Apartment.find();
@@ -15,7 +14,6 @@ export default async function handler(req, res) {
     }
   }
 
-  // 📌 Create new apartment
   if (req.method === "POST") {
     try {
       const { name, location, pricePerNight } = req.body;
@@ -35,6 +33,5 @@ export default async function handler(req, res) {
       return res.status(500).json({ message: "Error creating apartment", error });
     }
   }
-
   return res.status(405).json({ message: "Method not allowed" });
 }
