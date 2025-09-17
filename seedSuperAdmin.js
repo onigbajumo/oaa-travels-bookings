@@ -13,7 +13,6 @@ const seedSuperAdmin = async () => {
       console.log('Superadmin already exists.');
       return;
     }
-
     const hashedPassword = await bcrypt.hash('qwertyuiop', 10);
 
     const superAdmin = new User({
