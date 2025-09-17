@@ -36,14 +36,129 @@ export default async function handler(req, res) {
         from: process.env.EMAIL_USERNAME,
         to: booking.email,
         subject: "Booking Confirmation",
-        text: `Hello ${booking.fullName},\n\nYour booking at ${apartment.name} is confirmed.\nCheck-in: ${booking.checkIn}\nCheck-out: ${booking.checkOut}\n\nThank you!`,
+        html: 
+        `   
+        <!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Booking Confirmation - Oaa Travel</title>
+  </head>
+  <body style="font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 600px; margin: auto; background: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+      <tr>
+        <td style="background: #0077b6; color: #ffffff; padding: 20px; text-align: center;">
+          <h1 style="margin: 0; font-size: 22px;">Oaa Travel</h1>
+          <p style="margin: 0;">Your trusted travel partner</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 20px;">
+          <h2 style="color: #333;">Booking Confirmed 🎉</h2>
+          <p>Hello <strong>{{fullName}}</strong>,</p>
+          <p>We’re excited to let you know that your booking at <strong>{{apartmentName}}</strong> has been confirmed.</p>
+          
+          <table width="100%" cellpadding="10" cellspacing="0" style="background: #f3f3f3; border-radius: 6px; margin: 20px 0;">
+            <tr>
+              <td><strong>Check-in:</strong></td>
+              <td>{{checkIn}}</td>
+            </tr>
+            <tr>
+              <td><strong>Check-out:</strong></td>
+              <td>{{checkOut}}</td>
+            </tr>
+            <tr>
+              <td><strong>Location:</strong></td>
+              <td>{{apartmentLocation}}</td>
+            </tr>
+            <tr>
+              <td><strong>Price:</strong></td>
+              <td>₦{{pricePerNight}} / night</td>
+            </tr>
+          </table>
+
+          <p>If you have any questions, feel free to reply to this email or contact our support team.</p>
+
+          <p style="margin-top: 20px;">Safe travels,  
+          <br><strong>The Oaa Travel Team</strong></p>
+        </td>
+      </tr>
+      <tr>
+        <td style="background: #0077b6; color: #ffffff; text-align: center; padding: 10px; font-size: 12px;">
+          © 2025 Oaa Travel. All rights reserved.
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
+
+        `,
       });
 
       await transporter.sendMail({
         from: process.env.EMAIL_USERNAME,
         to: process.env.ADMIN_EMAIL,
         subject: "New Booking Received",
-        text: `New booking from ${booking.fullName} at ${apartment.name}.\nCheck-in: ${booking.checkIn}\nCheck-out: ${booking.checkOut}\nContact: ${booking.email}, ${booking.phone}`,
+        html: `
+        <!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>New Booking - Oaa Travel</title>
+  </head>
+  <body style="font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 600px; margin: auto; background: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+      <tr>
+        <td style="background: #023e8a; color: #ffffff; padding: 20px; text-align: center;">
+          <h1 style="margin: 0; font-size: 22px;">Oaa Travel</h1>
+          <p style="margin: 0;">Admin Booking Alert</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 20px;">
+          <h2 style="color: #333;">New Booking Received</h2>
+          <p>A new booking has been made via Oaa Travel:</p>
+
+          <table width="100%" cellpadding="10" cellspacing="0" style="background: #f3f3f3; border-radius: 6px; margin: 20px 0;">
+            <tr>
+              <td><strong>Customer:</strong></td>
+              <td>{{fullName}}</td>
+            </tr>
+            <tr>
+              <td><strong>Email:</strong></td>
+              <td>{{email}}</td>
+            </tr>
+            <tr>
+              <td><strong>Phone:</strong></td>
+              <td>{{phone}}</td>
+            </tr>
+            <tr>
+              <td><strong>Apartment:</strong></td>
+              <td>{{apartmentName}} (₦{{pricePerNight}}/night)</td>
+            </tr>
+            <tr>
+              <td><strong>Check-in:</strong></td>
+              <td>{{checkIn}}</td>
+            </tr>
+            <tr>
+              <td><strong>Check-out:</strong></td>
+              <td>{{checkOut}}</td>
+            </tr>
+          </table>
+
+          <p>Please log in to the admin dashboard for full details and management.</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="background: #023e8a; color: #ffffff; text-align: center; padding: 10px; font-size: 12px;">
+          © 2025 Oaa Travel Admin Portal
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
+
+        `,
       });
 
       return res.status(201).json({ message: "Booking successful", booking });
