@@ -71,9 +71,14 @@ const Sidebar = () => {
       path: "/superadmin/users",
     },
     {
-      name: "Contestants",
+      name: "Apartments",
       icon: <LuMessageSquareText size="20" />,
-      path: "/superadmin/contestants",
+      path: "/superadmin/apartments",
+    },
+    {
+      name: "Bookings",
+      icon: <LuMessageSquareText size="20" />,
+      path: "/superadmin/bookings",
     },
     
   ];
@@ -109,7 +114,7 @@ const Sidebar = () => {
             <div className="flex justify-between items-center mb-6">
               {isSidebarOpen ? (
                 <Image
-                  src="/MBGMOD.png"
+                  src="/oaa-travel.png"
                   width={300}
                   height={50}
                   className="w-40"

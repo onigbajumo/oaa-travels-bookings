@@ -37,13 +37,14 @@ const NIGERIAN_STATES = [
 const SOCIAL_MEDIA_OPTIONS = ["Facebook", "Instagram", "X", "TikTok", "Snapchat"];
 
 const COLORS = ["Red", "Blue", "Black", "White", "Pink", "Purple", "Green", "Yellow", "Orange"];
-const DRESS_SIZES = ["XS", "S", "M", "L", "XL", "Size 6", "Size 7", "Size 8", "Size 9", "Size 10", "Size 11", "Size 12", "Size 13", "Size 14"];
+const ACHIVEMENT = ["JSCE", "WASCE/SSCE", "ND", "HND", "COLLEGE", "NCE", "B.Sc", "M.Sc", "Others"];
+const DRESS_SIZES = ["XS", "S", "M", "L", "XL", "Size 6", "Size 8","Size 10", "Size 12", "Size 14"];
 const WAIST_SIZES = ["24", "26", "28", "30", "32", "34", "36", "38", "40+"];
 const SHOE_SIZES = ["36", "37", "38", "39", "40", "41", "42", "43", "44", "45"];
 
 export default function ContestantForm() {
   const [step, setStep] = useState(0);
-  const [formData, setFormData] = useState({
+  const initialFormState = {
     name: "",
     address: "",
     email: "",
@@ -73,19 +74,13 @@ export default function ContestantForm() {
     workExperience: "",
     images: [],
     attestation: false,
-  });
+  };
+  const [formData, setFormData] = useState(initialFormState);
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const toast = useToast();
 
-  const fileToBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
-  };
+
 
   const handleSocialChange = (index, field, value) => {
     const updated = [...formData.socialMediaHandles];
@@ -111,6 +106,8 @@ export default function ContestantForm() {
     setFormData((prev) => ({ ...prev, images: [...prev.images, ...acceptedFiles] }));
   }, []);
 
+  
+
   const removeImage = (indexToRemove) => {
     setFormData((prev) => ({
       ...prev,
@@ -118,8 +115,24 @@ export default function ContestantForm() {
     }));
   };
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, accept: { 'image/*': [] }, multiple: true });
-
+  // const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, accept: { 'image/*': [] }, multiple: true });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop: (acceptedFiles) => {
+      const validFile = acceptedFiles[0];
+      if (validFile && validFile.size <= 2 * 1024 * 1024) {
+        setFormData((prev) => ({ ...prev, images: [validFile] }));
+      } else {
+        toast({
+          title: "Image too large",
+          description: "Please upload an image less than 2MB.",
+          status: "error",
+        });
+      }
+    },
+    accept: { 'image/*': [] },
+    multiple: false,
+  });
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -147,14 +160,29 @@ export default function ContestantForm() {
     setSubmitted(false);
   
     try {
-      // Convert all image files to base64
-      const base64Images = await Promise.all(
-        formData.images.map(fileToBase64)
-      );
+      const imageUrls = await Promise.all(
+        formData.images.map(async (file) => {
+          const data = new FormData();
+          data.append("file", file);
+          data.append("upload_preset", "mbgmod"); 
+          data.append("folder", "mbgmod/contestants");
   
+          const res = await fetch("https://api.cloudinary.com/v1_1/digipeng-com/image/upload", {
+            method: "POST",
+            body: data,
+          });
+  
+          const result = await res.json();
+          if (result.secure_url) {
+            return result.secure_url;
+          } else {
+            throw new Error("Image upload failed");
+          }
+        })
+      );
       const payload = {
         ...formData,
-        images: base64Images,
+        images: imageUrls,
       };
   
       const res = await fetch("/api/contestant", {
@@ -168,40 +196,14 @@ export default function ContestantForm() {
         throw new Error(errData.error || "Submission failed");
       }
   
-      toast({ title: "Success", description: "Form submitted successfully", status: "success" });
-      setSubmitted(true);
-      setFormData({
-        name: "",
-        address: "",
-        email: "",
-        phone: "",
-        socialMediaHandles: [{ platform: "", url: "" }],
-        age: "",
-        height: "",
-        stateOfOrigin: "",
-        dateOfBirth: "",
-        placeOfBirth: "",
-        cherishedProfession: "",
-        bestThingAboutAge: "",
-        descriptiveWords: [""],
-        embarrassingMoment: "",
-        favoriteColor: "",
-        dressSize: "",
-        waistSize: "",
-        shoeSize: "",
-        bestAttribute: "",
-        favoriteQuote: "",
-        lifeAmbition: "",
-        reasonForJoining: "",
-        promotionPlan: "",
-        schoolAchievements: "",
-        activityInvolvements: "",
-        leadershipRoles: "",
-        workExperience: "",
-        images: [],
-        attestation: false,
+      toast({
+        title: "Success",
+        description: "Form submitted successfully",
+        status: "success",
       });
+      setFormData(initialFormState);
       setStep(0);
+      setSubmitted(true);
     } catch (err) {
       toast({ title: "Error", description: err.message, status: "error" });
       console.error("Submission error:", err);
@@ -211,10 +213,8 @@ export default function ContestantForm() {
   };
   
 
-  
-
   return (
-    <Box maxW="3xl" mx="auto" mt={10} p={5} shadow="md" borderWidth="1px">
+    <Box maxW="3xl" mx="auto" mt={10} p={5} borderWidth="1px">
       <Heading mb={6}>{steps[step]}</Heading>
       {submitted && (
         <Alert status="success" mb={6}><AlertIcon />Registration submitted successfully!</Alert>
@@ -267,7 +267,7 @@ export default function ContestantForm() {
             onChange={handleChange}
             placeholder="Select age"
         >
-            {Array.from({ length: 32 - 18 + 1 }, (_, i) => 18 + i).map((age) => (
+            {Array.from({ length: 30 - 18 + 1 }, (_, i) => 18 + i).map((age) => (
             <option key={age} value={age}>{age}</option>
             ))}
         </Select>
@@ -341,9 +341,19 @@ export default function ContestantForm() {
 
       {step === 3 && (
         <VStack spacing={4}>
+          
+
           <FormControl><FormLabel>School Achievements</FormLabel>
-            <Textarea name="schoolAchievements" value={formData.schoolAchievements} onChange={handleChange} placeholder="e.g. Head Girl, Debate Winner, Science Fair Champion" />
+
+            <Select name="schoolAchievements" value={formData.schoolAchievements} onChange={handleChange}>
+              <option value="">Select</option>
+              {ACHIVEMENT.map((achiveement) => (
+                <option key={achiveement} value={achiveement}>{achiveement}</option>
+              ))}
+            </Select>
           </FormControl>
+
+
           <FormControl><FormLabel>Activity Involvements</FormLabel><Textarea name="activityInvolvements" value={formData.activityInvolvements} onChange={handleChange} /></FormControl>
           <FormControl><FormLabel>Leadership Roles</FormLabel><Textarea name="leadershipRoles" value={formData.leadershipRoles} onChange={handleChange} /></FormControl>
           <FormControl><FormLabel>Work Experience</FormLabel><Textarea name="workExperience" value={formData.workExperience} onChange={handleChange} /></FormControl>
@@ -363,12 +373,28 @@ export default function ContestantForm() {
               )}
             </Box>
             <Stack direction="row" mt={3} flexWrap="wrap" spacing={3}>
-              {formData.images.map((file, idx) => (
-                <Box key={idx} position="relative">
-                  <ChakraImage src={URL.createObjectURL(file)} alt={`upload-${idx}`} boxSize="100px" objectFit="cover" borderRadius="md" />
-                  <IconButton icon={<FiX />} size="xs" colorScheme="red" position="absolute" top="0" right="0" onClick={() => removeImage(idx)} aria-label="Remove Image" />
-                </Box>
-              ))}
+            {formData.images.length > 0 && (
+  <Box position="relative">
+    <ChakraImage
+      src={URL.createObjectURL(formData.images[0])}
+      alt="upload-preview"
+      boxSize="100px"
+      objectFit="cover"
+      borderRadius="md"
+    />
+    <IconButton
+      icon={<FiX />}
+      size="xs"
+      colorScheme="red"
+      position="absolute"
+      top="0"
+      right="0"
+      onClick={() => setFormData((prev) => ({ ...prev, images: [] }))}
+      aria-label="Remove Image"
+    />
+  </Box>
+)}
+
             </Stack>
           </FormControl>
           <Checkbox name="attestation" isChecked={formData.attestation} onChange={(e) => setFormData((prev) => ({ ...prev, attestation: e.target.checked }))}>

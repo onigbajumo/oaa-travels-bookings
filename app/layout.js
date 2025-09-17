@@ -4,10 +4,10 @@ import { ToastContainer } from "react-toastify";
 
 export const metadata = {
   title: {
-    default: "MBGMOD - Most Beautiful Girl Mushin Odi-Olowo",
-    template: "%s | MBGMOD Admin",
+    default: "OAA Travel",
+    template: "%s | OAA Travel Admin",
   },
-  description: `Most Beautiful Girl Mushin Odi-Olowo`,
+  description: `OAA Travel Apartment Bookings`,
   
 };
 

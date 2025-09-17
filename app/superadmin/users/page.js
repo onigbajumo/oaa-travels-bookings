@@ -87,8 +87,8 @@ const UsersPage = () => {
 
   const userStats = {
     total: users.length,
-    active: users.filter((u) => u.isActive).length,
-    inactive: users.filter((u) => !u.isActive).length,
+    active: users.filter((u) => u.isVerified).length,
+    inactive: users.filter((u) => !u.isVerified).length,
   };
 
   const confirmAction = (user, type) => {
@@ -262,7 +262,7 @@ const UsersPage = () => {
                     <Td>{user.email}</Td>
                     <Td className="capitalize">{getRoleLabel(user.role)}</Td>
                     <Td>
-                      {user.isActive ? (
+                      {user.isVerified ? (
                         <div className="py-1 px-3 flex items-center gap-2 bg-[#EAF6EC] w-fit rounded-full">
                           <span className="text-[#28A745] text-sm">Active</span>
                         </div>

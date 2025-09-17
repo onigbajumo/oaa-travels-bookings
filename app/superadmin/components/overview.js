@@ -64,7 +64,7 @@ export default function AdminDashboard() {
 
   const fetchRecent = async () => {
     try {
-      const res = await fetch("/api/contestant");
+      const res = await fetch("/api/bookings");
       const json = await res.json();
       const recent = json.slice(0, 20);
       setRecent(recent);
@@ -147,7 +147,7 @@ export default function AdminDashboard() {
       new Date(item.createdAt).toLocaleDateString(),
     ]);
 
-    doc.text("Recent Contestant Registrations", 14, 16);
+    doc.text("Recent Bookings Registrations", 14, 16);
     doc.autoTable({
       startY: 20,
       head: [["S/N", "Name", "Email", "State", "Date"]],
@@ -182,7 +182,7 @@ export default function AdminDashboard() {
         </HStack>
       </Flex>
 
-      <Box p={4} bg="white" borderRadius="lg" shadow="md">
+      {/* <Box p={4} bg="white" borderRadius="lg" shadow="md">
         {loading ? (
           <Flex justify="center" align="center" h="300px">
             <Spinner size="lg" />
@@ -192,7 +192,7 @@ export default function AdminDashboard() {
             {renderChart()}
           </ResponsiveContainer>
         )}
-      </Box>
+      </Box> */}
 
       <Box mt={10}>
         <Flex justify="space-between" align="center" mb={4} wrap="wrap" gap={3}>
@@ -213,7 +213,7 @@ export default function AdminDashboard() {
           </HStack>
         </Flex>
 
-        <Box overflowX="auto">
+        {/* <Box overflowX="auto">
           <Table variant="simple">
             <Thead>
               <Tr>
@@ -236,7 +236,7 @@ export default function AdminDashboard() {
               ))}
             </Tbody>
           </Table>
-        </Box>
+        </Box> */}
       </Box>
     </Box>
   );

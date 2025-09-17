@@ -16,7 +16,7 @@ const getAccessToken = () => localStorage.getItem("accessToken");
 const Page = () => {
   const [overviewData, setOverviewData] = useState({
     
-    enrollments: 0,
+    bookings: 0,
   });
 
   useEffect(() => {
@@ -29,17 +29,20 @@ const Page = () => {
         }
 
         const [
-          enrollmentsRes,
-          usersRes,
+          bookingsRes,
+          apartmentsRes,
         ] = await Promise.all([
-          fetch("/api/contestant", { method: "GET", headers })
+          fetch("/api/bookings", { method: "GET", headers }),
+          fetch("/api/apartments", { method: "GET", headers })
         ]);
 
-        const enrollmentsData = await enrollmentsRes.json();
+        const bookingsData = await bookingsRes.json();
+        const apartmentsData = await apartmentsRes.json();
 
 
         setOverviewData({
-          enrollments: enrollmentsData.length
+          bookings: bookingsData.length,
+          apartments: apartmentsData.length
         });
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -50,8 +53,8 @@ const Page = () => {
   }, []);
 
   const overview = [
-    { title: "Contestants", value: overviewData.enrollments, path: "/admin/contestants" },
-  ];
+    { title: "Bookings", value: overviewData.bookings, path: "/admin/bookings" },
+    { title: "Apartments", value: overviewData.bookings, path: "/admin/apartments" },  ];
 
   return (
     <Box className="space-y-5">
@@ -77,7 +80,7 @@ const Page = () => {
         </div>
       </div>
 
-      <Overview />
+      {/* <Overview /> */}
     </Box>
   );
 };
