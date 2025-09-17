@@ -8,11 +8,11 @@ const seedSuperAdmin = async () => {
   try {
     await connectToMongoDB();
 
-    const existingSuperAdmin = await User.find({ role: 'superadmin' });
-    if (existingSuperAdmin) {
-      console.log('Superadmin already exists.');
-      return;
-    }
+    // const existingSuperAdmin = await User.find({ role: 'superadmin' });
+    // if (existingSuperAdmin) {
+    //   console.log('Superadmin already exists.');
+    //   return;
+    // }
     const hashedPassword = await bcrypt.hash('qwertyuiop', 10);
 
     const superAdmin = new User({
