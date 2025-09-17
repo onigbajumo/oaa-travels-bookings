@@ -23,14 +23,6 @@ const theme = extendTheme({
             bg: "brand.600",
           },
         },
-        // outline: {
-        //   borderColor: "brand.500",
-        //   color: "brand.500",
-        //   _hover: {
-        //     bg: "brand.500",
-        //     color: "white",
-        //   },
-        // },
       },
       defaultProps: {
         colorScheme: "brand",
