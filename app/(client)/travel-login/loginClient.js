@@ -34,7 +34,7 @@ export default function LoginPage() {
         <div className="space-y-3 mb-8">
           <div className="grid place-content-center">
             <Image
-              src="/MBGMOD.png"
+              src="/oaa-travel.png"
               width={1000}
               height={1000}
               className="w-52"

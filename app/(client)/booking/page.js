@@ -21,7 +21,6 @@ export default function BookingPage() {
     checkOut: "",
   });
 
-  // Load apartments from backend
   useEffect(() => {
     async function fetchApartments() {
       try {
@@ -35,7 +34,6 @@ export default function BookingPage() {
     fetchApartments();
   }, []);
 
-  // Handle apartment selection
   function handleApartmentChange(e) {
     const apartmentId = e.target.value;
     setForm((prev) => ({ ...prev, apartmentId }));
@@ -43,13 +41,11 @@ export default function BookingPage() {
     setSelectedApartment(apt || null);
   }
 
-  // Handle all inputs
   function handleChange(e) {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   }
 
-  // Submit booking
   async function handleBooking(e) {
     e.preventDefault();
     setIsSubmitting(true);
@@ -67,7 +63,7 @@ export default function BookingPage() {
         description: "Booking submitted successfully",
         status: "success",
       });
-       // ✅ Reset form fields after successful booking
+      
       setForm({
         fullName: "",
         email: "",
@@ -163,7 +159,6 @@ export default function BookingPage() {
           </select>
         </div>
 
-        {/* Auto-populated apartment details */}
         {selectedApartment && (
           <div className="bg-gray-50 p-4 rounded border">
             <p>
@@ -175,7 +170,6 @@ export default function BookingPage() {
           </div>
         )}
 
-        {/* Booking Dates */}
         <div>
           <label className="block mb-1">Check-in Date:</label>
           <input
