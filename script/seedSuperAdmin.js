@@ -1,23 +1,24 @@
 const mongoose = require('mongoose');
+require('dotenv').config({ path: '.env.local' });
 const bcrypt = require('bcryptjs');
-const User = require('./models/User'); // Adjust path to your model
-const connectToMongoDB = require('./libs/mongodb'); 
+const User = require('../models/User'); 
+const connectToMongoDB = require('../libs/mongodb'); 
 
 const seedSuperAdmin = async () => {
   try {
     await connectToMongoDB();
 
-    const existingSuperAdmin = await User.findOne({ role: 'superadmin' });
+    const existingSuperAdmin = await User.find({ role: 'superadmin' });
     if (existingSuperAdmin) {
       console.log('Superadmin already exists.');
       return;
     }
 
-    const hashedPassword = await bcrypt.hash('qwertyuiop1', 10);
+    const hashedPassword = await bcrypt.hash('qwertyuiop', 10);
 
     const superAdmin = new User({
       name: 'SuperAdmin',
-      email: 'admin@gmail.com',
+      email: 'onigbajumogbenga@gmail.com',
       password: hashedPassword,
       role: 'superadmin',
       isVerified: true,

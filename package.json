@@ -1,17 +1,19 @@
 {
-  "name": "mbgmod",
+  "name": "oaa-travel",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed:superadmin": "node script/seedSuperAdmin.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cloudinary": "^2.5.1",
     "date-fns": "^4.1.0",
+    "dotenv": "^17.2.2",
     "formidable": "^3.5.2",
     "html2pdf.js": "^0.10.3",
     "json2csv": "^6.0.0-alpha.2",

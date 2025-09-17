@@ -16,7 +16,7 @@ const getAccessToken = () => localStorage.getItem("accessToken");
 const Page = () => {
   const [overviewData, setOverviewData] = useState({
     
-    enrollments: 0,
+    bookings: 0,
     users: 0,
     admins: 0,
   });
@@ -31,20 +31,24 @@ const Page = () => {
         }
 
         const [
-          enrollmentsRes,
+          apartmentsRes,
           usersRes,
+          bookingsRes
         ] = await Promise.all([
-          fetch("/api/contestant", { method: "GET", headers }),
+          fetch("/api/apartments", { method: "GET", headers }),
           fetch("/api/users", { method: "GET", headers }),
+          fetch("/api/bookings", { method: "GET", headers }),
         ]);
 
-        const enrollmentsData = await enrollmentsRes.json();
+        const bookingsData = await bookingsRes.json();
         const usersData = await usersRes.json();
+        const apartmentData = await apartmentsRes.json();
 
 
         setOverviewData({
-          enrollments: enrollmentsData.length,
+          bookings: bookingsData.length,
           users: usersData.length,
+          apartments: apartmentData.length,
         });
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -55,8 +59,9 @@ const Page = () => {
   }, []);
 
   const overview = [
-    { title: "Contestans", value: overviewData.enrollments, path: "/superadmin/contestants" },
+    { title: "Bookings", value: overviewData.bookings, path: "/superadmin/bookings" },
     { title: "Users", value: overviewData.users, path: "/superadmin/users" },
+    { title: "Apartments", value: overviewData.users, path: "/superadmin/apartments" },
   ];
 
   return (
@@ -83,7 +88,7 @@ const Page = () => {
         </div>
       </div>
 
-      <Overview />
+      {/* <Overview /> */}
     </Box>
   );
 };

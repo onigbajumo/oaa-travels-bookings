@@ -213,7 +213,7 @@ export default function AdminDashboard() {
           </HStack>
         </Flex>
 
-        <Box overflowX="auto">
+        {/* <Box overflowX="auto">
           <Table variant="simple">
             <Thead>
               <Tr>
@@ -236,7 +236,7 @@ export default function AdminDashboard() {
               ))}
             </Tbody>
           </Table>
-        </Box>
+        </Box> */}
       </Box>
     </Box>
   );
