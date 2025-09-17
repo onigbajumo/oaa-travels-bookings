@@ -32,10 +32,6 @@ export default async function handler(req, res) {
         checkOut: body.checkOut,
       });
 
-<<<<<<< HEAD
-=======
-      // Send email to user
->>>>>>> dfba80219a44927f86eecf3e13aec88c3c4d0adc
       await transporter.sendMail({
         from: process.env.EMAIL_USERNAME,
         to: booking.email,
@@ -43,10 +39,6 @@ export default async function handler(req, res) {
         text: `Hello ${booking.fullName},\n\nYour booking at ${apartment.name} is confirmed.\nCheck-in: ${booking.checkIn}\nCheck-out: ${booking.checkOut}\n\nThank you!`,
       });
 
-<<<<<<< HEAD
-=======
-      // Send email to admin
->>>>>>> dfba80219a44927f86eecf3e13aec88c3c4d0adc
       await transporter.sendMail({
         from: process.env.EMAIL_USERNAME,
         to: process.env.ADMIN_EMAIL,
@@ -61,10 +53,6 @@ export default async function handler(req, res) {
     }
   }
 
-<<<<<<< HEAD
-=======
-  // 📌 Get bookings
->>>>>>> dfba80219a44927f86eecf3e13aec88c3c4d0adc
   if (req.method === "GET") {
     try {
       const { id, start, end } = req.query;
@@ -91,10 +79,6 @@ export default async function handler(req, res) {
     }
   }
 
-<<<<<<< HEAD
-=======
-  // 📌 Delete booking
->>>>>>> dfba80219a44927f86eecf3e13aec88c3c4d0adc
   if (req.method === "DELETE") {
     try {
       const { id } = req.query;
