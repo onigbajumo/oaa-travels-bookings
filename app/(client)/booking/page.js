@@ -70,6 +70,7 @@ export default function BookingPage() {
         phone: "",
         checkIn: "",
         checkOut: "",
+        apartmentId: "",
       });
       setSelectedApartment(null);
       } else {
@@ -153,7 +154,7 @@ export default function BookingPage() {
             <option value="">-- Choose an Apartment --</option>
             {apartments.map((apt) => (
               <option key={apt.id} value={apt._id}>
-                {apt.name} - {apt.location} - ₦{apt.pricePerNight}/night
+                {apt.name} - {apt.location} - ₦{apt.pricePerNight}/Night
               </option>
             ))}
           </select>
@@ -165,7 +166,7 @@ export default function BookingPage() {
               <strong>Location:</strong> {selectedApartment.location}
             </p>
             <p>
-              <strong>Price:</strong> ${selectedApartment.pricePerNight} / night
+              <strong>Price:</strong> ${selectedApartment.pricePerNight} / Night
             </p>
           </div>
         )}
