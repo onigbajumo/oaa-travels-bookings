@@ -2,6 +2,7 @@ import connectToMongoDB from "../../../libs/mongodb";
 import Booking from "../../../models/Booking";
 import Apartment from "../../../models/Apartment";
 import nodemailer from "nodemailer";
+import { format } from "date-fns";
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -11,13 +12,16 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+
+
+
 export default async function handler(req, res) {
   await connectToMongoDB();
-
+  
   if (req.method === "POST") {
     try {
       const body = req.body;
-
+      
       const apartment = await Apartment.findById(body.apartmentId);
       if (!apartment) {
         return res.status(404).json({ message: "Apartment not found" });
@@ -31,6 +35,10 @@ export default async function handler(req, res) {
         checkIn: body.checkIn,
         checkOut: body.checkOut,
       });
+      const populatedBooking = await Booking.findById(booking._id).populate("apartment");
+      // console.log(populatedBooking.apartment); 
+      const formattedCheckIn = format(new Date(booking.checkIn), "EEE, dd MMM yyyy");
+      const formattedCheckOut = format(new Date(booking.checkOut), "EEE, dd MMM yyyy");
 
       await transporter.sendMail({
         from: process.env.EMAIL_USERNAME,
@@ -54,26 +62,26 @@ export default async function handler(req, res) {
       </tr>
       <tr>
         <td style="padding: 20px;">
-          <h2 style="color: #333;">Booking Confirmed 🎉</h2>
-          <p>Hello <strong>{{fullName}}</strong>,</p>
-          <p>We’re excited to let you know that your booking at <strong>{{apartmentName}}</strong> has been confirmed.</p>
+          <h2 style="color: #333;">Booking Confirmed</h2>
+          <p>Hello <strong>${booking.fullName}</strong>,</p>
+          <p>We’re excited to let you know that your booking at <strong>${populatedBooking.apartment.name}</strong> has been confirmed.</p>
           
           <table width="100%" cellpadding="10" cellspacing="0" style="background: #f3f3f3; border-radius: 6px; margin: 20px 0;">
             <tr>
               <td><strong>Check-in:</strong></td>
-              <td>{{checkIn}}</td>
+              <td>${formattedCheckIn}</td>
             </tr>
             <tr>
               <td><strong>Check-out:</strong></td>
-              <td>{{checkOut}}</td>
+              <td>${formattedCheckOut}</td>
             </tr>
             <tr>
               <td><strong>Location:</strong></td>
-              <td>{{apartmentLocation}}</td>
+              <td>${populatedBooking.apartment.location}</td>
             </tr>
             <tr>
               <td><strong>Price:</strong></td>
-              <td>₦{{pricePerNight}} / night</td>
+              <td>₦${populatedBooking.apartment.pricePerNight} / Night</td>
             </tr>
           </table>
 
@@ -122,27 +130,27 @@ export default async function handler(req, res) {
           <table width="100%" cellpadding="10" cellspacing="0" style="background: #f3f3f3; border-radius: 6px; margin: 20px 0;">
             <tr>
               <td><strong>Customer:</strong></td>
-              <td>{{fullName}}</td>
+              <td>${booking.fullName}</td>
             </tr>
             <tr>
               <td><strong>Email:</strong></td>
-              <td>{{email}}</td>
+              <td>${booking.email}</td>
             </tr>
             <tr>
               <td><strong>Phone:</strong></td>
-              <td>{{phone}}</td>
+              <td>${booking.phone}</td>
             </tr>
             <tr>
               <td><strong>Apartment:</strong></td>
-              <td>{{apartmentName}} (₦{{pricePerNight}}/night)</td>
+              <td>${populatedBooking.apartment.name} (₦${populatedBooking.apartment.pricePerNight}/night)</td>
             </tr>
             <tr>
               <td><strong>Check-in:</strong></td>
-              <td>{{checkIn}}</td>
+              <td>${formattedCheckIn}</td>
             </tr>
             <tr>
               <td><strong>Check-out:</strong></td>
-              <td>{{checkOut}}</td>
+              <td>${formattedCheckOut}</td>
             </tr>
           </table>
 
