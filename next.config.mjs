@@ -1,5 +1,5 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+
+export const config = {
     images: {
       remotePatterns: [
         
@@ -12,11 +12,8 @@ const nextConfig = {
       ],
     },
     api: {
-      bodyParser: {
-        sizeLimit: '25mb', 
-      }
+      bodyParser: false,
     },
   };
   
-  export default nextConfig;
   
