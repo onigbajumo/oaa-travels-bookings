@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 require('dotenv').config({ path: '.env.local' });
 const bcrypt = require('bcryptjs');
-const User = require('./models/User'); 
-const connectToMongoDB = require('./libs/mongodb'); 
+const User = require('../../models/User'); 
+const connectToMongoDB = require('../../libs/mongodb'); 
 
 const seedSuperAdmin = async () => {
   try {
