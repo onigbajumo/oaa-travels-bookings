@@ -1,19 +1,7 @@
-
-export const config = {
-    images: {
-      remotePatterns: [
-        
-        {
-          protocol: 'https',
-          hostname: 'res.cloudinary.com',
-          port: '',
-          pathname: '/**',
-        },
-      ],
-    },
-    api: {
-      bodyParser: false,
-    },
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  swcMinify: false,
   };
   
+  export default nextConfig;
   
