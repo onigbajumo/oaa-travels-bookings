@@ -1,5 +1,5 @@
-
-export const config = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
     images: {
       remotePatterns: [
         
@@ -10,10 +10,8 @@ export const config = {
           pathname: '/**',
         },
       ],
-    },
-    api: {
-      bodyParser: false,
-    },
+    }
   };
   
+  export default nextConfig;
   
