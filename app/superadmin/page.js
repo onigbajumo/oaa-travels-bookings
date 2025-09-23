@@ -40,9 +40,9 @@ const Page = () => {
           fetch("/api/bookings", { method: "GET", headers }),
         ]);
 
-        const bookingsData = await bookingsRes.json();
-        const usersData = await usersRes.json();
         const apartmentData = await apartmentsRes.json();
+        const usersData = await usersRes.json();
+        const bookingsData = await bookingsRes.json();
 
 
         setOverviewData({
@@ -61,7 +61,7 @@ const Page = () => {
   const overview = [
     { title: "Bookings", value: overviewData.bookings, path: "/superadmin/bookings" },
     { title: "Users", value: overviewData.users, path: "/superadmin/users" },
-    { title: "Apartments", value: overviewData.users, path: "/superadmin/apartments" },
+    { title: "Apartments", value: overviewData.apartments, path: "/superadmin/apartments" },
   ];
 
   return (
