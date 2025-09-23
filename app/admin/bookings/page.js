@@ -8,7 +8,7 @@ export default function AdminBookingsPage() {
   useEffect(() => {
     async function fetchBookings() {
       try {
-        const res = await fetch("http://localhost:3000/api/bookings");
+        const res = await fetch("/api/bookings");
         const data = await res.json();
         setBookings(data);
       } catch (error) {
