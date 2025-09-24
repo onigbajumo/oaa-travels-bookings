@@ -12,6 +12,62 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+export function formatPrice(value) {
+  if (!value || isNaN(value)) return "₦0";
+  return value.toLocaleString("en-NG", {
+    style: "currency",
+    currency: "NGN",
+    minimumFractionDigits: 0,
+  });
+}
+
+// utils/dates.js (or inline in your API file)
+
+// Convert many shapes into a Date at UTC midnight
+function toUTCDate(input) {
+  if (!input) return null;
+
+  // Already a Date?
+  if (input instanceof Date && !isNaN(input)) return new Date(Date.UTC(
+    input.getUTCFullYear(), input.getUTCMonth(), input.getUTCDate()
+  ));
+
+  // ISO string "YYYY-MM-DD"
+  if (typeof input === 'string') {
+    // Force UTC midnight to avoid TZ/DST bugs
+    const d = new Date(`${input}T00:00:00Z`);
+    return isNaN(d) ? null : d;
+  }
+
+  // Array [year, month, day] — assume 1-based month; fix to 0-based
+  if (Array.isArray(input) && input.length >= 3) {
+    const [y, m, d] = input.map(Number);
+    if (!y || !m || !d) return null;
+    return new Date(Date.UTC(y, m - 1, d));
+  }
+
+  // Object {year, month, day}
+  if (typeof input === 'object' && input.year && input.month && input.day) {
+    const y = Number(input.year);
+    const m = Number(input.month);
+    const d = Number(input.day);
+    if (!y || !m || !d) return null;
+    // If month looks 0-based, adjust to 0..11; if 1..12, subtract 1
+    const zeroBasedMonth = m > 11 ? m - 1 : (m >= 1 ? m - 1 : 0);
+    return new Date(Date.UTC(y, zeroBasedMonth, d));
+  }
+
+  return null;
+}
+
+function diffNightsUTC(fromDate, toDate) {
+  if (!fromDate || !toDate) return NaN;
+  const ms = toDate.getTime() - fromDate.getTime();
+  if (isNaN(ms)) return NaN;
+  // Exact day difference in UTC
+  return Math.max(1, Math.round(ms / (1000 * 60 * 60 * 24)));
+}
+
 
 
 export default async function handler(req, res) {
@@ -39,6 +95,23 @@ export default async function handler(req, res) {
       return res.status(400).json({ message: "Apartment is already booked for these dates" });
     }
 
+    const checkIn = toUTCDate(body.checkIn);
+    const checkOut = toUTCDate(body.checkOut);
+
+    if (!checkIn || !checkOut) {
+      return res.status(400).json({ message: "Invalid check-in/check-out dates", raw: { checkIn: body.checkIn, checkOut: body.checkOut } });
+    }
+
+    const nights = diffNightsUTC(checkIn, checkOut);
+    if (isNaN(nights)) {
+      return res.status(400).json({ message: "Could not compute nights" });
+    }
+
+    const pricePerNight = Number(apartment.pricePerNight) || 0;
+    const totalPrice = pricePerNight * nights;
+    // console.log("Total Price:", totalPrice);
+    // console.log("Nights:", nights);
+    // console.log("Price per Night:", apartment.pricePerNight);
 
       const booking = await Booking.create({
         apartment: body.apartmentId,
@@ -47,29 +120,30 @@ export default async function handler(req, res) {
         phone: body.phone,
         checkIn: body.checkIn,
         checkOut: body.checkOut,
+        totalPrice,
       });
       const populatedBooking = await Booking.findById(booking._id).populate("apartment");
-      // console.log(populatedBooking.apartment); 
+      
       const formattedCheckIn = format(new Date(booking.checkIn), "EEE, dd MMM yyyy");
       const formattedCheckOut = format(new Date(booking.checkOut), "EEE, dd MMM yyyy");
 
       await transporter.sendMail({
         from: process.env.EMAIL_USERNAME,
         to: booking.email,
-        subject: "Booking Request Received - Oaa Travel",
+        subject: "Booking Request Received - OAA Travel",
         html: 
         `
           <!DOCTYPE html>
         <html>
           <head>
             <meta charset="UTF-8" />
-            <title>Booking Request Received - Oaa Travel</title>
+            <title>Booking Request Received - OAA Travel</title>
           </head>
           <body style="font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px;">
             <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 600px; margin: auto; background: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
               <tr>
                 <td style="background: #0077b6; color: #ffffff; padding: 20px; text-align: center;">
-                  <h1 style="margin: 0; font-size: 22px;">Oaa Travel</h1>
+                  <h1 style="margin: 0; font-size: 22px;">OAA Travel</h1>
                   <p style="margin: 0;">Your trusted travel partner</p>
                 </td>
               </tr>
@@ -77,7 +151,7 @@ export default async function handler(req, res) {
                 <td style="padding: 20px;">
                   <h2 style="color: #333;">Booking Request Received</h2>
                   <p>Hello <strong>${booking.fullName}</strong>,</p>
-                  <p>Thank you for choosing Oaa Travel. We’ve received your booking request for <strong>${populatedBooking.apartment.name}</strong>.</p>
+                  <p>Thank you for choosing OAA Travel. We’ve received your booking request for <strong>${populatedBooking.apartment.name}</strong>.</p>
                   <p><em>Please note: Your booking is not yet confirmed. To secure your reservation, kindly make payment using the bank details below. Once payment is confirmed, you will receive another email confirming acceptance of your booking.</em></p>
                   
                   <table width="100%" cellpadding="10" cellspacing="0" style="background: #f3f3f3; border-radius: 6px; margin: 20px 0;">
@@ -94,8 +168,12 @@ export default async function handler(req, res) {
                       <td>${populatedBooking.apartment.location}</td>
                     </tr>
                     <tr>
-                      <td><strong>Price:</strong></td>
-                      <td>₦${populatedBooking.apartment.pricePerNight} / Night</td>
+                      <td><strong>Price per night:</strong></td>
+                      <td>${formatPrice(populatedBooking.apartment.pricePerNight)} / Night</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Total Price:</strong></td>
+                      <td>${formatPrice(populatedBooking.totalPrice)} / Night</td>
                     </tr>
                   </table>
 
@@ -120,12 +198,12 @@ export default async function handler(req, res) {
                   <p>If you have any questions or enquiries, please call us at <strong>+234 706 381 6404</strong> or simply reply to this email. Our team will be glad to assist you.</p>
 
                   <p style="margin-top: 20px;">Safe travels,  
-                  <br><strong>The Oaa Travel Team</strong></p>
+                  <br><strong>The OAA Travel Team</strong></p>
                 </td>
               </tr>
               <tr>
                 <td style="background: #0077b6; color: #ffffff; text-align: center; padding: 10px; font-size: 12px;">
-                  © 2025 Oaa Travel. All rights reserved.
+                  © 2025 OAA Travel. All rights reserved.
                 </td>
               </tr>
             </table>
@@ -144,20 +222,20 @@ export default async function handler(req, res) {
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>New Booking - Oaa Travel</title>
+    <title>New Booking - OAA Travel</title>
   </head>
   <body style="font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px;">
     <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 600px; margin: auto; background: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
       <tr>
         <td style="background: #023e8a; color: #ffffff; padding: 20px; text-align: center;">
-          <h1 style="margin: 0; font-size: 22px;">Oaa Travel</h1>
+          <h1 style="margin: 0; font-size: 22px;">OAA Travel</h1>
           <p style="margin: 0;">Admin Booking Alert</p>
         </td>
       </tr>
       <tr>
         <td style="padding: 20px;">
           <h2 style="color: #333;">New Booking Received</h2>
-          <p>A new booking has been made via Oaa Travel:</p>
+          <p>A new booking has been made via OAA Travel:</p>
 
           <table width="100%" cellpadding="10" cellspacing="0" style="background: #f3f3f3; border-radius: 6px; margin: 20px 0;">
             <tr>
@@ -174,8 +252,13 @@ export default async function handler(req, res) {
             </tr>
             <tr>
               <td><strong>Apartment:</strong></td>
-              <td>${populatedBooking.apartment.name} (₦${populatedBooking.apartment.pricePerNight}/night)</td>
+              <td>${populatedBooking.apartment.name} (${formatPrice(populatedBooking.apartment.pricePerNight)}/night)</td>
             </tr>
+            <tr>
+              <td><strong>Total Price:</strong></td>
+              <td>${formatPrice(populatedBooking.totalPrice)}</td>
+            </tr>
+            
             <tr>
               <td><strong>Check-in:</strong></td>
               <td>${formattedCheckIn}</td>
@@ -191,7 +274,7 @@ export default async function handler(req, res) {
       </tr>
       <tr>
         <td style="background: #023e8a; color: #ffffff; text-align: center; padding: 10px; font-size: 12px;">
-          © 2025 Oaa Travel Admin Portal
+          © 2025 OAA Travel Admin Portal
         </td>
       </tr>
     </table>
@@ -272,20 +355,20 @@ export default async function handler(req, res) {
     await transporter.sendMail({
       from: process.env.EMAIL_USERNAME,
       to: booking.email,
-      subject: "Booking Confirmed - Oaa Travel",
+      subject: "Booking Confirmed - OAA Travel",
       html: `
           <!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Booking Confirmed - Oaa Travel</title>
+    <title>Booking Confirmed - OAA Travel</title>
   </head>
   <body style="font-family: Arial, sans-serif; background-color: #f2f6fa; padding: 20px;">
     <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 650px; margin: auto; background: #ffffff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
       <tr>
         <td style="background: #009688; color: #ffffff; padding: 25px; text-align: center;">
           <h1 style="margin: 0; font-size: 24px;">Booking Confirmed 🎉</h1>
-          <p style="margin: 0; font-size: 14px;">Thank you for completing your payment with Oaa Travel</p>
+          <p style="margin: 0; font-size: 14px;">Thank you for completing your payment with OAA Travel</p>
         </td>
       </tr>
       <tr>
@@ -293,7 +376,7 @@ export default async function handler(req, res) {
           <p style="font-size: 16px; color: #333;">Dear <strong>${booking.fullName}</strong>,</p>
           <p style="font-size: 15px; color: #444; line-height: 1.6;">
             We’re excited to let you know that your booking at 
-            <strong>${booking.apartment.name}</strong> has been confirmed and secured.  
+            <strong>${booking.apartment.name}</strong> has been confirmed.  
             We look forward to hosting you and ensuring a smooth stay.
           </p>
 
@@ -312,8 +395,12 @@ export default async function handler(req, res) {
               <td>${booking.apartment.location}</td>
             </tr>
             <tr>
-              <td><strong>Total Paid:</strong></td>
-              <td>₦${booking.apartment.pricePerNight} / Night</td>
+              <td><strong>Price per night:</strong></td>
+              <td>${formatPrice(booking.apartment.pricePerNight)} / Night</td>
+            </tr>
+             <tr>
+              <td><strong>Total Price:</strong></td>
+              <td>${formatPrice(booking.totalPrice)}</td>
             </tr>
           </table>
 
@@ -328,12 +415,12 @@ export default async function handler(req, res) {
           </p>
 
           <p style="margin-top: 25px; font-size: 15px; color: #333;">Warm regards,  
-          <br><strong>The Oaa Travel Team</strong></p>
+          <br><strong>The OAA Travel Team</strong></p>
         </td>
       </tr>
       <tr>
         <td style="background: #009688; color: #ffffff; text-align: center; padding: 12px; font-size: 12px;">
-          © 2025 Oaa Travel. All rights reserved.
+          © 2025 OAA Travel. All rights reserved.
         </td>
       </tr>
     </table>
@@ -354,13 +441,13 @@ export default async function handler(req, res) {
     await transporter.sendMail({
       from: process.env.EMAIL_USERNAME,
       to: booking.email,
-      subject: "Booking Rejected - Oaa Travel",
+      subject: "Booking Rejected - OAA Travel",
       html: `
             <!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Booking Declined - Oaa Travel</title>
+    <title>Booking Declined - OAA Travel</title>
   </head>
   <body style="font-family: Arial, sans-serif; background-color: #faf4f4; padding: 20px;">
     <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 650px; margin: auto; background: #ffffff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
@@ -375,7 +462,7 @@ export default async function handler(req, res) {
           <p style="font-size: 16px; color: #333;">Dear <strong>${booking.fullName}</strong>,</p>
           <p style="font-size: 15px; color: #444; line-height: 1.6;">
             We regret to inform you that your booking request for 
-            <strong>${populatedBooking.apartment.name}</strong> could not be accepted at this time.
+            <strong>${booking.apartment.name}</strong> could not be accepted at this time.
           </p>
 
           <h3 style="color: #c62828; margin-top: 20px;">Booking Details</h3>
@@ -390,7 +477,7 @@ export default async function handler(req, res) {
             </tr>
             <tr>
               <td><strong>Location:</strong></td>
-              <td>${populatedBooking.apartment.location}</td>
+              <td>${booking.apartment.location}</td>
             </tr>
           </table>
 
@@ -404,12 +491,12 @@ export default async function handler(req, res) {
           </p>
 
           <p style="margin-top: 25px; font-size: 15px; color: #333;">We sincerely apologize for the inconvenience.  
-          <br><strong>The Oaa Travel Team</strong></p>
+          <br><strong>The OAA Travel Team</strong></p>
         </td>
       </tr>
       <tr>
         <td style="background: #c62828; color: #ffffff; text-align: center; padding: 12px; font-size: 12px;">
-          © 2025 Oaa Travel. All rights reserved.
+          © 2025 OAA Travel. All rights reserved.
         </td>
       </tr>
     </table>
