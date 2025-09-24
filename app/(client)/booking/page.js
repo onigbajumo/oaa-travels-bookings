@@ -4,6 +4,7 @@ import { useToast, Box } from "@chakra-ui/react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 
+
 export default function BookingPage() {
   const [apartments, setApartments] = useState([]);
   const [selectedApartment, setSelectedApartment] = useState(null);
@@ -47,9 +48,10 @@ export default function BookingPage() {
         const data = await res.json();
         if (res.ok && data.bookedDates) {
           setBookedDates(data.bookedDates.map((d) => new Date(d)));
-        } else {
-          setBookedDates([]);
-        }
+        } 
+        // else {
+        //   setBookedDates([]);
+        // }
       } catch (err) {
         console.error("Failed to fetch booked dates", err);
       }
@@ -161,7 +163,7 @@ export default function BookingPage() {
           <option value="">-- Choose an Apartment --</option>
           {apartments.map((apt) => (
             <option key={apt._id} value={apt._id}>
-              {apt.name} - {apt.location} - ₦{apt.pricePerNight}/Night
+              {apt.name} - {apt.location} - ₦{apt.pricePerNight.toLocaleString()}/Night
             </option>
           ))}
         </select>
@@ -172,7 +174,7 @@ export default function BookingPage() {
               <strong>Location:</strong> {selectedApartment.location}
             </p>
             <p>
-              <strong>Price:</strong> ₦{selectedApartment.pricePerNight} / Night
+              <strong>Price:</strong> ₦{selectedApartment.pricePerNight.toLocaleString()} / Night
             </p>
           </div>
         )}
@@ -203,7 +205,7 @@ export default function BookingPage() {
               }
               disabled={[
               { before: new Date() },   
-              ...bookedDates.map((d) => ({ date: d })), 
+              ...bookedDates, 
               ]}
               numberOfMonths={2}  
               styles={{
